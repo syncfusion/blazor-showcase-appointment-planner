@@ -1,0 +1,213 @@
+﻿@page "/dashboard"
+@page "/"
+
+@using AppointmentPlanner.Data;
+@using AppointmentPlanner.Models;
+@using System;
+@using System.Globalization;
+
+<div class="planner-dashboard">
+    <div class="row content view-detail-display" style="margin: 0px;">
+        <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 text-display">
+                    <div class="e-card card day-events-container">
+                        <div class="e-card-content">
+                            <span class="card-text label-text">Total Appointments - Today</span>
+                            <div class="count-container">
+                                <span class="icon-day"><img src="css/appoinment/assets/Icons/Today_Widget.svg" /></span>
+                                <span class="day-event-count">@dayEventCount</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 text-display">
+                    <div class="e-card card week-events-container">
+                        <div class="e-card-content">
+                            <span class="card-text label-text">Total Appointments - This Week</span>
+                            <div class="count-container">
+                                <span class="icon-week"><img src="css/appoinment/assets/Icons/ThisWeek_Widget.svg" /></span>
+                                <span class="week-event-count">@weekEventCount</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="e-card grid-container">
+                        <div class="e-card-header">
+                            <div class="e-card-header-caption">
+                                <div class="e-card-header-title">
+                                    <span class="label-text"> Today"s Appointment</span><span class="link-text">
+                                        <NavLink class="nav-link" href="schedule">Book Appointment</NavLink>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="e-card-content">
+                            <EjsGrid id="Grid" DataSource="@gridData" Height="160px" ModelType="@model">
+                                <GridColumns>
+                                    <GridColumn Field="Time" HeaderText="Time" TextAlign="@TextAlign.Left" Width="80"></GridColumn>
+                                    <GridColumn Field="Name" HeaderText="Name" Width="120"></GridColumn>
+                                    <GridColumn HeaderText="Doctor Name" TextAlign="@TextAlign.Left" Width="150">
+                                        <Template>
+                                            <NavLink ActiveClass="doctors" Match="NavLinkMatch.Prefix" href="@($"doctors/doctorsdetails/{(context as AppointmentData).DoctorId}")">@((context as AppointmentData).DoctorName)</NavLink>
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field="Symptoms" HeaderText="Symptoms" TextAlign="@TextAlign.Left" Width="150"></GridColumn>
+                                </GridColumns>
+                            </EjsGrid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="e-card chart-container">
+                        <div class="e-card-content">
+                            <EjsChart Height="340px" Width="100%" Title="Consultation">
+                                <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
+                                <ChartTitleStyle TextAlignment="@Alignment.Near"></ChartTitleStyle>
+                                <ChartPrimaryXAxis Title="Date" ValueType="Syncfusion.EJ2.Blazor.Charts.ValueType.DateTime" Interval="1" IntervalType="@IntervalType.Days" LabelFormat="MM/dd" Minimum="@firstDayOfWeek" Maximum="@max" EdgeLabelPlacement="@EdgeLabelPlacement.Shift">
+                                    <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+                                    <ChartAxisMinorGridLines Width="0"></ChartAxisMinorGridLines>
+                                    <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                                </ChartPrimaryXAxis>
+                                <ChartPrimaryYAxis Title="Patient" Minimum="0" Maximum="6" Interval="2"></ChartPrimaryYAxis>
+                                <ChartLegendSettings Visible="true" Position="@LegendPosition.Top" Padding="20"></ChartLegendSettings>
+                                <ChartSeriesCollection>
+                                    <ChartSeries DataSource="@chartData" Type="Syncfusion.EJ2.Blazor.Charts.ChartSeriesType.Spline" Width="2" XName="Date" YName="EventCount"
+                                                 Name="Diabetology" LegendShape="Syncfusion.EJ2.Blazor.Charts.LegendShape.Circle" Fill="#60F238">
+                                    </ChartSeries>
+                                    <ChartSeries DataSource="@chartData1" Type="Syncfusion.EJ2.Blazor.Charts.ChartSeriesType.Spline" Width="2" XName="Date" YName="EventCount"
+                                                 Name="Orthopaedics" LegendShape="Syncfusion.EJ2.Blazor.Charts.LegendShape.Circle" Fill="#388CF5">
+                                    </ChartSeries>
+                                    <ChartSeries DataSource="@chartData2" Type="Syncfusion.EJ2.Blazor.Charts.ChartSeriesType.Spline" Width="2" XName="Date" YName="EventCount"
+                                                 Name="Cardiology" LegendShape="Syncfusion.EJ2.Blazor.Charts.LegendShape.Circle" Fill="#F29438">
+                                    </ChartSeries>
+                                </ChartSeriesCollection>
+                            </EjsChart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 list-display" style="padding-right: 0px;">
+            <div class="recent-activity">
+                <EjsListView Height="100%" Width="100%" ShowHeader="true" DataSource="@listDataSource" CssClass="activity-template" HeaderTitle="Recent Activity" ModelType="@listData">
+                    <ListViewTemplates>
+                        <Template>
+                            <div class="activity-container @((context as ActivityData).Type)">
+                                <div class="activity-message"><span class="type-name">@((context as ActivityData).Name)</span> - <span>@((context as ActivityData).Message)</span></div>
+                                <span class="activity-time">@((context as ActivityData).Time)</span>
+                            </div>
+                        </Template>
+                    </ListViewTemplates>
+                </EjsListView>
+            </div>
+            <div class="doctor-availability">
+                <EjsListView Height="100%" Width="100%" ShowHeader="true" DataSource="@doctorAvailability" CssClass="e-list-template" ModelType="@doctorAvail">
+                    <ListViewTemplates>
+                        <HeaderTemplate>
+                            <div class="availability-title">
+                                <span class="header-text">Doctor's Availability</span><span class="all-text">
+                                    <NavLink ActiveClass="doctors" Match="NavLinkMatch.Prefix" href="doctors">View All</NavLink>
+                                </span>
+                            </div>
+                        </HeaderTemplate>
+                        <Template>
+                            <div class="availabilty-container">
+                                <div class="image-container">
+                                    <span class="doctor-image">
+                                        <img src="css/appoinment/assets/images/@((context as DoctorsData).Text).png" /><span class="availability @((context as DoctorsData).Availability)"></span>
+                                    </span>
+                                </div>
+                                <div class="detail-container">
+                                    <span class="doctor-name">Dr.@((context as DoctorsData).Name)</span>
+                                    <span class="doctor-speciality">@getSpecializationText((context as DoctorsData).Specialization)</span>
+                                </div>
+                            </div>
+                        </Template>
+                    </ListViewTemplates>
+                </EjsListView>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    private string dayEventCount { get; set; }
+    private string weekEventCount { get; set; }
+    private List<AppointmentData> gridData { get; set; } = new List<AppointmentData>();
+    private ActivityData listData = new ActivityData();
+    private DoctorsData doctorAvail = new DoctorsData();
+    private AppointmentData model = new AppointmentData();
+    private List<HospitalData> hospitalData { get; set; }
+    private List<ActivityData> listDataSource { get; set; } = AppointmentService.ActivityDatas;
+    public List<DoctorsData> doctorAvailability { get; set; } = AppointmentService.DoctorsDatas;
+    private List<DoctorsData> doctorsData { get; set; }
+    private List<PatientsData> patientsData { get; set; }
+
+    private DateTime startDate { get; set; } = new DateTime(2018, 7, 5, 0, 0, 0, 0);
+
+    private DateTime endDate { get; set; }
+
+    private DateTime firstDayOfWeek { get; set; }
+    private DateTime max { get; set; }
+
+    private List<ChartDataModel> chartData { get; set; }
+    private List<ChartDataModel> chartData1 { get; set; }
+    private List<ChartDataModel> chartData2 { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        hospitalData = HospitalData.GetHospitalData();
+        doctorsData = DoctorsData.GetDoctorsData();
+        patientsData = PatientsData.GetPatientsData();
+        firstDayOfWeek = AppointmentService.GetWeekFirstDate(AppointmentService.startDate);
+        max = AppointmentService.GetWeekFirstDate(AppointmentService.startDate).AddDays(6);
+        endDate = AppointmentService.startDate.AddDays(1);
+        List<HospitalData> currentDayEvents = AppointmentService.GetFilteredData(startDate, endDate);
+        this.gridData = this.GetAppoinment(currentDayEvents);
+        List<HospitalData> currentViewEvents = AppointmentService.GetFilteredData(firstDayOfWeek, this.AddDate(startDate, 6));
+        this.dayEventCount = currentDayEvents.Count().ToString();
+        this.weekEventCount = currentViewEvents.Count().ToString();
+        List<HospitalData> diabetologyData = currentViewEvents.Where(item => item.DepartmentId == 5).ToList();
+        List<HospitalData> orthopaedicsData = currentViewEvents.Where(item => item.DepartmentId == 4).ToList();
+        List<HospitalData> cardiologyData = currentViewEvents.Where(item => item.DepartmentId == 6).ToList();
+        chartData = AppointmentService.GetAllChartData(diabetologyData, firstDayOfWeek);
+        chartData1 = AppointmentService.GetAllChartData(orthopaedicsData, firstDayOfWeek);
+        chartData2 = AppointmentService.GetAllChartData(cardiologyData, firstDayOfWeek);
+    }
+
+    private List<AppointmentData> GetAppoinment(List<HospitalData> currentDayEvents)
+    {
+        List<AppointmentData> data = new List<AppointmentData>();
+        for (int i = 0; i < currentDayEvents.Count(); i++)
+        {
+            var eventData = currentDayEvents[i];
+            var filteredPatients = patientsData.Where(item => item.Id.Equals(eventData.PatientId)).FirstOrDefault();
+            var filteredDoctors = doctorsData.Where(item => item.Id.Equals(eventData.DoctorId)).FirstOrDefault();
+            if (filteredPatients != null && filteredDoctors != null)
+            {
+                data.Add(new AppointmentData(AppointmentService.GetFormatDate(eventData.StartTime, "hh:mm tt"), filteredPatients.Name, filteredDoctors.Name, eventData.Symptoms, filteredDoctors.Id));
+            }
+        }
+        return data;
+    }
+
+    private DateTime AddDate(DateTime date, int value)
+    {
+        return date.AddDays(value);
+    }
+
+    private string getSpecializationText(string text)
+    {
+        return SpecializationData.GetSpecializationData().Where(item => item.Id.Equals(text)).FirstOrDefault().Text.ToUpper();
+    }
+
+}
