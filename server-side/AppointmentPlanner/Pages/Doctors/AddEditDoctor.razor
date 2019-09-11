@@ -1,0 +1,146 @@
+﻿
+@using AppointmentPlanner.Data;
+@using AppointmentPlanner.Models;
+@using Microsoft.AspNetCore.Components.Forms;
+
+@inject NavigationManager UriHelper
+
+<EjsDialog Target="body" @ref="DialogObj" Width="390px" CssClass="new-doctor-dialog" IsModal="true" ShowCloseIcon="true" Header="@editHeader" AnimationSettings="@dialogAnnimation">
+    <ChildContent>
+        <DialogEvents Closed="dialogClosed"></DialogEvents>
+        <EditForm ID="new-doctor-form" Model="@DoctorEditModel" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+            <div class="name-container">
+                <EjsTextBox CssClass="doctor-name e-field" Placeholder="Doctor Name" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Name"></EjsTextBox>
+                <ValidationMessage For="@(() => DoctorEditModel.Name)" />
+            </div>
+            <div class="gender-container">
+                <div class="gender">
+                    <div><label>Gender</label></div>
+                    <div class="e-btn-group e-round-corner e-field">
+                        <input type="radio" ID="patientCheckMale" name="Gender" Value="Male" @onchange="@(()=> DoctorEditModel.Gender = "Male")" checked />
+                        <label class="e-btn" for="patientCheckMale">Male</label>
+                        <input type="radio" ID="patientCheckFemale" name="Gender" Value="Female" @onchange="@(()=> DoctorEditModel.Gender = "FeMale")" />
+                        <label class="e-btn" for="patientCheckFemale">Female</label>
+                    </div>
+                </div>
+                <div class="mobile" style="width:345px">
+                    <EjsTextBox CssClass="e-field" Placeholder="Mobile Number" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Mobile"></EjsTextBox>
+                    <ValidationMessage For="@(() => DoctorEditModel.Mobile)" />
+                </div>
+            </div>
+            <div class="email-container">
+                <EjsTextBox CssClass="e-field" Placeholder="Email" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Email"></EjsTextBox>
+                <ValidationMessage For="@(() => DoctorEditModel.Email)" />
+            </div>
+            <div class="education-container">
+                <div class="department">
+                    <EjsDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Department" Width="160px" DataSource="@specializationData" @bind-Value="@DoctorEditModel.Specialization">
+                        <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
+                    </EjsDropDownList>
+                </div>
+                <div class="education" style="width:345px">
+                    <EjsTextBox CssClass="e-field" Placeholder="Education" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Education"></EjsTextBox>
+                    <ValidationMessage For="@(() => DoctorEditModel.Education)" />
+                </div>
+            </div>
+            <div class="experience-container">
+                <div class="experience">
+                    <EjsDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Experience" Width="160px" @bind-Value="@DoctorEditModel.Experience" DataSource="@experienceData">
+                        <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
+                    </EjsDropDownList>
+                </div>
+                <div class="designation" style="width:345px">
+                    <EjsTextBox CssClass="e-field" Placeholder="Designation" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Designation"></EjsTextBox>
+                </div>
+            </div>
+            <div class="duty-container">
+                <EjsDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Duty Timing" @bind-Value="@DoctorEditModel.DutyTiming" DataSource="@dutyTimingsData">
+                    <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
+                </EjsDropDownList>
+            </div>
+            <div class="e-footer-content">
+                <div class="button-container">
+                    <button type="button" class="e-btn e-normal" @onclick="@onCancelClick">Cancel</button>
+                    <button type="submit" class="e-btn e-normal e-primary">Save</button>
+                </div>
+            </div>
+        </EditForm>
+    </ChildContent>
+</EjsDialog>
+
+@code{
+
+    EjsDialog DialogObj;
+
+    private AppointmentService service = new AppointmentService();
+    [Parameter]
+    public bool IsShow { get; set; }
+
+    private SpecializationData specializeModel = new SpecializationData();
+    public List<SpecializationData> specializationData { get; set; } = AppointmentService.SpecializationDatas;
+
+    public DoctorsData DoctorEditModel = new DoctorsData();
+
+    public bool IsShowNewDialog { get; set; } = false;
+
+    private string editHeader { get; set; } = "New Doctor";
+
+    private DialogAnimationSettings dialogAnnimation { get; set; } = new DialogAnimationSettings { Effect = DialogEffect.Zoom };
+
+    private SpecializationData dropdownTempModel = new SpecializationData();
+
+    private List<TextIdData> experienceData = AppointmentService.ExperienceData;
+
+    private List<TextIdData> dutyTimingsData = AppointmentService.DutyTimings;
+
+    private void dialogClosed(object args)
+    {
+        this.IsShowNewDialog = false;
+    }
+
+    public void HandleValidSubmit(EditContext context)
+    {
+        DoctorsData initialData = AppointmentService.DoctorsDatas.FirstOrDefault();
+        DoctorsData getHours = updateWorkHours(initialData);
+        DoctorsData newDoctor = new DoctorsData(DoctorEditModel.Name, DoctorEditModel.Gender, "default", AppointmentService.DoctorsDatas.Count() + 1, DoctorEditModel.DepartmentId, DoctorEditModel.Color, DoctorEditModel.Education, DoctorEditModel.Specialization, DoctorEditModel.Experience, DoctorEditModel.Designation, DoctorEditModel.DutyTiming, DoctorEditModel.Email, DoctorEditModel.Mobile, "available", getHours.StartHour, getHours.EndHour, initialData.AvailableDays, initialData.WorkDays);
+        AppointmentService.DoctorsDatas.Add(newDoctor);
+        DialogObj.Hide();
+        IsShow = false;
+    }
+    private DoctorsData updateWorkHours(DoctorsData data)
+    {
+        string dutyString = AppointmentService.DutyTimings.Where(item => item.Id.Equals(DoctorEditModel.DutyTiming)).FirstOrDefault().Text;
+        string startHour;
+        string endHour;
+        int startValue;
+        int endValue;
+        if (dutyString == "10:00 AM - 7:00 PM")
+        {
+            startValue = 10;
+            endValue = 19;
+            startHour = "10:00";
+            endHour = "19:00";
+        }
+        else if (dutyString == "08:00 AM - 5:00 PM")
+        {
+            startValue = 8;
+            endValue = 17;
+            startHour = "08:00";
+            endHour = "17:00";
+        }
+        else
+        {
+            startValue = 12;
+            endValue = 21;
+            startHour = "12:00";
+            endHour = "21:00";
+        }
+        return new DoctorsData { StartHour = startHour, EndHour = endHour };
+    }
+    private void onCancelClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
+    {
+        this.DialogObj.Hide();
+        this.IsShowNewDialog = false;
+    }
+}

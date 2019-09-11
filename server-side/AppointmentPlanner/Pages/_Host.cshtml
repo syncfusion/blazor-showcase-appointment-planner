@@ -1,0 +1,35 @@
+﻿@page "/"
+@namespace AppointmentPlanner.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AppointmentPlanner</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <link href="ej2/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/appoinment/main.css" rel="stylesheet" />
+    <link href="css/appoinment/dashboard.css" rel="stylesheet" />
+    <link href="css/appoinment/doctor.css" rel="stylesheet" />
+    <link href="css/appoinment/doctordetails.css" rel="stylesheet" />
+    <link href="css/appoinment/patients.css" rel="stylesheet" />
+    <link href="css/appoinment/preference.css" rel="stylesheet" />
+    <link href="css/appoinment/calendar.css" rel="stylesheet" />
+    <link href="css/appoinment/doctoreditdialog.css" rel="stylesheet" />
+    <link href="css/appoinment/about.css" rel="stylesheet" />
+    <script src="https://cdn.syncfusion.com/ej2/17.2.50/dist/ej2.min.js"></script>
+    <script src="https://cdn.syncfusion.com/ej2/17.2.50/dist/ejs.interop.min.js"></script>
+</head>
+<body class="e-app-mainpage">
+    <app>
+        @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
+    </app>
+
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+﻿@page "/preference"
+
+@using Newtonsoft.Json;
+@using Newtonsoft.Json.Converters;
+@using AppointmentPlanner.Data;
+@using AppointmentPlanner.Models;
+
+<div class='preference-container'>
+    <header>
+        <div class="module-title">
+            <div class='title'>PREFERENCE</div>
+            <div class='underline'></div>
+        </div>
+    </header>
+    <div class="control-container">
+        <div class='label-text'>Default View</div>
+        <EjsDropDownList CssClass='preference-drop-down' ID='CurrentView' @bind-Value="@selectedView" Width="335px" DataSource="@views">
+            <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
+            <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+        </EjsDropDownList>
+    </div>
+    <div class="control-container">
+        <div class='label-text'>Calendar Start Time</div>
+        <EjsDropDownList CssClass='preference-drop-down' ID='CalendarStart' @bind-Value="@selectedStartHour" Width="335px" DataSource="@startHours">
+            <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
+            <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+        </EjsDropDownList>
+    </div>
+    <div class="control-container">
+        <div class='label-text'>Calendar End Time</div>
+        <EjsDropDownList CssClass='preference-drop-down' ID='CalendarEnd' @bind-Value="@selectedEndHour" Width="335px" DataSource="@endHours">
+            <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
+            <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+        </EjsDropDownList>
+    </div>
+    <div class="control-container">
+        <div class='label-text'>Slot Duration</div>
+        <EjsDropDownList CssClass='preference-drop-down' ID='Duration' @bind-Value="@timeInterval" Width="335px" DataSource="@timeSlots">
+            <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
+            <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+        </EjsDropDownList>
+    </div>
+    <div class="control-container">
+        <div class='label-text'>Booking Color</div>
+        <EjsDropDownList CssClass='preference-drop-down' ID='BookingColor' @bind-Value="@selectedCategory" Width="335px" DataSource="@colorCategory">
+            <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
+            <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+        </EjsDropDownList>
+    </div>
+    <div class="control-container">
+        <div class='label-text'>First Day of Week</div>
+        <EjsDropDownList CssClass='preference-drop-down' ID='FirstDayOfWeek' @bind-Value="@selectedDayOfWeek" Width="335px" DataSource="@dayOfWeeks">
+            <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
+            <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+        </EjsDropDownList>
+    </div>
+</div>
+
+
+@code{
+
+    private List<TextValueData> views { get; set; } = AppointmentService.Views;
+    private List<TextValueData> startHours { get; set; } = AppointmentService.StartHours;
+    private List<TextValueData> endHours { get; set; } = AppointmentService.EndHours;
+    private List<TextValueNumericData> timeSlots { get; set; } = AppointmentService.TimeSlot;
+    private List<TextValueData> colorCategory { get; set; } = AppointmentService.ColorCategory;
+    private List<TextValueNumericData> dayOfWeeks { get; set; } = AppointmentService.DayOfWeekList;
+    private string selectedView = AppointmentService.CalendarSettings.currentView;
+    private string selectedStartHour = AppointmentService.CalendarSettings.calendar.start;
+    private string selectedEndHour = AppointmentService.CalendarSettings.calendar.end;
+    private string selectedCategory = AppointmentService.CalendarSettings.bookingColor;
+    private int timeInterval = AppointmentService.CalendarSettings.interval;
+    private int selectedDayOfWeek = AppointmentService.CalendarSettings.firstDayOfWeek;
+    private CalendarSetting cal { get; set; } = new CalendarSetting();
+    private void onValueChange(Syncfusion.EJ2.Blazor.DropDowns.ChangeEventArgs<string> args)
+    {
+        switch (args.Element.ID)
+        {
+            case "CurrentView":
+                AppointmentService.CalendarSettings.currentView = args.Value;
+                break;
+            case "CalendarStart":
+                AppointmentService.CalendarSettings.calendar.start = args.Value;
+                break;
+            case "CalendarEnd":
+                AppointmentService.CalendarSettings.calendar.end = args.Value;
+                break;
+            case "Duration":
+                AppointmentService.CalendarSettings.interval = Int32.Parse(args.Value);
+                break;
+            case "BookingColor":
+                AppointmentService.CalendarSettings.bookingColor = (string)args.Value;
+                break;
+            case "FirstDayOfWeek":
+                AppointmentService.CalendarSettings.firstDayOfWeek = Int32.Parse(args.Value);
+                break;
+        }
+    }
+}

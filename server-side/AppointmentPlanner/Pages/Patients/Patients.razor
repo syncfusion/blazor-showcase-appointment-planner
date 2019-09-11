@@ -1,0 +1,274 @@
+﻿@page "/patients"
+
+@using AppointmentPlanner.Data;
+@using AppointmentPlanner.Models;
+
+<div id="patient-wrapper" class="planner-patient-wrapper">
+    <header>
+        <div class="module-title">
+            <div class="title">PATIENT LIST</div>
+            <div class="underline"></div>
+        </div>
+        <div class="add-patient" @onclick="@onAddPatient">
+            <div class="e-icon-add e-icons"></div>
+            <div class="add-patient-label">Add New</div>
+        </div>
+    </header>
+    <div class="patients-detail-wrapper">
+        <div class="patient-operations">
+            <div id="searchTemplate" class="search-wrapper planner-patient-search">
+                <div class="e-input-group" role="search">
+                    <input id="schedule_searchbar" class="e-input" name="input" type="search"
+                           placeholder="Search Patient" @oninput="@patientSearch" />
+                    <span id="schedule_searchbutton" class="e-input-group-icon search-icon e-icons" tabindex="-1"
+                          title="Search" aria-label="search"></span>
+                </div>
+            </div>
+            <EjsButton CssClass="e-normal add-details" @onclick="@onAddPatient" IsPrimary="true">
+                Add
+                New Patient
+            </EjsButton>
+        </div>
+        <div class="patient-display">
+            <EjsGrid ID="Grid" @ref="gridObj" DataSource="@FilteredPatients">
+                <GridEvents TValue="PatientsData" OnActionBegin="onDataEdit"></GridEvents>
+                <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="EditMode.Dialog">
+                </GridEditSettings>
+                <GridColumns>
+                    <GridColumn IsPrimaryKey="true" Field=@nameof(PatientsData.Id) Width="50" HeaderText="ID" TextAlign="@TextAlign.Left"></GridColumn>
+                    <GridColumn Field=@nameof(PatientsData.Name) HeaderText="Name" TextAlign="@TextAlign.Left" Width="100">
+                    </GridColumn>
+                    <GridColumn Field=@nameof(PatientsData.Gender) HeaderText="Gender" TextAlign="@TextAlign.Left" Width="80"></GridColumn>
+                    <GridColumn Field=@nameof(PatientsData.BloodGroup) HeaderText="Blood Group" TextAlign="@TextAlign.Left" Width="100"></GridColumn>
+                    <GridColumn Field=@nameof(PatientsData.Symptoms) HeaderText="Symptoms" TextAlign="@TextAlign.Left" Width="150"></GridColumn>
+                    <GridColumn Field=@nameof(PatientsData.Mobile) HeaderText="Mobile Number" TextAlign="@TextAlign.Left" Width="100"></GridColumn>
+                    <GridColumn Field=@nameof(PatientsData.Email) HeaderText="Email" TextAlign="@TextAlign.Left" Width="120"></GridColumn>
+                </GridColumns>
+            </EjsGrid>
+        </div>
+    </div>
+</div>
+
+@if (GridEditDialog)
+{
+<EjsDialog @ref="GridEditDialogObj" Target="body" Width="390px" @bind-Visible="@GridEditDialog" CssClass="e-edit-dialog" IsModal="true" ShowCloseIcon="true" Header="@gridEditHeader" AnimationSettings="@dialogAnnimation">
+    <DialogTemplates>
+        <Content>
+            <div class="grid-edit-dialog">
+                <div class="field-row">
+                    <label> Patient Id </label><span id="Id">@((activePatientData as PatientsData).Id)</span>
+                </div>
+                <div class="field-row">
+                    <label> Patient Name </label><span id="Name">@((activePatientData as PatientsData).Name)</span>
+                </div>
+                <div class="field-row">
+                    <label> Gender </label><span id="Gender">@((activePatientData as PatientsData).Gender)</span>
+                </div>
+                <div class="field-row">
+                    <label> DOB </label><span id="DOB">@((activePatientData as PatientsData).DOB)</span>
+                </div>
+                <div class="field-row">
+                    <label> Blood Group </label><span id="BloodGroup">@((activePatientData as PatientsData).BloodGroup)</span>
+                </div>
+                <div class="field-row">
+                    <label> Mobile Number </label><span id="Mobile">@((activePatientData as PatientsData).Mobile)</span>
+                </div>
+                <div class="field-row">
+                    <label> Email </label><span id="Email">@((activePatientData as PatientsData).Email)</span>
+                </div>
+                <div class="field-row">
+                    <label> Symptoms </label><span id="Symptoms">@((activePatientData as PatientsData).Symptoms)</span>
+                </div>
+                <div class="field-row history-row">
+                    <label>Appointment History</label>
+                    <div ID="history-wrapper">
+
+                        @foreach (var item in historyData)
+                            {
+                        <div class="history-content">@(getHistoryFormatDate(item))</div>
+                            }
+                    </div>
+                </div>
+            </div>
+        </Content>
+        <FooterTemplate>
+            <div class="button-container" style="display: flex; float: right">
+                <EjsButton CssClass="e-normal" @onclick="@onDeleteClick">Delete</EjsButton>
+                <EjsButton CssClass="e-normal" IsPrimary="true" @onclick="@gridEditDialog">Edit</EjsButton>
+            </div>
+        </FooterTemplate>
+    </DialogTemplates>
+</EjsDialog>
+}
+
+
+@if (IsShowPatientEditDialog)
+{
+<EjsDialog @ref="DialogObj" Target="body" Width="390px" CssClass="new-patient-dialog" IsModal="true" @bind-Visible="@IsShowPatientEditDialog" ShowCloseIcon="true" Header="@patientHeader" AnimationSettings="@dialogAnnimation">
+    <ChildContent>
+        <EditForm Model="@PatientEditModel" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+            <div class="name-container">
+                <EjsTextBox CssClass="patient-name e-field" Placeholder="Patient Name" FloatLabelType="@FloatLabelType.Always" @bind-Value="@PatientEditModel.Name"></EjsTextBox>
+                <ValidationMessage For="@(() => PatientEditModel.Name)" />
+            </div>
+            <div class="field-container gender-container">
+                <div class="gender">
+                    <div><label>Gender</label></div>
+                    <div class="e-btn-group e-round-corner e-field">
+                        <input type="radio" ID="patientCheckMale" name="Gender" Value="Male" @onchange="@(()=> PatientEditModel.Gender = "Male")" checked />
+                        <label class="e-btn" for="patientCheckMale">Male</label>
+                        <input type="radio" ID="patientCheckFemale" name="Gender" Value="Female" @onchange="@(()=> PatientEditModel.Gender = "FeMale")" />
+                        <label class="e-btn" for="patientCheckFemale">Female</label>
+                    </div>
+                </div>
+                <div class="dob">
+                    <EjsDatePicker ID="DOB" CssClass="e-field" Placeholder="DOB" @bind-Value="@PatientEditModel.DOB" FloatLabelType="@FloatLabelType.Always" ShowClearButton="false"></EjsDatePicker>
+                    <ValidationMessage For="@(() => PatientEditModel.DOB)" />
+                </div>
+            </div>
+            <div class="field-container contact-container">
+                <div class="mobile" style="width:345px">
+                    <EjsTextBox CssClass="e-field" Placeholder="Mobile Number" FloatLabelType="@FloatLabelType.Always" @bind-Value="@PatientEditModel.Mobile"></EjsTextBox>
+                    <ValidationMessage For="@(() => PatientEditModel.Mobile)" />
+                </div>
+                <div class="blood-group">
+                    <EjsDropDownList FloatLabelType="@FloatLabelType.Always" CssClass="e-field" Placeholder="Blood Group" @bind-Value="@PatientEditModel.BloodGroup" DataSource="@bloodGroupData">
+                        <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                    </EjsDropDownList>
+                    <ValidationMessage For="@(() => PatientEditModel.BloodGroup)" />
+                </div>
+            </div>
+            <div class="field-container email-container">
+                <EjsTextBox CssClass="e-field" Placeholder="Email" FloatLabelType="@FloatLabelType.Always" @bind-Value="@PatientEditModel.Email"></EjsTextBox>
+                <ValidationMessage For="@(() => PatientEditModel.Email)" />
+            </div>
+            <div class="field-container symptom-container">
+                <EjsTextBox CssClass="e-field" Placeholder="Symptoms" FloatLabelType="@FloatLabelType.Always" @bind-Value="@PatientEditModel.Symptoms"></EjsTextBox>
+                <ValidationMessage For="@(() => PatientEditModel.Symptoms)" />
+            </div>
+            <div class="e-footer-content">
+                <div class="button-container">
+                    <button type="button" class="e-btn e-normal" @onclick="@onCancelClick">Cancel</button>
+                    <button type="submit" class="e-btn e-normal e-primary">@saveButton</button>
+                </div>
+            </div>
+        </EditForm>
+    </ChildContent>
+</EjsDialog>
+}
+
+@code{
+    EjsGrid<PatientsData> gridObj;
+    EjsDialog DialogObj, GridEditDialogObj;
+
+    public PatientsData PatientEditModel = new PatientsData();
+    public List<PatientsData> FilteredPatients { get; set; }
+
+    private string saveButton { get; set; } = "Save";
+
+    private DialogAnimationSettings dialogAnnimation { get; set; } = new DialogAnimationSettings { Effect = DialogEffect.Zoom };
+
+    private List<HospitalData> historyData { get; set; }
+    private bool isPatientClicked { get; set; } = false;
+
+    private PatientsData activePatientData { get; set; }
+
+    private bool IsShowPatientEditDialog { get; set; } = false;
+    public bool GridEditDialog { get; set; } = false;
+    private string patientHeader { get; set; } = "New Patient";
+    private string gridEditHeader { get; set; } = "Patient Details";
+    private bool isValid { get; set; }
+    public PatientsData patientModel = new PatientsData();
+
+    private List<TextValueData> bloodGroupData { get; set; } = AppointmentService.BloodGroupData;
+
+    private DateTime? dobValue { get; set; } = DateTime.Now;
+    private List<DoctorsData> doctorsData = AppointmentService.DoctorsDatas;
+    public PatientsData EditData { get; set; } = AppointmentService.PatientsDatas[0];
+    protected override void OnInitialized()
+    {
+        FilteredPatients = AppointmentService.PatientsDatas;
+    }
+
+    private void onAddPatient(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
+    {
+        saveButton = "Save";
+        PatientEditModel = new PatientsData { Name = null, Gender = "Male", Mobile = null, Email = null, Symptoms = null };
+        this.IsShowPatientEditDialog = true;
+        this.isPatientClicked = true;
+    }
+    private void onCancelClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
+    {
+        this.DialogObj.Hide();
+    }
+    public void HandleValidSubmit()
+    {
+        PatientsData getRecord = null;
+        if (saveButton == "Save")
+        {
+            getRecord = new PatientsData(AppointmentService.PatientsDatas.Count() + 1, PatientEditModel.Name, PatientEditModel.Name, PatientEditModel.DOB, PatientEditModel.Mobile, PatientEditModel.Email, AppointmentService.PatientsDatas[0].Address, AppointmentService.PatientsDatas[0].Disease, AppointmentService.PatientsDatas[0].DepartmentName, PatientEditModel.BloodGroup, PatientEditModel.Gender, PatientEditModel.Symptoms);
+            gridObj.AddRecord(getRecord, AppointmentService.PatientsDatas.Count());
+        }
+        else
+        {
+            getRecord = new PatientsData(activePatientData.Id, PatientEditModel.Name, PatientEditModel.Name, PatientEditModel.DOB, PatientEditModel.Mobile, PatientEditModel.Email, activePatientData.Address, activePatientData.Disease, activePatientData.DepartmentName, PatientEditModel.BloodGroup, PatientEditModel.Gender, PatientEditModel.Symptoms);
+            gridObj.UpdateRow((activePatientData.Id - 1), getRecord);
+        }
+        this.DialogObj.Hide();
+    }
+    private void onDataEdit(Syncfusion.EJ2.Blazor.Grids.ActionEventArgs<PatientsData> args)
+    {
+        if (args.RequestType == Syncfusion.EJ2.Blazor.Grids.Action.BeginEdit)
+        {
+            saveButton = "Update";
+            args.Cancel = true;
+            GridEditDialog = true;
+            AppointmentService.ActivePatientData = activePatientData = args.RowData;
+            historyData = AppointmentService.HospitalDatas.Where(item => item.PatientId.Equals(args.RowData.Id)).ToList();
+        }
+        else if (args.RequestType == Syncfusion.EJ2.Blazor.Grids.Action.Save)
+        {
+            this.DialogObj.Hide();
+        }
+    }
+    private void onDeleteClick()
+    {
+        var patientData = ((List<PatientsData>)FilteredPatients).Where(item => item.Id != activePatientData.Id).ToList();
+        FilteredPatients = AppointmentService.PatientsDatas = patientData;
+        this.GridEditDialogObj.Hide();
+        this.IsShowPatientEditDialog = false;
+    }
+
+    private void gridEditDialog()
+    {
+        GridEditDialog = false;
+        PatientEditModel = new PatientsData { Name = activePatientData.Name, Gender = activePatientData.Gender, Mobile = activePatientData.Mobile, Email = activePatientData.Email, Symptoms = activePatientData.Symptoms };
+        this.IsShowPatientEditDialog = true;
+    }
+
+    private void onPatientClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args, int Id)
+    {
+        this.gridObj.SelectRow(Id - 1);
+        this.gridObj.StartEdit();
+    }
+
+    private void patientSearch(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        var patientData = PatientsData.GetPatientsData();
+        this.FilteredPatients = (from cust in patientData
+                                 where (cust.Name.ToLower().Contains(args.Value.ToString())) || (cust.Gender.ToLower().Contains(args.Value.ToString())) || (cust.Id.ToString().ToUpper().Contains(args.Value.ToString())) || (cust.Mobile.Contains(args.Value.ToString())) || ((cust.BloodGroup as string).Contains(args.Value.ToString()))
+                                 select cust).ToList();
+    }
+
+    private string getHistoryFormatDate(HospitalData data)
+    {
+        return AppointmentService.GetFormatDate(data.StartTime, "MMMM dd") + "-" + AppointmentService.GetFormatDate(data.StartTime, "hh:mm tt") + "-" + AppointmentService.GetFormatDate(data.EndTime, "hh:mm tt") + " Appointment with Dr." + getDoctorName(data.DoctorId);
+    }
+
+    private string getDoctorName(int Id)
+    {
+        return doctorsData.Where(item => item.Id.Equals(Id)).FirstOrDefault().Name;
+    }
+
+}
