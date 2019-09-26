@@ -30,13 +30,16 @@
             </EjsButton>
         </div>
         <div class="patient-display">
-            <EjsGrid ID="Grid" @ref="gridObj" DataSource="@FilteredPatients">
-                <GridEvents TValue="PatientsData" OnActionBegin="onDataEdit"></GridEvents>
-                <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="EditMode.Dialog">
+            <EjsGrid ID="Grid" @ref="gridObj" DataSource="@FilteredPatients" ModelType="@patientModel">
+                <GridEvents TValue="PatientsData" RowSelected="onRowSelected" OnRecordDoubleClick="onDoubleClick"></GridEvents>
+                <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" AllowEditOnDblClick="false" Mode="EditMode.Dialog">
                 </GridEditSettings>
                 <GridColumns>
                     <GridColumn IsPrimaryKey="true" Field=@nameof(PatientsData.Id) Width="50" HeaderText="ID" TextAlign="@TextAlign.Left"></GridColumn>
-                    <GridColumn Field=@nameof(PatientsData.Name) HeaderText="Name" TextAlign="@TextAlign.Left" Width="100">
+                    <GridColumn HeaderText="Name" TextAlign="@TextAlign.Left" Width="100">
+                        <Template>
+                            <span class="patient-name" @onclick="@(e => onPatientClick(e, (context as PatientsData).Id))">@((context as PatientsData).Name)</span>
+                        </Template>
                     </GridColumn>
                     <GridColumn Field=@nameof(PatientsData.Gender) HeaderText="Gender" TextAlign="@TextAlign.Left" Width="80"></GridColumn>
                     <GridColumn Field=@nameof(PatientsData.BloodGroup) HeaderText="Blood Group" TextAlign="@TextAlign.Left" Width="100"></GridColumn>
@@ -196,7 +199,6 @@
         saveButton = "Save";
         PatientEditModel = new PatientsData { Name = null, Gender = "Male", Mobile = null, Email = null, Symptoms = null };
         this.IsShowPatientEditDialog = true;
-        this.isPatientClicked = true;
     }
     private void onCancelClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {
@@ -217,21 +219,27 @@
         }
         this.DialogObj.Hide();
     }
-    private void onDataEdit(Syncfusion.EJ2.Blazor.Grids.ActionEventArgs<PatientsData> args)
+
+    public void onRowSelected(RowSelectEventArgs<PatientsData> args)
     {
-        if (args.RequestType == Syncfusion.EJ2.Blazor.Grids.Action.BeginEdit)
+        if (isPatientClicked)
         {
-            saveButton = "Update";
-            args.Cancel = true;
-            GridEditDialog = true;
-            AppointmentService.ActivePatientData = activePatientData = args.RowData;
-            historyData = AppointmentService.HospitalDatas.Where(item => item.PatientId.Equals(args.RowData.Id)).ToList();
-        }
-        else if (args.RequestType == Syncfusion.EJ2.Blazor.Grids.Action.Save)
-        {
-            this.DialogObj.Hide();
+            this.showDialog(args.Data);
+            this.isPatientClicked = false;
         }
     }
+    public void onDoubleClick(RecordDoubleClickEventArgs<PatientsData> args)
+    {
+        this.showDialog(args.RowData);
+    }
+    private void showDialog(PatientsData data)
+    {
+        saveButton = "Update";
+        GridEditDialog = true;
+        AppointmentService.ActivePatientData = activePatientData = data;
+        historyData = AppointmentService.HospitalDatas.Where(item => item.PatientId.Equals(data.Id)).ToList();
+    }
+
     private void onDeleteClick()
     {
         var patientData = ((List<PatientsData>)FilteredPatients).Where(item => item.Id != activePatientData.Id).ToList();
@@ -250,7 +258,7 @@
     private void onPatientClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args, int Id)
     {
         this.gridObj.SelectRow(Id - 1);
-        this.gridObj.StartEdit();
+        this.isPatientClicked = true;
     }
 
     private void patientSearch(Microsoft.AspNetCore.Components.ChangeEventArgs args)

@@ -4,10 +4,16 @@
 @using AppointmentPlanner.Data;
 @using AppointmentPlanner.Models;
 @using Microsoft.JSInterop;
-
-<link href="css/appoinment/main.css" rel="stylesheet" />
-<div class="planner-wrapper" style="width: 100%">
-    <EjsSidebar ID="plannerSiderBar" @ref="SidebarObj" EnableGestures="false" MediaQuery="(min-width: 600px)" Type="SidebarType.Auto">
+ 
+<div class="sb-content-overlay @(hide)">
+    <div class="sb-loading">
+        <svg class="circular" height="40" width="40">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="6" stroke-miterlimit="10" />
+        </svg>
+    </div>
+</div>
+<div class="planner-wrapper" style="width: 100%; visibility:@(visible); opacity:@(opacity)">
+    <EjsSidebar ID="plannerSiderBar" @ref="SidebarObj" EnableGestures="false" MediaQuery="(min-width: 600px)" Type="SidebarType.Auto" Created="OnCreate">
         <ChildContent>
             <div class="dock">
                 <div class="info align-center">
@@ -25,12 +31,12 @@
                                 var currentPath = UriHelper.Uri;
                                 var baseUri = UriHelper.BaseUri;
                                 activeClass = ((currentPath == baseUri) && activeClass == null) ? "nav-link sidebar-item active" : "nav-link sidebar-item";
-                                <NavLink class="@(activeClass)" href="@((context as NavigationMenuData).Value)" Match="NavLinkMatch.Prefix">
-                                    <span class="dashboard-image">
-                                        <span class="item-image @((context as NavigationMenuData).Icon)"></span>
-                                    </span>
-                                    <span class="text" title="dashboard">@((context as NavigationMenuData).Text)</span>
-                                </NavLink>
+                            <NavLink class="@(activeClass)" href="@((context as NavigationMenuData).Value)" Match="NavLinkMatch.Prefix">
+                                <span class="dashboard-image">
+                                    <span class="item-image @((context as NavigationMenuData).Icon)"></span>
+                                </span>
+                                <span class="text" title="dashboard">@((context as NavigationMenuData).Text)</span>
+                            </NavLink>
                             }
                         </Template>
                     </ListViewTemplates>
@@ -64,9 +70,22 @@
     [Inject]
     protected IJSRuntime JsRuntime { get; set; }
 
+    private string target { get; set; } = "#loader-content";
+
+    private string visible { get; set; } = "hidden";
+
+    private string hide { get; set; }
+    private string opacity { get;set; } = "0";
     public NavigationMenuData ListModel = new NavigationMenuData();
     private List<NavigationMenuData> navigationItems = NavigationMenuData.GetNavigationItems();
     private string activeClass { get; set; } = null;
+
+    public void OnCreate()
+    {
+        this.hide = "sb-hide";
+        this.visible = "visible";
+        this.opacity = "1";
+    }
 
     protected override void OnInitialized()
     {
