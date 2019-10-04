@@ -10,7 +10,7 @@
         <div class="col-lg-9 col-md-9 col-sm-9" style="padding: 0px">
             <div class="schedule-container e-droppable">
                 <EjsSchedule ID="schedule" TValue="HospitalData" @ref="scheduleObj" Width="100%" ModelType="@model" Height="800px" RowAutoHeight="true" CssClass="doctor-appointment-planner" ShowWeekend="false" StartHour="@startHour" EndHour="@endHour" SelectedDate="new DateTime(2018, 7, 5)" WorkDays="@workDay" FirstDayOfWeek="1" @bind-CurrentView="@sceduleView">
-                    <ScheduleEvents TValue="HospitalData" OnPopupOpen="EditDialogOpen"></ScheduleEvents>
+                    <ScheduleEvents TValue="HospitalData" OnCellClick="OnCellClick"></ScheduleEvents>
                     <ScheduleWorkHours Start="08:00" End="21:00"></ScheduleWorkHours>
                     <ScheduleEventSettings DataSource="@scheduleEventData">
                         <ScheduleField>
@@ -269,16 +269,10 @@
         this.scheduleObj.OpenEditor(data, CurrentAction.Add, false, null);
     }
 
-    public void EditDialogOpen(Syncfusion.EJ2.Blazor.Schedule.PopupOpenEventArgs<HospitalData> args)
+    public void OnCellClick(CellClickEventArgs args)
     {
-        if (args.Type == PopupType.QuickInfo)
-        {
-            if(args.Data.Id == 0) {
-                args.Cancel = true;
-            }
-        }
-
-    }
+        args.Cancel = true;
+    } 
     private void onValueChange(Syncfusion.EJ2.Blazor.DropDowns.ChangeEventArgs<int?> args)
     {
         if (args.Value != null)
