@@ -9,7 +9,7 @@ This Appointment planner demo application showcases the usage of several Essenti
 The samples requires the below requirements to run.
 
 * [Visual Studio 2019 Preview](https://visualstudio.microsoft.com/vs/preview/)
-* [.NET Core SDK 3.0.100-preview9-014004](https://dotnet.microsoft.com/download/dotnet-core/3.0)
+* [.NET Core SDK 3.0.100](https://dotnet.microsoft.com/download/dotnet-core/3.0)
 
 ### Run
 
@@ -19,6 +19,6 @@ The samples requires the below requirements to run.
 
 ## Demo
 
-### <a href="https://ej2.syncfusion.com/showcase/blazor/appointmentplanner/" target="_blank">https://ej2.syncfusion.com/showcase/blazor/appointmentplanner/</a>
+### <a href="https://blazor.syncfusion.com/showcase/appointmentplanner/" target="_blank">https://blazor.syncfusion.com/showcase/appointmentplanner/</a>
 
 Check all the showcase samples from <a href="https://ej2.syncfusion.com/home/blazor.html" target="_blank">here</a>.
