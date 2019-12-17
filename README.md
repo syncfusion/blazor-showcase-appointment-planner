@@ -9,7 +9,7 @@ This Appointment planner demo application showcases the usage of several Essenti
 The samples requires the below requirements to run.
 
 * [Visual Studio 2019 Preview](https://visualstudio.microsoft.com/vs/preview/)
-* [.NET Core SDK 3.0.100](https://dotnet.microsoft.com/download/dotnet-core/3.0)
+* [.NET Core SDK 3.1.100](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 
 ### Run
 
