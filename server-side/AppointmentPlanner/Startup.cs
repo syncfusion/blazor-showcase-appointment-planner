@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Syncfusion.EJ2.Blazor;
 using AppointmentPlanner.Data;
 
 namespace AppointmentPlanner
@@ -32,6 +33,8 @@ namespace AppointmentPlanner
             });
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddSyncfusionBlazor();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

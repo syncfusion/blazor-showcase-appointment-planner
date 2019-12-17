@@ -30,7 +30,7 @@
             </EjsButton>
         </div>
         <div class="patient-display">
-            <EjsGrid ID="Grid" @ref="gridObj" DataSource="@FilteredPatients" ModelType="@patientModel">
+            <EjsGrid ID="Grid" @ref="gridObj" DataSource="@FilteredPatients">
                 <GridEvents TValue="PatientsData" RowSelected="onRowSelected" OnRecordDoubleClick="onDoubleClick"></GridEvents>
                 <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" AllowEditOnDblClick="false" Mode="EditMode.Dialog">
                 </GridEditSettings>
@@ -52,7 +52,7 @@
     </div>
 </div>
 
-@if (GridEditDialog)
+@if (activePatientData !=null)
 {
 <EjsDialog @ref="GridEditDialogObj" Target="body" Width="390px" @bind-Visible="@GridEditDialog" CssClass="e-edit-dialog" IsModal="true" ShowCloseIcon="true" Header="@gridEditHeader" AnimationSettings="@dialogAnnimation">
     <DialogTemplates>
@@ -105,8 +105,6 @@
 }
 
 
-@if (IsShowPatientEditDialog)
-{
 <EjsDialog @ref="DialogObj" Target="body" Width="390px" CssClass="new-patient-dialog" IsModal="true" @bind-Visible="@IsShowPatientEditDialog" ShowCloseIcon="true" Header="@patientHeader" AnimationSettings="@dialogAnnimation">
     <ChildContent>
         <EditForm Model="@PatientEditModel" OnValidSubmit="@HandleValidSubmit">
@@ -159,7 +157,6 @@
         </EditForm>
     </ChildContent>
 </EjsDialog>
-}
 
 @code{
     EjsGrid<PatientsData> gridObj;
@@ -244,6 +241,8 @@
     {
         var patientData = ((List<PatientsData>)FilteredPatients).Where(item => item.Id != activePatientData.Id).ToList();
         FilteredPatients = AppointmentService.PatientsDatas = patientData;
+        var deleteData = ((List<PatientsData>)FilteredPatients).Where(item => item.Id == activePatientData.Id).FirstOrDefault();
+        this.gridObj.DeleteRecord(null, deleteData);
         this.GridEditDialogObj.Hide();
         this.IsShowPatientEditDialog = false;
     }
