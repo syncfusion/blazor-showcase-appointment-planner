@@ -20,10 +20,10 @@
     </header>
     <div class="specialization-detail-wrapper">
         <div class="specialization-types">
-            <EjsDropDownList id="Specialization" ModelType="@specializeModel" TValue="string" width="200px" ShowClearButton="true" DataSource="@specializationData" placeholder="Select a Specialization" popupHeight="230px">
+            <EjsDropDownList id="Specialization" TItem="SpecializationData" TValue="string" Width="200px" ShowClearButton="true" DataSource="@specializationData" Placeholder="Select a Specialization" PopupHeight="230px">
                 <DropDownListEvents TValue="string" ValueChange="@(e => onSpecializationChange(e))"></DropDownListEvents>
-                <DropDownListFieldSettings text="Text" value="Id"></DropDownListFieldSettings>
-                <DropDownListTemplates>
+                <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
+                <DropDownListTemplates TItem="SpecializationData">
                     <ItemTemplate>
                         <div class="specialist-value">
                             <span class="@((context as SpecializationData).Id)" style="background: @((context as SpecializationData).Color)"></span>
@@ -73,8 +73,7 @@
         </div>
     </div>
 </div>
-@if (IsShowNewDialog)
-{
+
     <EjsDialog Target="body" @ref="DialogObj" Width="390px" CssClass="new-doctor-dialog" IsModal="true" @bind-Visible="@IsShowNewDialog" ShowCloseIcon="true" Header="@editHeader" AnimationSettings="@dialogAnnimation">
         <ChildContent>
             <DialogEvents Closed="dialogClosed"></DialogEvents>
@@ -105,7 +104,7 @@
                 </div>
                 <div class="education-container">
                     <div class="department">
-                        <EjsDropDownList ModelType="@specializationData" FloatLabelType="@FloatLabelType.Always" Placeholder="Department" Width="160px" DataSource="@specializationData" @bind-Value="@DoctorEditModel.Specialization">
+                        <EjsDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Department" Width="160px" DataSource="@specializationData" @bind-Value="@DoctorEditModel.Specialization">
                             <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
                         </EjsDropDownList>
                     </div>
@@ -138,7 +137,6 @@
             </EditForm>
         </ChildContent>
     </EjsDialog>
-}
 
 @code{
 

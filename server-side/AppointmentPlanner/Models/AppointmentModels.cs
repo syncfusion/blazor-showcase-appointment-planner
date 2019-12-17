@@ -21,8 +21,9 @@ namespace AppointmentPlanner.Models
             public int PatientId { get; set; }
             public string Symptoms { get; set; }
             public bool? IsAllDay { get; set; }
+            public string? ElementType { get; set; }
 
-            public HospitalData()
+        public HospitalData()
             {
 
             }
@@ -166,7 +167,7 @@ namespace AppointmentPlanner.Models
             public string Gender { get; set; } = "Male";
             public string Text { get; set; }
             public int Id { get; set; }
-            public int DepartmentId { get; set; }
+            public int DepartmentId { get; set; } = 1;
             public string Color { get; set; }
             [Required(ErrorMessage = "Enter valid Education")]
             public string Education { get; set; }

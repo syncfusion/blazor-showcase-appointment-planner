@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="e-card-content">
-                            <EjsGrid id="Grid" DataSource="@gridData" Height="160px" ModelType="@model">
+                            <EjsGrid id="Grid" DataSource="@gridData" Height="160px">
                                 <GridColumns>
                                     <GridColumn Field="Time" HeaderText="Time" TextAlign="@TextAlign.Left" Width="80"></GridColumn>
                                     <GridColumn Field="Name" HeaderText="Name" Width="120"></GridColumn>
@@ -95,7 +95,7 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 list-display" style="padding-right: 0px;">
             <div class="recent-activity">
-                <EjsListView Height="100%" Width="100%" ShowHeader="true" DataSource="@listDataSource" CssClass="activity-template" HeaderTitle="Recent Activity" ModelType="@listData">
+                <EjsListView Height="100%" Width="100%" ShowHeader="true" DataSource="@listDataSource" CssClass="activity-template" HeaderTitle="Recent Activity">
                     <ListViewTemplates>
                         <Template>
                             <div class="activity-container @((context as ActivityData).Type)">
@@ -107,7 +107,7 @@
                 </EjsListView>
             </div>
             <div class="doctor-availability">
-                <EjsListView Height="100%" Width="100%" ShowHeader="true" DataSource="@doctorAvailability" CssClass="e-list-template" ModelType="@doctorAvail">
+                <EjsListView Height="100%" Width="100%" ShowHeader="true" DataSource="@doctorAvailability" CssClass="e-list-template">
                     <ListViewTemplates>
                         <HeaderTemplate>
                             <div class="availability-title">

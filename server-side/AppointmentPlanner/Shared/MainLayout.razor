@@ -23,7 +23,7 @@
                         <p class='user-type'>Admin</p>
                     </div>
                 </div>
-                <EjsListView ModelType="@ListModel" CssClass="menulist" ShowIcon="true" DataSource="@navigationItems" Enable="true">
+                <EjsListView CssClass="menulist" ShowIcon="true" DataSource="@navigationItems" Enable="true">
                     <ListViewTemplates>
                         <Template>
                             @if ((context as NavigationMenuData) != null)
