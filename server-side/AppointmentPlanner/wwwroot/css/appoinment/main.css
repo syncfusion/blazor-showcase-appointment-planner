@@ -104,6 +104,10 @@
         flex: auto;
         position: relative;
     }
+	.planner-header .clinic-name.appointment-title {
+        font-size: 16px;
+        font-weight: 400;
+     }
 
         .planner-header div.side-bar-opener .open-icon {
             margin: 15px;
