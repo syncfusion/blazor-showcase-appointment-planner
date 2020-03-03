@@ -134,6 +134,10 @@
                 letter-spacing: 0.54px;
                 height: 22px;
                 font-weight: bold;
+                max-width: 250px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .doctor-details-container .active-doctor .active-doctor-info .basic-detail .education {
@@ -285,6 +289,10 @@
             color: #333;
             letter-spacing: 0.39px;
         }
+
+.confirm-dialog.e-dialog.e-popup {
+    width: auto;
+}
 
 @media (max-width: 850px) {
     .doctor-details-container {

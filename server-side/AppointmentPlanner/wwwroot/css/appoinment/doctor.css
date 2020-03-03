@@ -133,6 +133,10 @@
                         color: #333;
                         letter-spacing: 0.48px;
                         font-weight: 500;
+                        max-width: 250px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis
                     }
 
                     .doctors-wrapper .specialization-detail-wrapper .specialist-display .specialist-item .specialist-detail .education {

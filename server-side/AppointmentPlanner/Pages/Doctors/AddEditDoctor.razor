@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="mobile" style="width:345px">
-                    <EjsTextBox CssClass="e-field" Placeholder="Mobile Number" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Mobile"></EjsTextBox>
+                    <EjsMaskedTextBox @ref="maskObj" CssClass="e-field" Placeholder="Mobile Number" FloatLabelType="@FloatLabelType.Always" Mask="(999) 999-9999" @bind-Value="@DoctorEditModel.Mobile"></EjsMaskedTextBox>
                     <ValidationMessage For="@(() => DoctorEditModel.Mobile)" />
                 </div>
             </div>
@@ -41,7 +41,6 @@
                 </div>
                 <div class="education" style="width:345px">
                     <EjsTextBox CssClass="e-field" Placeholder="Education" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Education"></EjsTextBox>
-                    <ValidationMessage For="@(() => DoctorEditModel.Education)" />
                 </div>
             </div>
             <div class="experience-container">
@@ -76,6 +75,9 @@
     private AppointmentService service = new AppointmentService();
     [Parameter]
     public bool IsShow { get; set; }
+    private EjsMaskedTextBox maskObj { get; set; }
+    [Parameter]
+    public EjsDropDownList<int?, DoctorsData> DDLInstance { get; set; }
 
     private SpecializationData specializeModel = new SpecializationData();
     public List<SpecializationData> specializationData { get; set; } = AppointmentService.SpecializationDatas;
@@ -99,12 +101,14 @@
         this.IsShowNewDialog = false;
     }
 
-    public void HandleValidSubmit(EditContext context)
+    public async Task HandleValidSubmit(EditContext context)
     {
         DoctorsData initialData = AppointmentService.DoctorsDatas.FirstOrDefault();
         DoctorsData getHours = updateWorkHours(initialData);
-        DoctorsData newDoctor = new DoctorsData(DoctorEditModel.Name, DoctorEditModel.Gender, "default", AppointmentService.DoctorsDatas.Count() + 1, DoctorEditModel.DepartmentId, DoctorEditModel.Color, DoctorEditModel.Education, DoctorEditModel.Specialization, DoctorEditModel.Experience, DoctorEditModel.Designation, DoctorEditModel.DutyTiming, DoctorEditModel.Email, DoctorEditModel.Mobile, "available", getHours.StartHour, getHours.EndHour, initialData.AvailableDays, initialData.WorkDays);
+        string mobileNo = await this.maskObj.GetMaskedValue();
+        DoctorsData newDoctor = new DoctorsData(DoctorEditModel.Name, DoctorEditModel.Gender, "default", AppointmentService.DoctorsDatas.Count() + 1, DoctorEditModel.DepartmentId, DoctorEditModel.Color, DoctorEditModel.Education, DoctorEditModel.Specialization, DoctorEditModel.Experience, DoctorEditModel.Designation, DoctorEditModel.DutyTiming, DoctorEditModel.Email, mobileNo, "available", getHours.StartHour, getHours.EndHour, initialData.AvailableDays, initialData.WorkDays);
         AppointmentService.DoctorsDatas.Add(newDoctor);
+        DDLInstance.AddItem(new List<DoctorsData>() { newDoctor });
         DialogObj.Hide();
         IsShow = false;
     }

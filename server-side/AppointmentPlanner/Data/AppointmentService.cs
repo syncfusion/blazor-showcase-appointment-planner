@@ -12,7 +12,7 @@ namespace AppointmentPlanner.Data
 { 
     public class AppointmentService
     {
-        public static DateTime startDate { get; set; } = new DateTime(2018, 7, 5, 0, 0, 0, 0);
+        public static DateTime startDate { get; set; } = new DateTime(2019, 7, 5, 0, 0, 0, 0);
         public static DoctorsData ActiveDoctorData { get; set; } = DoctorsData.GetDoctorsData().FirstOrDefault();
 
         public static PatientsData ActivePatientData = PatientsData.GetPatientsData().FirstOrDefault();
@@ -36,12 +36,33 @@ namespace AppointmentPlanner.Data
 
         public static DateTime GetWeekFirstDate(DateTime date)
         { 
-            return date.AddDays(DayOfWeek.Sunday - date.DayOfWeek);
+            return date.AddDays(DayOfWeek.Monday - date.DayOfWeek);
         }
 
         public static string GetFormatDate(DateTime date, string type)
         {
             return date.ToString(type, CultureInfo.InvariantCulture);
+        }
+
+        public static string timeSlince(DateTime activityTime)
+        {
+            if(Math.Round((DateTime.Now - activityTime).Days / (365.25 / 12)) > 0)
+            {
+                return Math.Round((DateTime.Now - activityTime).Days / (365.25 / 12)).ToString() + " months ago";
+            } else if(Math.Round((DateTime.Now - activityTime).TotalDays) > 0)
+            {
+                return Math.Round((DateTime.Now - activityTime).TotalDays).ToString() + " days ago";
+            } else if(Math.Round((DateTime.Now - activityTime).TotalHours) > 0)
+            {
+                return Math.Round((DateTime.Now - activityTime).TotalHours).ToString() + " hours ago";
+            } else if (Math.Round((DateTime.Now - activityTime).TotalMinutes) > 0)
+            {
+                return Math.Round((DateTime.Now - activityTime).TotalMinutes).ToString() + " mins ago";
+            } else if (Math.Round((DateTime.Now - activityTime).TotalSeconds) > 0)
+            {
+                return Math.Round((DateTime.Now - activityTime).TotalSeconds).ToString() + " seconds ago";
+            }
+            return Math.Round((DateTime.Now - activityTime).TotalMilliseconds).ToString() + " milliSeconds ago";
         }
 
         public static DoctorsData getDoctorDetails(int id)
@@ -62,11 +83,17 @@ namespace AppointmentPlanner.Data
         public static string getAvailability(DoctorsData data)
         {
             var workDays = data.WorkDays;
-            List<WorkDaysData> filteredData = workDays.Where(item => item.Enable.Equals(true)).ToList();
-            var result = filteredData.Select(item => item.Day.Substring(0, 3).ToUpper());
-            var resultItem = String.Join(",", result);
-            string.Concat("-", resultItem);
-            return resultItem.ToString(); ;
+            if (workDays != null)
+            {
+                List<WorkDaysData> filteredData = workDays.Where(item => item.Enable.Equals(true)).ToList();
+                var result = filteredData.Select(item => item.Day.Substring(0, 3).ToUpper());
+                var resultItem = String.Join(",", result);
+                string.Concat("-", resultItem);
+                return resultItem.ToString();
+            } else
+            {
+                return "";
+            }
         }
 
         public static List<HospitalData> GetFilteredData(DateTime StartDate, DateTime EndDate)
