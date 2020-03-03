@@ -15,7 +15,7 @@
                         <div class="e-card-content">
                             <span class="card-text label-text">Total Appointments - Today</span>
                             <div class="count-container">
-                                <span class="icon-day"><img src="css/appoinment/assets/Icons/Today_Widget.svg" /></span>
+                                <span class="icon-day"><img src="css/appoinment/assets/Icons/Today_Widget.svg" alt="Today" /></span>
                                 <span class="day-event-count">@dayEventCount</span>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                         <div class="e-card-content">
                             <span class="card-text label-text">Total Appointments - This Week</span>
                             <div class="count-container">
-                                <span class="icon-week"><img src="css/appoinment/assets/Icons/ThisWeek_Widget.svg" /></span>
+                                <span class="icon-week"><img src="css/appoinment/assets/Icons/ThisWeek_Widget.svg" alt="ThisWeek" /></span>
                                 <span class="week-event-count">@weekEventCount</span>
                             </div>
                         </div>
@@ -34,13 +34,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 dashboard-control">
                     <div class="e-card grid-container">
                         <div class="e-card-header">
                             <div class="e-card-header-caption">
                                 <div class="e-card-header-title">
-                                    <span class="label-text"> Today"s Appointment</span><span class="link-text">
-                                        <NavLink class="nav-link" href="schedule">Book Appointment</NavLink>
+                                    <span class="label-text"> Today's Appointments</span><span class="link-text">
+                                        <NavLink class="nav-link" href="schedule">Book Appointments</NavLink>
                                     </span>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 dashboard-control">
                     <div class="e-card chart-container">
                         <div class="e-card-content">
                             <EjsChart Height="340px" Width="100%" Title="Consultation">
@@ -95,12 +95,12 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 list-display" style="padding-right: 0px;">
             <div class="recent-activity">
-                <EjsListView Height="100%" Width="100%" ShowHeader="true" DataSource="@listDataSource" CssClass="activity-template" HeaderTitle="Recent Activity">
+                <EjsListView Height="100%" Width="100%" ShowHeader="true" DataSource="@listDataSource" CssClass="activity-template" HeaderTitle="Recent Activities">
                     <ListViewTemplates>
                         <Template>
                             <div class="activity-container @((context as ActivityData).Type)">
                                 <div class="activity-message"><span class="type-name">@((context as ActivityData).Name)</span> - <span>@((context as ActivityData).Message)</span></div>
-                                <span class="activity-time">@((context as ActivityData).Time)</span>
+                                <span class="activity-time">@(AppointmentService.timeSlince((context as ActivityData).ActivityTime))</span>
                             </div>
                         </Template>
                     </ListViewTemplates>
@@ -151,7 +151,7 @@
     private List<DoctorsData> doctorsData { get; set; }
     private List<PatientsData> patientsData { get; set; }
 
-    private DateTime startDate { get; set; } = new DateTime(2018, 7, 5, 0, 0, 0, 0);
+    private DateTime startDate { get; set; } = new DateTime(2019, 7, 5, 0, 0, 0, 0);
 
     private DateTime endDate { get; set; }
 

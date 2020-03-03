@@ -34,10 +34,16 @@
         }
             .planner-dashboard .view-detail-display .grid-container .e-card-header .e-card-header-caption .e-card-header-title {
                 display: flex;
+                padding: 0px;
+                font-weight: 600;
             }
             .planner-dashboard .view-detail-display .grid-container .e-card-header .e-card-header-caption .label-text {
                 flex: auto;
                 letter-spacing: 0.48px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                padding: .5rem 0;
             }
 
             .planner-dashboard .view-detail-display .grid-container .link-text {
@@ -46,11 +52,15 @@
                 color: #5851e1;
                 letter-spacing: 0.39px;
                 text-align: right;
+                text-overflow: ellipsis;
+                overflow:hidden;
             }
 
                 .planner-dashboard .view-detail-display .grid-container .link-text a {
                     cursor: pointer;
                     text-decoration: underline;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
                 }
 
     .planner-dashboard header {
@@ -70,11 +80,13 @@
     .planner-dashboard .view-detail-display .e-card .week-event-count, .planner-dashboard .view-detail-display .e-card .day-event-count {
         font-weight: 400;
         font-size: 36px;
+        cursor: default;
         color: #5851e1;
         letter-spacing: 1.08px;
         height: 44px;
-        padding-top: 3.5px;
-        padding-left: 41.6px;
+        display: flex;
+        justify-content: center;
+        flex-basis: 50%;
     }
 
             .planner-dashboard .view-detail-display .e-card .count-container {
@@ -204,6 +216,9 @@
 
             .e-list-template .e-list-header .e-headertemplate-text .availability-title .header-text {
                 flex: auto;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
 
             .e-list-template .e-list-header .e-headertemplate-text .availability-title .all-text {
@@ -214,10 +229,13 @@
                 letter-spacing: 0.39px;
                 text-align: right;
                 margin-right: 4px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
             }
 
-.e-list-template .e-content {
-    padding-top: 17.5px;
+.e-list-template .e-content, .activity-template .e-content {
+    padding-top: 10px;
 }
 
     .e-list-template .e-content li.e-list-item {
@@ -310,4 +328,10 @@
 .view-detail-display a {
     text-decoration: underline;
     color: -webkit-link;
+}
+
+@media (max-width: 850px) {
+    .planner-dashboard {
+        margin: 20px 10px;
+    }
 }

@@ -90,7 +90,6 @@
         .planner-header .name-cantainer .clinic-image {
             font-size: 50px;
             color: #fff;
-            padding-left: 6px;
         }
 
     .planner-header .clinic-name, .planner-header .logout-name {
@@ -156,7 +155,7 @@
         }
 
         .planner-header:not(.device-header) .logout-container {
-            padding: 7px 20px;
+            padding: 7px 10px;
         }
 
             .planner-header:not(.device-header) .logout-container .logout-name {
@@ -206,12 +205,102 @@ header .module-title .underline {
         padding-bottom: 10px;
     }
 }
-@media (max-width: 600px) {
+@media (max-width: 700px) {
+
+    .planner-dashboard .list-display {
+        padding: 20px 0px 0px 0px;
+    }
+
+    .planner-dashboard .text-display {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-right: 0px;
+    }
+
+    .col-lg-12.col-md-12.col-sm-12.dashboard-control {
+        padding-right: 0px;
+    }
+
+    
+
+        .col-lg-3.col-md-3.col-sm-3.treeview-container-wrapper .title-container {
+            margin-top: 20px;
+        }
+}
+@media (max-width: 700px) {
+    .planner-calendar .col-lg-3.col-md-3.col-sm-3.treeview-container-wrapper {
+        padding-top: 20px;
+        max-width: 100%;
+    }
     .planner-header div.side-bar-opener {
+        display: flex;
+        flex-basis: 12%;
+        order: 0;
+        align-items: center;
+        justify-content: center;
+        overflow: auto;
+        margin: 0 auto;
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+        .planner-header div.side-bar-opener .open-icon {
+            display: flex;
+            text-align: center;
+            vertical-align: middle;
+            align-items: center;
+            flex-basis: 100%;
+            flex-grow: 0;
+            flex-shrink: 0;
+            padding: 0px;
+            margin: 0px;
+        }
+        .planner-wrapper .e-content-animation {
+            padding-left: 0px;
+        }
+    .planner-header:not(.device-header) {
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+        width: 100%;
+        position: relative;
+    }
+    .planner-header .name-cantainer {
+        flex: auto;
+        display: flex;
+        flex-basis: 46%;
+        order: 1;
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+    .sb-header-item.sb-table-cell {
+        display: flex;
+        flex-basis: 14%;
+        order: 3;
+        align-items: center;
+        justify-content: center;
+        overflow: auto;
+        margin: 0 auto;
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+    .planner-header .logout-container {
+        display: flex;
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: 30%;
+        order: 2;
+        text-align: center;
+        justify-content: center;
+    }
+    .e-content-animation .doctor-details-container .active-doctor {
         display: block;
     }
-    .planner-wrapper .e-content-animation {
-        padding-left: 0px;
+    .planner-dashboard .view-detail-display .e-card .e-card-content .count-container {
+        margin: 0 0px 6.3px 0px;
+    }
+    .planner-dashboard .view-detail-display .e-card .e-card-content .week-event-count,
+    .planner-dashboard .view-detail-display .e-card .e-card-content .day-event-count {
+        padding-left: 25.6px;
     }
 }
  
@@ -404,7 +493,7 @@ header .module-title .underline {
     stroke-dashoffset: 0;
     animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
     stroke-linecap: round;
-    stroke: #ff4081;
+    stroke: #5851e1;
 }
 
 @keyframes rotate {
@@ -427,5 +516,6 @@ header .module-title .underline {
         stroke-dashoffset: -124;
     }
 }
+
 
 

@@ -4,7 +4,8 @@
 @using AppointmentPlanner.Data;
 @using AppointmentPlanner.Models;
 @using Microsoft.JSInterop;
- 
+@inject IJSRuntime JSRuntime;
+
 <div class="sb-content-overlay @(hide)">
     <div class="sb-loading">
         <svg class="circular" height="40" width="40">
@@ -13,36 +14,37 @@
     </div>
 </div>
 <div class="planner-wrapper" style="width: 100%; visibility:@(visible); opacity:@(opacity)">
-    <EjsSidebar ID="plannerSiderBar" @ref="SidebarObj" EnableGestures="false" MediaQuery="(min-width: 600px)" Type="SidebarType.Auto" Created="OnCreate">
+    <EjsSidebar ID="plannerSiderBar" @ref="SidebarObj" EnableGestures="false"  MediaQuery="(min-width: 600px)" Type="SidebarType.Auto" Created="OnCreate" CloseOnDocumentClick="onDocumentClick">
         <ChildContent>
-            <div class="dock">
-                <div class="info align-center">
-                    <div class="image"><img src="css/appoinment/assets/images/Admin.png" /></div>
-                    <div class="content nameContent">
-                        <p class='name'>Jane Deo</p>
-                        <p class='user-type'>Admin</p>
+                <div class="dock">
+                    <div class="info align-center">
+                        <div class="image"><img src="css/appoinment/assets/images/Admin.png" alt="Admin" /></div>
+                        <div class="content nameContent">
+                            <p class='name'>Jane Deo</p>
+                            <p class='user-type'>Admin</p>
+                        </div>
                     </div>
+                    <EjsListView CssClass="menulist" TValue="NavigationMenuData" ShowIcon="true" DataSource="@navigationItems" Enable="true">
+                        <ListViewTemplates>
+                            <Template>
+                                @if ((context as NavigationMenuData) != null)
+                                {
+                                    var currentPath = UriHelper.Uri;
+                                    var baseUri = UriHelper.BaseUri;
+                                    activeClass = ((currentPath == baseUri) && activeClass == null) ? "nav-link sidebar-item active" : "nav-link sidebar-item";
+                                    <NavLink class="@(activeClass)" href="@((context as NavigationMenuData).Value)" Match="NavLinkMatch.Prefix">
+                                        <span class="dashboard-image">
+                                            <span class="item-image @((context as NavigationMenuData).Icon)"></span>
+                                        </span>
+                                        <span class="text" title="@((context as NavigationMenuData).Text)">@((context as NavigationMenuData).Text)</span>
+                                    </NavLink>
+                                }
+                            </Template>
+                        </ListViewTemplates>
+                        <ListViewFieldSettings Text="Text" Id="Value" IconCss="Icon" Tooltip="Text"></ListViewFieldSettings>
+                        <ListViewEvents TValue="NavigationMenuData" Selected="@onSelectedItem"></ListViewEvents>
+                    </EjsListView>
                 </div>
-                <EjsListView CssClass="menulist" ShowIcon="true" DataSource="@navigationItems" Enable="true">
-                    <ListViewTemplates>
-                        <Template>
-                            @if ((context as NavigationMenuData) != null)
-                            {
-                                var currentPath = UriHelper.Uri;
-                                var baseUri = UriHelper.BaseUri;
-                                activeClass = ((currentPath == baseUri) && activeClass == null) ? "nav-link sidebar-item active" : "nav-link sidebar-item";
-                            <NavLink class="@(activeClass)" href="@((context as NavigationMenuData).Value)" Match="NavLinkMatch.Prefix">
-                                <span class="dashboard-image">
-                                    <span class="item-image @((context as NavigationMenuData).Icon)"></span>
-                                </span>
-                                <span class="text" title="dashboard">@((context as NavigationMenuData).Text)</span>
-                            </NavLink>
-                            }
-                        </Template>
-                    </ListViewTemplates>
-                    <ListViewFieldSettings Text="Text" Id="Value" IconCss="Icon" Tooltip="Text"></ListViewFieldSettings>
-                </EjsListView>
-            </div>
         </ChildContent>
     </EjsSidebar>
     <main>
@@ -58,11 +60,19 @@
                 <div class="logout-icon-container"><span class="icon-logout logout-image"></span></div>
                 <span class='logout-name'>Logout</span>
             </div>
+            <div class="sb-header-item sb-table-cell sb-download-wrapper">
+                <a href="https://github.com/syncfusion/ej2-showcase-blazor-appointment-planner" target="_blank">
+                    <div id="github" class="sb-github-btn">
+                        <div class="github-image">
+                            <img src="css/appoinment/mark.svg" />
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
         @Body
     </main>
 </div>
-
 
 @code{
 
@@ -70,12 +80,17 @@
     [Inject]
     protected IJSRuntime JsRuntime { get; set; }
 
+    private string SideBarToggleClass { get; set; }
+    private bool onDocumentClick { get; set; }
+    private bool isDevice { get; set; }
+
     private string target { get; set; } = "#loader-content";
 
     private string visible { get; set; } = "hidden";
+    private string OverlayClass { get; set; }
 
     private string hide { get; set; }
-    private string opacity { get;set; } = "0";
+    private string opacity { get; set; } = "0";
     public NavigationMenuData ListModel = new NavigationMenuData();
     private List<NavigationMenuData> navigationItems = NavigationMenuData.GetNavigationItems();
     private string activeClass { get; set; } = null;
@@ -89,7 +104,7 @@
 
     protected override void OnInitialized()
     {
-        AppointmentService.startDate = new DateTime(2018, 7, 5, 0, 0, 0, 0);
+        AppointmentService.startDate = new DateTime(2019, 7, 5, 0, 0, 0, 0);
         AppointmentService.ActiveDoctorData = DoctorsData.GetDoctorsData().FirstOrDefault();
         AppointmentService.ActivePatientData = PatientsData.GetPatientsData().FirstOrDefault();
         AppointmentService.StartHours = TextValueData.GetStartHours();
@@ -111,8 +126,28 @@
         AppointmentService.CalendarSettings = new CalendarSetting { bookingColor = "Doctors", calendar = new AppointmentPlanner.Models.Calendar { start = "08:00", end = "21:00" }, currentView = "Week", interval = 60, firstDayOfWeek = 0 };
     }
 
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            this.isDevice = await JSRuntime.InvokeAsync<bool>("checkBrowserDevice");
+            this.onDocumentClick = this.isDevice;
+        }
+    }
+
     private void showSideBar()
     {
         this.SidebarObj.Show();
+    }
+    private void onSelect()
+    {
+        
+    }
+    private void onSelectedItem(Syncfusion.EJ2.Blazor.Lists.SelectEventArgs<NavigationMenuData> args)
+    {
+        if (this.isDevice)
+        {
+            this.SidebarObj.Hide();
+        }
     }
 }

@@ -110,6 +110,26 @@ app {
 .validation-message {
     color: red;
 }
+.planner-header .sb-table-cell {
+    padding-right: 6px;
+    vertical-align: middle;
+}
+.planner-header .sb-github-btn {
+    width: 40px;
+    opacity: 100;
+    padding: 11px 8px;
+    border-radius: 0px;
+    border-width: 0px;
+    font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif";
+    font-weight: 500;
+    line-height: 18px;
+    border-color: transparent;
+    background: transparent;
+}
+
+.planner-header .github-image img {
+    filter: brightness(0) invert(100%);
+}
 
 @media (max-width: 767.98px) {
     .main .top-row {

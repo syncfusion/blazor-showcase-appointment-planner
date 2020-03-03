@@ -92,6 +92,8 @@
                 font-size: 14px;
                 color: #333;
                 letter-spacing: 0.39px;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
 
             .e-dialog.e-edit-dialog .e-dlg-content .grid-edit-dialog .field-row.history-row {
@@ -192,7 +194,6 @@
 
             .new-patient-dialog .e-dlg-content .gender-container .gender .e-btn-group {
                 height: 32px;
-                margin-top: 8px;
             }
 
                 .new-patient-dialog .e-dlg-content .gender-container .gender .e-btn-group label {
@@ -201,4 +202,7 @@
 .e-dialog.new-patient-dialog .e-footer-content {
     padding: 15px 15px 0 15px;
 }
- 
+
+.patient-search.e-input-group .e-clear-icon::before {
+    font-size: 10px;
+}

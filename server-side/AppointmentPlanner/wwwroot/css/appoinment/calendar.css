@@ -623,3 +623,12 @@
                         color: #c0c0c0;
                     }
 }
+.col-lg-3.col-md-3.col-sm-3.treeview-container-wrapper {
+    padding: 0px;
+}
+
+.e-schedule .e-date-header-wrap table tbody td .e-custom-date-header.date-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}

@@ -20,7 +20,7 @@
     </header>
     <div class="specialization-detail-wrapper">
         <div class="specialization-types">
-            <EjsDropDownList id="Specialization" TItem="SpecializationData" TValue="string" Width="200px" ShowClearButton="true" DataSource="@specializationData" Placeholder="Select a Specialization" PopupHeight="230px">
+            <EjsDropDownList id="Specialization" @ref="specObj" TItem="SpecializationData" TValue="string" Width="200px" ShowClearButton="true" DataSource="@specializationData" Placeholder="Select a Specialization" PopupHeight="230px">
                 <DropDownListEvents TValue="string" ValueChange="@(e => onSpecializationChange(e))"></DropDownListEvents>
                 <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
                 <DropDownListTemplates TItem="SpecializationData">
@@ -55,11 +55,11 @@
                             Dr. @data.Name
                         </div>
                         <div class="education">
-                            @data.Education.ToUpper()
+                            @(data.Education != null ? data.Education.ToUpper(): "")
                         </div>
                         <div class="specialist-experience">
                             <div class="specialization">
-                                <span class="label-text">Specialization</span>
+                                <span class="label-text">Designation</span>
                                 <span class="specialization-text">@data.Designation</span>
                             </div>
                             <div class="experience">
@@ -94,7 +94,7 @@
                         </div>
                     </div>
                     <div class="mobile" style="width:345px">
-                        <EjsTextBox CssClass="e-field" Placeholder="Mobile Number" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Mobile"></EjsTextBox>
+                        <EjsMaskedTextBox CssClass="e-field" @ref="maskObj" Placeholder="Mobile Number" FloatLabelType="@FloatLabelType.Always" Mask="(999) 999-9999" @bind-Value="@DoctorEditModel.Mobile"></EjsMaskedTextBox>
                         <ValidationMessage For="@(() => DoctorEditModel.Mobile)" />
                     </div>
                 </div>
@@ -104,13 +104,12 @@
                 </div>
                 <div class="education-container">
                     <div class="department">
-                        <EjsDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Department" Width="160px" DataSource="@specializationData" @bind-Value="@DoctorEditModel.Specialization">
-                            <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
+                        <EjsDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Department" Width="160px" DataSource="@specializationData" @bind-Value="@DoctorEditModel.DepartmentId">
+                            <DropDownListFieldSettings Text="Text" Value="DepartmentId"></DropDownListFieldSettings>
                         </EjsDropDownList>
                     </div>
                     <div class="education" style="width:345px">
                         <EjsTextBox CssClass="e-field" Placeholder="Education" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Education"></EjsTextBox>
-                        <ValidationMessage For="@(() => DoctorEditModel.Education)" />
                     </div>
                 </div>
                 <div class="experience-container">
@@ -141,7 +140,9 @@
 @code{
 
     EjsDialog DialogObj;
+    EjsDropDownList<string, SpecializationData> specObj { get; set; }
     private List<DoctorsData> filteredDoctors { get; set; } = AppointmentService.DoctorsDatas;
+    private EjsMaskedTextBox maskObj { get; set; }
 
     private SpecializationData specializeModel = new SpecializationData();
     private List<SpecializationData> specializationData { get; set; } = AppointmentService.SpecializationDatas;
@@ -171,16 +172,22 @@
         this.IsShowNewDialog = false;
     }
 
-    public void HandleValidSubmit(EditContext context)
+    public async Task HandleValidSubmit(EditContext context)
     {
         DoctorsData initialData = AppointmentService.DoctorsDatas.FirstOrDefault();
+        initialData = initialData != null ? initialData : new DoctorsData();
         DoctorsData getHours = updateWorkHours(initialData);
-        DoctorsData newDoctor = new DoctorsData(DoctorEditModel.Name, DoctorEditModel.Gender, "default", AppointmentService.DoctorsDatas.Count() + 1, DoctorEditModel.DepartmentId, DoctorEditModel.Color, DoctorEditModel.Education, DoctorEditModel.Specialization, DoctorEditModel.Experience, DoctorEditModel.Designation, DoctorEditModel.DutyTiming, DoctorEditModel.Email, DoctorEditModel.Mobile, "available", getHours.StartHour, getHours.EndHour, initialData.AvailableDays, initialData.WorkDays);
+        string mobileNo = await this.maskObj.GetMaskedValue();
+        var specialize = AppointmentService.DoctorsDatas.Where(i => i.DepartmentId == DoctorEditModel.DepartmentId).FirstOrDefault().Specialization;
+        DoctorsData newDoctor = new DoctorsData(DoctorEditModel.Name, DoctorEditModel.Gender, "default", AppointmentService.DoctorsDatas.LastOrDefault().Id + 1, DoctorEditModel.DepartmentId, DoctorEditModel.Color, DoctorEditModel.Education, specialize, DoctorEditModel.Experience, DoctorEditModel.Designation, DoctorEditModel.DutyTiming, DoctorEditModel.Email, mobileNo, "available", getHours.StartHour, getHours.EndHour, initialData.AvailableDays, initialData.WorkDays);
         AppointmentService.DoctorsDatas.Add(newDoctor);
-        filteredDoctors = AppointmentService.DoctorsDatas;
+        if (specObj.Value != null)
+        {
+            filteredDoctors = AppointmentService.DoctorsDatas.Where(i => i.Specialization.Equals(specObj.Value)).ToList();
+        }
         string message = "Dr." + newDoctor.Name + "," + newDoctor.Specialization.Substring(0, 1).ToUpper() + newDoctor.Specialization.Substring(1);
-        AppointmentService.ActivityDatas.Insert(0, new ActivityData { Name = "Added New Doctor", Message = message, Time = "10 min ago", Type = "doctor", ActivityTime = DateTime.Now });
-        DialogObj.Hide();
+        AppointmentService.ActivityDatas.Insert(0, new ActivityData { Name = "Added New Doctor", Message = message, Time = "4 mins ago", Type = "doctor", ActivityTime = DateTime.Now });
+        await DialogObj.Hide();
     }
 
     private DoctorsData updateWorkHours(DoctorsData data)
@@ -228,7 +235,7 @@
         {
             SpecializationData items = JsonConvert.DeserializeObject<SpecializationData>(eventArgs.ItemData.ToString());
             this.selectedDepartmentId = items.DepartmentId;
-            filteredData = AppointmentService.DoctorsDatas.Where(i => i.DepartmentId.Equals(this.selectedDepartmentId)).ToList();
+            filteredData = AppointmentService.DoctorsDatas.Where(i => i.Specialization.Equals(items.Id)).ToList();
         }
         else
         {

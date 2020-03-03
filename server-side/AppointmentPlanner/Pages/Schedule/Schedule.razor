@@ -9,10 +9,10 @@
     <div class="drag-sample-wrapper droppable">
         <div class="col-lg-9 col-md-9 col-sm-9" style="padding: 0px">
             <div class="schedule-container e-droppable">
-                <EjsSchedule ID="schedule" TValue="HospitalData" @ref="scheduleObj" Width="100%" Height="800px" RowAutoHeight="true" CssClass="doctor-appointment-planner" ShowWeekend="false" StartHour="@startHour" EndHour="@endHour" SelectedDate="@(new DateTime(2018, 7, 5))" WorkDays="@workDay" FirstDayOfWeek="1" @bind-CurrentView="@sceduleView">
+                <EjsSchedule ID="schedule" TValue="HospitalData" @ref="scheduleObj" Width="100%" Height="800px" RowAutoHeight="true" CssClass="doctor-appointment-planner" ShowWeekend="false" StartHour="@startHour" EndHour="@endHour" SelectedDate="@(new DateTime(2019, 7, 5))" WorkDays="@workDay" FirstDayOfWeek="@calendarDayOfWeek" @bind-CurrentView="@sceduleView">
                     <ScheduleEvents TValue="HospitalData" OnCellClick="OnCellClick"></ScheduleEvents>
                     <ScheduleWorkHours Start="08:00" End="21:00"></ScheduleWorkHours>
-                    <ScheduleEventSettings DataSource="@scheduleEventData">
+                    <ScheduleEventSettings DataSource="@scheduleEventData" ResourceColorField="@resourceColorField" EditFollowingEvents="@EditUpcoming">
                         <ScheduleField>
                             <FieldSubject Name="Name"></FieldSubject>
                             <FieldStartTime Name="StartTime" Title="From"></FieldStartTime>
@@ -22,91 +22,47 @@
                     </ScheduleEventSettings>
                     <ScheduleResources>
                         <ScheduleResource TValue="SpecializationData" DataSource="@specialistCategory" Field="DepartmentId" Title="Department" Name="Departments" TextField="Text" IdField="DepartmentId" ColorField="Color"></ScheduleResource>
-                        <ScheduleResource TValue="DoctorsData" DataSource="@resourceDataSource" Field="DoctorId" Title="Consultation" Name="Doctors" TextField="Name" IdField="Id" ColorField="Color" GroupIDField="DepartmentId" WorkDaysField="AvailableDays" StartHourField="StartHour" EndHourField="EndHour"></ScheduleResource>
+                        <ScheduleResource TValue="DoctorsData" DataSource="@resourceDataSource" Query="@QueryData" Field="DoctorId" Title="Consultation" Name="Doctors" TextField="Name" IdField="Id" ColorField="Color" GroupIDField="DepartmentId" WorkDaysField="AvailableDays" StartHourField="StartHour" EndHourField="EndHour"></ScheduleResource>
                     </ScheduleResources>
                     <ScheduleViews>
                         <ScheduleView Option="@View.Day">
-                            <ScheduleViewTimeScale Enable="true" Interval="60"></ScheduleViewTimeScale>
+                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
                         </ScheduleView>
                         <ScheduleView Option="@View.Week">
-                            <ScheduleViewTimeScale Enable="true" Interval="60"></ScheduleViewTimeScale>
+                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
                         </ScheduleView>
                         <ScheduleView Option="@View.Month">
-                            <ScheduleViewTimeScale Enable="true" Interval="60"></ScheduleViewTimeScale>
+                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
                         </ScheduleView>
                         <ScheduleView Option="@View.TimelineDay">
-                            <ScheduleViewTimeScale Enable="true" Interval="60"></ScheduleViewTimeScale>
+                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
                             <ScheduleViewGroup EnableCompactView="false" Resources="@resourceGroup"></ScheduleViewGroup>
                         </ScheduleView>
                         <ScheduleView Option="@View.TimelineWeek">
-                            <ScheduleViewTimeScale Enable="true" Interval="60"></ScheduleViewTimeScale>
+                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
                             <ScheduleViewGroup EnableCompactView="false" Resources="@resourceGroup"></ScheduleViewGroup>
                         </ScheduleView>
                         <ScheduleView Option="@View.TimelineWorkWeek">
-                            <ScheduleViewTimeScale Enable="true" Interval="60"></ScheduleViewTimeScale>
+                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
                             <ScheduleViewGroup EnableCompactView="false" Resources="@resourceGroup"></ScheduleViewGroup>
                         </ScheduleView>
                         <ScheduleView Option="@View.TimelineMonth">
-                            <ScheduleViewTimeScale Enable="true" Interval="60"></ScheduleViewTimeScale>
+                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
                             <ScheduleViewGroup EnableCompactView="false" Resources="@resourceGroup"></ScheduleViewGroup>
                         </ScheduleView>
                     </ScheduleViews>
                     <ScheduleTemplates>
                         <DateHeaderTemplate>
-                            <div class="date-text">@(getDateHeaderText((context as TemplateContext).Date))</div>
+                            <div class="e-custom-date-header date-text" title="@(getDateHeaderText((context as TemplateContext).Date))">@(getDateHeaderText((context as TemplateContext).Date).ToUpper())</div>
                         </DateHeaderTemplate>
                     </ScheduleTemplates>
-                    <ScheduleQuickInfoTemplates>
-                        <HeaderTemplate>
-                            <div class="quick-info-header">
-                                <div class="quick-info-header-content" style="@(getBackGroundColor((context as HospitalData)))">
-                                    <div class="quick-info-title">
-                                        Appointment Details
-                                    </div>
-                                    <div class="duration-text">@(getEventDetails((context as HospitalData)))</div>
-                                </div>
-                            </div>
-                        </HeaderTemplate>
-                        <ContentTemplate>
-                            @if ((context as HospitalData).ElementType == "cell")
-                            {
-                                <div class="e-cell-content">
-                                    <form class="e-schedule-form">
-                                        <div style="padding:10px">
-                                            <EjsTextBox CssClass="subject e-field" Placeholder="Title"></EjsTextBox>
-                                        </div>
-                                        <div style="padding:10px">
-                                            <EjsTextBox CssClass="location e-field" Placeholder="Location"></EjsTextBox>
-                                        </div>
-                                    </form>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="event-content">
-                                    <div class="patient-name-wrap">
-                                        <label>Patient Name</label>:
-                                        <span>@(getPatientName((context as HospitalData)))</span>
-                                    </div>
-                                    <div class="doctor-name-wrap">
-                                        <label>Doctor Name</label>:
-                                        <span>Dr.@(getDoctorName((context as HospitalData)))</span>
-                                    </div>
-                                    <div class="notes-wrap">
-                                        <label>Notes</label>:
-                                        <span>@((context as HospitalData).Symptoms)</span>
-                                    </div>
-                                </div>
-                            }
-                        </ContentTemplate>
-                    </ScheduleQuickInfoTemplates>
                 </EjsSchedule>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-3" style="padding: 0px">
+        <div class="col-lg-3 col-md-3 col-sm-3 treeview-container-wrapper">
             <div class="treeview-container">
                 <div>
-                    <EjsDropDownList Placeholder="Choose Specialist" Width="220px" TItem="DoctorsData" PopupHeight="auto" DataSource="@resourceDataSource" TValue="int?" CssClass="planner-dropdown" ShowClearButton="true">
+                    <EjsDropDownList @ref="ddlObj" Placeholder="Choose Specialist" Width="220px" TItem="DoctorsData" PopupHeight="auto" DataSource="@resourceDataSource" TValue="int?" CssClass="planner-dropdown" ShowClearButton="true">
                         <DropDownListEvents TValue="int?" ValueChange="onValueChange"></DropDownListEvents>
                         <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
                         <DropDownListTemplates TItem="DoctorsData">
@@ -120,8 +76,10 @@
                                 </div>
                             </ItemTemplate>
                             <FooterTemplate>
-                                <div class="add-doctor" @onclick="@onAddClick">
-                                    <div class="e-icon-add e-icons"></div><div class="add-doctor-text">Add New Doctor</div>
+                                <div class="add-doctor">
+                                    <div class="e-icon-add e-icons"></div><div class="add-doctor-text">
+                                        <NavLink Match="NavLinkMatch.Prefix" href="@($"doctors")">Add New Doctor</NavLink>
+                                    </div>
                                 </div>
                             </FooterTemplate>
                         </DropDownListTemplates>
@@ -156,7 +114,7 @@
 </div>
 @if (OpenDialog)
 {
-    <AppointmentPlanner.Pages.Doctors.AddEditDoctor IsShow="@OpenDialog"></AppointmentPlanner.Pages.Doctors.AddEditDoctor>
+    <AppointmentPlanner.Pages.Doctors.AddEditDoctor IsShow="@OpenDialog" DDLInstance="ddlObj"></AppointmentPlanner.Pages.Doctors.AddEditDoctor>
 }
 
 @code {
@@ -165,8 +123,14 @@
 
     [Inject]
     protected IJSRuntime JsRuntime { get; set; }
+    public bool EditUpcoming = false;
 
     public bool OpenDialog { get; set; } = false;
+    private int viewInterval { get; set; } = 60;
+    private int calendarDayOfWeek { get; set; } = 1;
+    private string resourceColorField { get; set; }
+
+    EjsDropDownList<int?, DoctorsData> ddlObj { get; set; }
 
     private List<HospitalData> scheduleEventData { get; set; } = AppointmentService.HospitalDatas;
 
@@ -203,12 +167,15 @@
 
     private List<DoctorsData> specialistData { get; set; }
     private List<DoctorsData> doctorsData { get; set; }
-
+    public Query QueryData { get; set; } = new Query();
     private List<DoctorsData> activeDoctorData { get; set; }
     protected override void OnInitialized()
     {
         sceduleView = (View)Enum.Parse(typeof(View), (AppointmentService.CalendarSettings.currentView as string));
         specialistData = doctorsData = AppointmentService.DoctorsDatas;
+        this.viewInterval = AppointmentService.CalendarSettings.interval;
+        this.calendarDayOfWeek = AppointmentService.CalendarSettings.firstDayOfWeek;
+        this.resourceColorField = AppointmentService.CalendarSettings.bookingColor;
     }
     private string getPatientName(HospitalData data)
     {
@@ -290,7 +257,7 @@
 
     private void createNewEvent(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {
-        var data = new { startTime = new DateTime(2018, 7, 5, 8, 0, 0), endTime = new DateTime(2018, 7, 5, 8, 30, 0) };
+        var data = new { startTime = new DateTime(2019, 7, 5, 8, 0, 0), endTime = new DateTime(2019, 7, 5, 8, 30, 0) };
         this.scheduleObj.OpenEditor(data, CurrentAction.Add, false, null);
     }
 
@@ -316,8 +283,7 @@
         activeDoctorData = filterItem;
         workDay = filterItem[0].AvailableDays;
         workHours = new Calendar { start = filterItem[0].StartHour, end = filterItem[0].EndHour };
-        scheduleObj.Resources[0].Query = new Query().Where(new WhereFilter() { Field = "DepartmentId", Operator = "equal", value = deptId });
-        scheduleObj.Resources[0].Query = new Query().Where(new WhereFilter() { Field = "Id", Operator = "equal", value = Int32.Parse(doctorId) });
+        QueryData = new Query().Where(new WhereFilter() { Field = "Id", Operator = "equal", value = Int32.Parse(doctorId) });
         if (filterItem.Count() > 0)
         {
             updateBreakHours(scheduleObj.SelectedDate);
@@ -345,8 +311,7 @@
         specialistCategory = AppointmentService.SpecializationDatas;
         resourceDataSource = AppointmentService.DoctorsDatas;
 
-        scheduleObj.Resources[0].Query = new Query();
-        scheduleObj.Resources[0].Query = new Query();
+        QueryData = new Query();
 
         scheduleEventData = AppointmentService.HospitalDatas;
         updateWaitingList(null);
@@ -368,7 +333,7 @@
         {
             if (ele.State != "RemoveBreak")
             {
-                int id = filteredEvents.Select(item => item.Id).Max() + 1;
+                int id = (filteredEvents.Count() > 0) ? filteredEvents.Select(item => item.Id).Max() + 1 : 0;
 
                 filteredEvents.Add(new HospitalData() { Id = id, Name = "Break Time", StartTime = (DateTime)ele.BreakStartHour, EndTime = (DateTime)ele.BreakEndHour, DoctorId = activeData.Id });
             }
@@ -395,7 +360,7 @@
                 {
                     int id = filteredEvents.Select(data => data.Id).Max() + 1;
 
-                    filteredEvents.Add(new HospitalData() { Id = id, Name = "Off Work", StartTime = (DateTime)item.StartTime, EndTime = (DateTime)item.EndTime, DoctorId = activeData.Id });
+                    filteredEvents.Add(new HospitalData() { Id = id, Name = "Off Work", IsBlock = true, StartTime = (DateTime)item.StartTime, EndTime = (DateTime)item.EndTime, DoctorId = activeData.Id });
                 });
             }
         });
@@ -441,7 +406,8 @@
     {
         args.Cancel = true;
         object isScheduleSlot = await args.Target.GetAttribute("role");
-        if (isScheduleSlot != null && isScheduleSlot.ToString() == "gridcell")
+        var groupedResource = await args.Target.GetClassList();
+        if (isScheduleSlot != null && isScheduleSlot.ToString() == "gridcell" && groupedResource.IndexOf("e-resource-group-cells") == -1)
         {
             CellClickEventArgs cellData = await scheduleObj.GetCellDetails(args.Target);
             var filteredData = waitingList.Where(item => item.Id.Equals(Int32.Parse(args.DraggedNodeData.Id))).ToList();
@@ -450,6 +416,7 @@
             if (isGroup != null)
             {
                 ResourceDetails<HospitalData> resData = await scheduleObj.GetResourcesByIndex(cellData.GroupIndex);
+                TimeSheetGroupData groupData = JsonConvert.DeserializeObject<TimeSheetGroupData>(resData.GroupData.ToString());
                 eventData = new HospitalData
                 {
                     Name = filteredData[0].Name,
@@ -458,8 +425,8 @@
                     IsAllDay = cellData.IsAllDay,
                     Symptoms = filteredData[0].Disease,
                     PatientId = filteredData[0].PatientId,
-                    DepartmentId = (resData.GroupData as TemplateArgs).DepartmentId,
-                    DoctorId = (resData.GroupData as TemplateArgs).DoctorId
+                    DepartmentId = groupData.DepartmentId,
+                    DoctorId = groupData.DoctorId
                 };
             }
             else

@@ -7,21 +7,21 @@
 <head>
     <!-- Google Tag Manager -->
     <script>
-    (function (w, d, s, l, i) {
-        w[l] = w[l] || []; w[l].push({
-            'gtm.start':
-                new Date().getTime(), event: 'gtm.js'
-        }); var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-WLQL39J');</script>
 
     <!-- End Google Tag Manager -->
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Appointment Planner is a single page application demo for Blazor. This example explore with dashboard like layout, rich interactions and more features." />
-    <title>Blazor demo for Appointment Planner | Syncfusion</title>
+    <meta name="description" content="Appointment Planner is a single page application for demonstrating Syncfusion Blazor Components features in a real-world scenario with dashboard like layout." />
+    <title>Appointment Planner - Syncfusion Blazor Components Showcase App</title>
     <base href="~/" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
@@ -37,13 +37,23 @@
     <link href="css/appoinment/doctoreditdialog.css" rel="stylesheet" />
     <link href="css/appoinment/about.css" rel="stylesheet" />
     <script src="~/ej2/ej2.min.js"></script>
-    <script src="~/ej2/ejs.interop.min.js"></script>
+    <script type="text/javascript">
+        if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+            document.write('<script src="ej2/ejs.interop-ie.min.js"><\/script>');
+            document.write('<script src="ej2/blazor.polyfill.min.js"><\/script>');
+        } else {
+            document.write('<script src="ej2/ejs.interop.min.js"><\/script>');
+        }
+        window.checkBrowserDevice = function () {
+            return ejs.base.Browser.isDevice;
+        }
+    </script>
 </head>
 <body class="e-app-mainpage">
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WLQL39J" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <div hidden id="sync-analytics" data-queue="EJ2 - Showcase - Blazor - AppointmentPlanner"></div>
+    <div hidden id="sync-analytics" data-queue="Syncfusion - Showcase - Blazor - AppointmentPlanner"></div>
     <app>
         @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
     </app>
