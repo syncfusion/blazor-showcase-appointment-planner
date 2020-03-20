@@ -82,92 +82,92 @@
     width: 168px;
 }
 
-.ejimage-button::before {
+.sfimage-button::before {
     content: '\e702';
     color: #7575ff;
 }
 
-.ejimage-schedule::before {
+.sfimage-schedule::before {
     content: '\e709';
     color: #7575ff;
 }
 
-.ejimage-chart::before {
+.sfimage-chart::before {
     content: '\e906';
     color: #7575ff;
 }
 
-.ejimage-card::before {
+.sfimage-card::before {
     content: '\e713';
     color: #7575ff;
 }
 
-.ejimage-sidebar::before {
+.sfimage-sidebar::before {
     content: '\e705';
     color: #7575ff;
 }
 
-.ejimage-autocomplete::before {
+.sfimage-autocomplete::before {
     content: '\e70b';
     color: #7575ff;
 }
 
-.ejimage-datepicker::before {
+.sfimage-datepicker::before {
     content: '\e90d';
     color: #7575ff;
 }
 
-.ejimage-timepicker::before {
+.sfimage-timepicker::before {
     content: '\e927';
     color: #7575ff;
 }
 
-.ejimage-dialog::before {
+.sfimage-dialog::before {
     content: '\e90e';
     color: #7575ff;
 }
 
-.ejimage-dropdownlist::before {
+.sfimage-dropdownlist::before {
     content: '\e70a';
     color: #7575ff;
 }
 
-.ejimage-grid::before {
+.sfimage-grid::before {
     content: '\e913';
     color: #7575ff;
 }
 
-.ejimage-checkbox::before {
+.sfimage-checkbox::before {
     content: '\e707';
     color: #7575ff;
 }
 
-.ejimage-numerictextbox::before {
+.sfimage-numerictextbox::before {
     content: '\e72a';
     color: #7575ff;
 }
 
-.ejimage-radiobutton::before {
+.sfimage-radiobutton::before {
     content: '\e727';
     color: #7575ff;
 }
 
-.ejimage-listview::before {
+.sfimage-listview::before {
     content: '\e917';
     color: #7575ff;
 }
 
-.ejimage-treeview::before {
+.sfimage-treeview::before {
     content: '\e92b';
     color: #7575ff;
 }
 
-.ejimage-textboxes::before {
+.sfimage-textboxes::before {
     content: '\e919';
     color: #7575ff;
 }
 
-.ejimage-toast::before {
+.sfimage-toast::before {
     content: '\e716';
     color: #7575ff;
 }

@@ -9,7 +9,7 @@
     <div class="drag-sample-wrapper droppable">
         <div class="col-lg-9 col-md-9 col-sm-9" style="padding: 0px">
             <div class="schedule-container e-droppable">
-                <EjsSchedule ID="schedule" TValue="HospitalData" @ref="scheduleObj" Width="100%" Height="800px" RowAutoHeight="true" CssClass="doctor-appointment-planner" ShowWeekend="false" StartHour="@startHour" EndHour="@endHour" SelectedDate="@(new DateTime(2019, 7, 5))" WorkDays="@workDay" FirstDayOfWeek="@calendarDayOfWeek" @bind-CurrentView="@sceduleView">
+                <SfSchedule ID="schedule" TValue="HospitalData" @ref="scheduleObj" Width="100%" Height="800px" RowAutoHeight="true" CssClass="doctor-appointment-planner" ShowWeekend="false" StartHour="@startHour" EndHour="@endHour" SelectedDate="@(new DateTime(2019, 7, 5))" WorkDays="@workDay" FirstDayOfWeek="@calendarDayOfWeek" @bind-CurrentView="@sceduleView">
                     <ScheduleEvents TValue="HospitalData" OnCellClick="OnCellClick"></ScheduleEvents>
                     <ScheduleWorkHours Start="08:00" End="21:00"></ScheduleWorkHours>
                     <ScheduleEventSettings DataSource="@scheduleEventData" ResourceColorField="@resourceColorField" EditFollowingEvents="@EditUpcoming">
@@ -56,13 +56,13 @@
                             <div class="e-custom-date-header date-text" title="@(getDateHeaderText((context as TemplateContext).Date))">@(getDateHeaderText((context as TemplateContext).Date).ToUpper())</div>
                         </DateHeaderTemplate>
                     </ScheduleTemplates>
-                </EjsSchedule>
+                </SfSchedule>
             </div>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 treeview-container-wrapper">
             <div class="treeview-container">
                 <div>
-                    <EjsDropDownList @ref="ddlObj" Placeholder="Choose Specialist" Width="220px" TItem="DoctorsData" PopupHeight="auto" DataSource="@resourceDataSource" TValue="int?" CssClass="planner-dropdown" ShowClearButton="true">
+                    <SfDropDownList @ref="ddlObj" Placeholder="Choose Specialist" Width="220px" TItem="DoctorsData" PopupHeight="auto" DataSource="@resourceDataSource" TValue="int?" CssClass="planner-dropdown" ShowClearButton="true">
                         <DropDownListEvents TValue="int?" ValueChange="onValueChange"></DropDownListEvents>
                         <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
                         <DropDownListTemplates TItem="DoctorsData">
@@ -83,12 +83,12 @@
                                 </div>
                             </FooterTemplate>
                         </DropDownListTemplates>
-                    </EjsDropDownList>
+                    </SfDropDownList>
                 </div>
                 <div class="title-container">
                     <h1 class="title-text">Waiting List</h1>
                 </div>
-            <EjsTreeView TValue="WaitingList" LoadOnDemand="false" CssClass="treeview-external-drag" AllowDragAndDrop="true">
+            <SfTreeView TValue="WaitingList" LoadOnDemand="false" CssClass="treeview-external-drag" AllowDragAndDrop="true">
                 <TreeViewFieldsSettings Id="Id" Text="Name" DataSource="@waitingList"></TreeViewFieldsSettings>
                 <TreeViewEvents TValue="WaitingList" OnNodeDragged="NodeDragStop"></TreeViewEvents>
                 <TreeViewTemplates>
@@ -107,7 +107,7 @@
                         </div>
                     </NodeTemplate>
                 </TreeViewTemplates>
-            </EjsTreeView>
+            </SfTreeView>
             </div>
         </div>
     </div>
@@ -119,7 +119,7 @@
 
 @code {
 
-    EjsSchedule<HospitalData> scheduleObj;
+    SfSchedule<HospitalData> scheduleObj;
 
     [Inject]
     protected IJSRuntime JsRuntime { get; set; }
@@ -130,7 +130,7 @@
     private int calendarDayOfWeek { get; set; } = 1;
     private string resourceColorField { get; set; }
 
-    EjsDropDownList<int?, DoctorsData> ddlObj { get; set; }
+    SfDropDownList<int?, DoctorsData> ddlObj { get; set; }
 
     private List<HospitalData> scheduleEventData { get; set; } = AppointmentService.HospitalDatas;
 
@@ -265,7 +265,7 @@
     {
         args.Cancel = true;
     }
-    private void onValueChange(Syncfusion.EJ2.Blazor.DropDowns.ChangeEventArgs<int?> args)
+    private void onValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?> args)
     {
         if (args.Value != null)
         {

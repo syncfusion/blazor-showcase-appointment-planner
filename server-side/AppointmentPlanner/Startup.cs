@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Syncfusion.EJ2.Blazor;
+using Syncfusion.Blazor;
 using AppointmentPlanner.Data;
 
 namespace AppointmentPlanner

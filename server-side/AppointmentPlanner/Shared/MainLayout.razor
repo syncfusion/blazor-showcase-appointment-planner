@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="planner-wrapper" style="width: 100%; visibility:@(visible); opacity:@(opacity)">
-    <EjsSidebar ID="plannerSiderBar" @ref="SidebarObj" EnableGestures="false"  MediaQuery="(min-width: 600px)" Type="SidebarType.Auto" Created="OnCreate" CloseOnDocumentClick="onDocumentClick">
+    <SfSidebar ID="plannerSiderBar" @ref="SidebarObj" EnableGestures="false"  MediaQuery="(min-width: 600px)" Type="SidebarType.Auto" Created="OnCreate" CloseOnDocumentClick="onDocumentClick">
         <ChildContent>
                 <div class="dock">
                     <div class="info align-center">
@@ -24,14 +24,15 @@
                             <p class='user-type'>Admin</p>
                         </div>
                     </div>
-                    <EjsListView CssClass="menulist" TValue="NavigationMenuData" ShowIcon="true" DataSource="@navigationItems" Enable="true">
-                        <ListViewTemplates>
+                    <SfListView CssClass="menulist" TValue="NavigationMenuData" ShowIcon="true" DataSource="@navigationItems" Enable="true">
+                        <ListViewTemplates TValue="NavigationMenuData">
                             <Template>
                                 @if ((context as NavigationMenuData) != null)
                                 {
                                     var currentPath = UriHelper.Uri;
                                     var baseUri = UriHelper.BaseUri;
-                                    activeClass = ((currentPath == baseUri) && activeClass == null) ? "nav-link sidebar-item active" : "nav-link sidebar-item";
+                                    var checkPath = currentPath.Contains("dashboard") || currentPath.Contains("schedule") || currentPath.Contains("doctors") || currentPath.Contains("patients") || currentPath.Contains("preference") || currentPath.Contains("about");
+                                    activeClass = (!checkPath && (context as NavigationMenuData).Value == "dashboard") ? "nav-link sidebar-item active" : "nav-link sidebar-item";
                                     <NavLink class="@(activeClass)" href="@((context as NavigationMenuData).Value)" Match="NavLinkMatch.Prefix">
                                         <span class="dashboard-image">
                                             <span class="item-image @((context as NavigationMenuData).Icon)"></span>
@@ -43,10 +44,10 @@
                         </ListViewTemplates>
                         <ListViewFieldSettings Text="Text" Id="Value" IconCss="Icon" Tooltip="Text"></ListViewFieldSettings>
                         <ListViewEvents TValue="NavigationMenuData" Selected="@onSelectedItem"></ListViewEvents>
-                    </EjsListView>
+                    </SfListView>
                 </div>
         </ChildContent>
-    </EjsSidebar>
+    </SfSidebar>
     <main>
         <div class="planner-header">
             <div class="side-bar-opener">
@@ -76,7 +77,7 @@
 
 @code{
 
-    EjsSidebar SidebarObj;
+    SfSidebar SidebarObj;
     [Inject]
     protected IJSRuntime JsRuntime { get; set; }
 
@@ -143,7 +144,7 @@
     {
         
     }
-    private void onSelectedItem(Syncfusion.EJ2.Blazor.Lists.SelectEventArgs<NavigationMenuData> args)
+    private void onSelectedItem(Syncfusion.Blazor.Lists.SelectEventArgs<NavigationMenuData> args)
     {
         if (this.isDevice)
         {

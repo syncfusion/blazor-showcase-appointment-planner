@@ -346,7 +346,7 @@ header .module-title .underline {
     -moz-osx-font-smoothing: grayscale;
 }
 
-[class^="ejimage-"], [class*=" ejimage-"] {
+[class^="sfimage-"], [class*=" sfimage-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'sb-icons' !important;
     font-style: normal;

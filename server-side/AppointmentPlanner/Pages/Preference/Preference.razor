@@ -14,45 +14,45 @@
     </header>
     <div class="control-container">
         <div class='label-text'>Default View</div>
-        <EjsDropDownList CssClass='preference-drop-down' ID='CurrentView' @bind-Value="@selectedView" Width="335px" DataSource="@views">
+        <SfDropDownList CssClass='preference-drop-down' ID='CurrentView' @bind-Value="@selectedView" Width="335px" DataSource="@views">
             <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-        </EjsDropDownList>
+        </SfDropDownList>
     </div>
     <div class="control-container">
         <div class='label-text'>Calendar Start Time</div>
-        <EjsDropDownList CssClass='preference-drop-down' ID='CalendarStart' @bind-Value="@selectedStartHour" Width="335px" DataSource="@startHours">
+        <SfDropDownList CssClass='preference-drop-down' ID='CalendarStart' @bind-Value="@selectedStartHour" Width="335px" DataSource="@startHours">
             <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-        </EjsDropDownList>
+        </SfDropDownList>
     </div>
     <div class="control-container">
         <div class='label-text'>Calendar End Time</div>
-        <EjsDropDownList CssClass='preference-drop-down' ID='CalendarEnd' @bind-Value="@selectedEndHour" Width="335px" DataSource="@endHours">
+        <SfDropDownList CssClass='preference-drop-down' ID='CalendarEnd' @bind-Value="@selectedEndHour" Width="335px" DataSource="@endHours">
             <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-        </EjsDropDownList>
+        </SfDropDownList>
     </div>
     <div class="control-container">
         <div class='label-text'>Slot Duration</div>
-        <EjsDropDownList CssClass='preference-drop-down' ID='Duration' @bind-Value="@timeInterval" Width="335px" DataSource="@timeSlots">
+        <SfDropDownList CssClass='preference-drop-down' ID='Duration' @bind-Value="@timeInterval" Width="335px" DataSource="@timeSlots">
             <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-        </EjsDropDownList>
+        </SfDropDownList>
     </div>
     <div class="control-container">
         <div class='label-text'>Booking Color</div>
-        <EjsDropDownList CssClass='preference-drop-down' ID='BookingColor' @bind-Value="@selectedCategory" Width="335px" DataSource="@colorCategory">
+        <SfDropDownList CssClass='preference-drop-down' ID='BookingColor' @bind-Value="@selectedCategory" Width="335px" DataSource="@colorCategory">
             <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-        </EjsDropDownList>
+        </SfDropDownList>
     </div>
     <div class="control-container">
         <div class='label-text'>First Day of the Week</div>
-        <EjsDropDownList CssClass='preference-drop-down' ID='FirstDayOfWeek' @bind-Value="@selectedDayOfWeek" Width="335px" DataSource="@dayOfWeeks">
+        <SfDropDownList CssClass='preference-drop-down' ID='FirstDayOfWeek' @bind-Value="@selectedDayOfWeek" Width="335px" DataSource="@dayOfWeeks">
             <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-        </EjsDropDownList>
+        </SfDropDownList>
     </div>
 </div>
 
@@ -72,7 +72,7 @@
     private int timeInterval = AppointmentService.CalendarSettings.interval;
     private int selectedDayOfWeek = AppointmentService.CalendarSettings.firstDayOfWeek;
     private CalendarSetting cal { get; set; } = new CalendarSetting();
-    private void onValueChange(Syncfusion.EJ2.Blazor.DropDowns.ChangeEventArgs<string> args)
+    private void onValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
     {
         switch (args.Element.ID)
         {
