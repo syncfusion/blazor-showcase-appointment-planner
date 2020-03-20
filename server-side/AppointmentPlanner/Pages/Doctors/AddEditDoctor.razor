@@ -5,13 +5,13 @@
 
 @inject NavigationManager UriHelper
 
-<EjsDialog Target="body" @ref="DialogObj" Width="390px" CssClass="new-doctor-dialog" IsModal="true" ShowCloseIcon="true" Header="@editHeader" AnimationSettings="@dialogAnnimation">
+<SfDialog Target="body" @ref="DialogObj" Width="390px" CssClass="new-doctor-dialog" IsModal="true" ShowCloseIcon="true" Header="@editHeader" AnimationSettings="@dialogAnnimation">
     <ChildContent>
         <DialogEvents Closed="dialogClosed"></DialogEvents>
         <EditForm ID="new-doctor-form" Model="@DoctorEditModel" OnValidSubmit="@HandleValidSubmit">
             <DataAnnotationsValidator></DataAnnotationsValidator>
             <div class="name-container">
-                <EjsTextBox CssClass="doctor-name e-field" Placeholder="Doctor Name" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Name"></EjsTextBox>
+                <SfTextBox CssClass="doctor-name e-field" Placeholder="Doctor Name" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Name"></SfTextBox>
                 <ValidationMessage For="@(() => DoctorEditModel.Name)" />
             </div>
             <div class="gender-container">
@@ -25,38 +25,38 @@
                     </div>
                 </div>
                 <div class="mobile" style="width:345px">
-                    <EjsMaskedTextBox @ref="maskObj" CssClass="e-field" Placeholder="Mobile Number" FloatLabelType="@FloatLabelType.Always" Mask="(999) 999-9999" @bind-Value="@DoctorEditModel.Mobile"></EjsMaskedTextBox>
+                    <SfMaskedTextBox @ref="maskObj" CssClass="e-field" Placeholder="Mobile Number" FloatLabelType="@FloatLabelType.Always" Mask="(999) 999-9999" @bind-Value="@DoctorEditModel.Mobile"></SfMaskedTextBox>
                     <ValidationMessage For="@(() => DoctorEditModel.Mobile)" />
                 </div>
             </div>
             <div class="email-container">
-                <EjsTextBox CssClass="e-field" Placeholder="Email" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Email"></EjsTextBox>
+                <SfTextBox CssClass="e-field" Placeholder="Email" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Email"></SfTextBox>
                 <ValidationMessage For="@(() => DoctorEditModel.Email)" />
             </div>
             <div class="education-container">
                 <div class="department">
-                    <EjsDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Department" Width="160px" DataSource="@specializationData" @bind-Value="@DoctorEditModel.Specialization">
+                    <SfDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Department" Width="160px" DataSource="@specializationData" @bind-Value="@DoctorEditModel.Specialization">
                         <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
-                    </EjsDropDownList>
+                    </SfDropDownList>
                 </div>
                 <div class="education" style="width:345px">
-                    <EjsTextBox CssClass="e-field" Placeholder="Education" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Education"></EjsTextBox>
+                    <SfTextBox CssClass="e-field" Placeholder="Education" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Education"></SfTextBox>
                 </div>
             </div>
             <div class="experience-container">
                 <div class="experience">
-                    <EjsDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Experience" Width="160px" @bind-Value="@DoctorEditModel.Experience" DataSource="@experienceData">
+                    <SfDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Experience" Width="160px" @bind-Value="@DoctorEditModel.Experience" DataSource="@experienceData">
                         <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
-                    </EjsDropDownList>
+                    </SfDropDownList>
                 </div>
                 <div class="designation" style="width:345px">
-                    <EjsTextBox CssClass="e-field" Placeholder="Designation" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Designation"></EjsTextBox>
+                    <SfTextBox CssClass="e-field" Placeholder="Designation" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Designation"></SfTextBox>
                 </div>
             </div>
             <div class="duty-container">
-                <EjsDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Duty Timing" @bind-Value="@DoctorEditModel.DutyTiming" DataSource="@dutyTimingsData">
+                <SfDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Duty Timing" @bind-Value="@DoctorEditModel.DutyTiming" DataSource="@dutyTimingsData">
                     <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
-                </EjsDropDownList>
+                </SfDropDownList>
             </div>
             <div class="e-footer-content">
                 <div class="button-container">
@@ -66,18 +66,18 @@
             </div>
         </EditForm>
     </ChildContent>
-</EjsDialog>
+</SfDialog>
 
 @code{
 
-    EjsDialog DialogObj;
+    SfDialog DialogObj;
 
     private AppointmentService service = new AppointmentService();
     [Parameter]
     public bool IsShow { get; set; }
-    private EjsMaskedTextBox maskObj { get; set; }
+    private SfMaskedTextBox maskObj { get; set; }
     [Parameter]
-    public EjsDropDownList<int?, DoctorsData> DDLInstance { get; set; }
+    public SfDropDownList<int?, DoctorsData> DDLInstance { get; set; }
 
     private SpecializationData specializeModel = new SpecializationData();
     public List<SpecializationData> specializationData { get; set; } = AppointmentService.SpecializationDatas;

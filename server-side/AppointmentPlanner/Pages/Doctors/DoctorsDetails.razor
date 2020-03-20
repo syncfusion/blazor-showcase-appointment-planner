@@ -16,8 +16,8 @@
             </div>
         </div>
         <div class='doctor-detail'>
-            <EjsButton Disabled="@((activeData != null) ? false : true)" CssClass="e-small delete-details" @onclick="@onDoctorDelete">Delete</EjsButton>
-            <EjsButton Disabled="@((activeData != null) ? false : true)" CssClass="e-small edit-details" @onclick="@onDoctorEdit">Edit</EjsButton>
+            <SfButton Disabled="@((activeData != null) ? false : true)" CssClass="e-small delete-details" @onclick="@onDoctorDelete">Delete</SfButton>
+            <SfButton Disabled="@((activeData != null) ? false : true)" CssClass="e-small edit-details" @onclick="@onDoctorEdit">Edit</SfButton>
         </div>
     </header>
     @if (activeData != null) { 
@@ -64,7 +64,7 @@
     }
 </div>
 
-<EjsDialog @bind-Visible="@this.isConfirmDelete" CssClass="confirm-dialog" Width="auto" IsModal="true" ShowCloseIcon="true">
+<SfDialog @bind-Visible="@this.isConfirmDelete" CssClass="confirm-dialog" Width="auto" IsModal="true" ShowCloseIcon="true">
     <DialogTemplates>
         <Header>
             <span>Doctor Details</span>
@@ -77,15 +77,15 @@
         <DialogButton ButtonModel="@deleteDoctorBtn" OnClick="@DeleteBtnClick"></DialogButton>
         <DialogButton ButtonModel="@cancelDoctorBtn" OnClick="@CancelBtnClick"></DialogButton>
     </DialogButtons>
-</EjsDialog>
+</SfDialog>
 
-<EjsDialog Target="body" @ref="EdiDialogObj" Width="390px" CssClass='new-doctor-dialog' IsModal="true" @bind-Visible="@editVisible" ShowCloseIcon="true" Header="@editHeader" AnimationSettings="@dialogAnnimation">
+<SfDialog Target="body" @ref="EdiDialogObj" Width="390px" CssClass='new-doctor-dialog' IsModal="true" @bind-Visible="@editVisible" ShowCloseIcon="true" Header="@editHeader" AnimationSettings="@dialogAnnimation">
     <ChildContent>
         <DialogEvents Opened="@EditDialogOpen"></DialogEvents>
         <EditForm ID="new-doctor-form" Model="@DoctorEditModel" OnValidSubmit="@HandleSubmit">
             <DataAnnotationsValidator></DataAnnotationsValidator>
             <div class="name-container">
-                <EjsTextBox CssClass='doctor-name e-field' Placeholder='Doctor Name' FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Name"></EjsTextBox>
+                <SfTextBox CssClass='doctor-name e-field' Placeholder='Doctor Name' FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Name"></SfTextBox>
                 <ValidationMessage For="@(() => DoctorEditModel.Name)" />
             </div>
             <div class="gender-container">
@@ -99,38 +99,38 @@
                     </div>
                 </div>
                 <div class="mobile" style="width:345px">
-                    <EjsMaskedTextBox CssClass="e-field" @ref="maskObj" Placeholder="Mobile Number" FloatLabelType="@FloatLabelType.Always" Mask="(999) 999-9999" @bind-Value="@DoctorEditModel.Mobile"></EjsMaskedTextBox>
+                    <SfMaskedTextBox CssClass="e-field" @ref="maskObj" Placeholder="Mobile Number" FloatLabelType="@FloatLabelType.Always" Mask="(999) 999-9999" @bind-Value="@DoctorEditModel.Mobile"></SfMaskedTextBox>
                     <ValidationMessage For="@(() => DoctorEditModel.Mobile)" />
                 </div>
             </div>
             <div class="email-container">
-                <EjsTextBox CssClass='e-field' Placeholder='Email' FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Email"></EjsTextBox>
+                <SfTextBox CssClass='e-field' Placeholder='Email' FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Email"></SfTextBox>
                 <ValidationMessage For="@(() => DoctorEditModel.Email)" />
             </div>
             <div class="education-container">
                 <div class="department">
-                    <EjsDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Department" Width="160px" DataSource="@specializationData" @bind-Value="@DoctorEditModel.DepartmentId">
+                    <SfDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Department" Width="160px" DataSource="@specializationData" @bind-Value="@DoctorEditModel.DepartmentId">
                         <DropDownListFieldSettings Text="Text" Value="DepartmentId"></DropDownListFieldSettings>
-                    </EjsDropDownList>
+                    </SfDropDownList>
                 </div>
                 <div class="education" style="width:345px">
-                    <EjsTextBox CssClass='e-field' Placeholder='Education' FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Education"></EjsTextBox>
+                    <SfTextBox CssClass='e-field' Placeholder='Education' FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Education"></SfTextBox>
                 </div>
             </div>
             <div class="experience-container">
                 <div class="experience">
-                    <EjsDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Experience" Width="160px" @bind-Value="@DoctorEditModel.Experience" DataSource="@experienceData">
+                    <SfDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Experience" Width="160px" @bind-Value="@DoctorEditModel.Experience" DataSource="@experienceData">
                         <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
-                    </EjsDropDownList>
+                    </SfDropDownList>
                 </div>
                 <div class="designation" style="width:345px">
-                    <EjsTextBox CssClass='e-field' Placeholder='Designation' FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Designation"></EjsTextBox>
+                    <SfTextBox CssClass='e-field' Placeholder='Designation' FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Designation"></SfTextBox>
                 </div>
             </div>
             <div class="duty-container">
-                <EjsDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Duty Timing" @bind-Value="@DoctorEditModel.DutyTiming" DataSource="@dutyTimingsData">
+                <SfDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Duty Timing" @bind-Value="@DoctorEditModel.DutyTiming" DataSource="@dutyTimingsData">
                     <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
-                </EjsDropDownList>
+                </SfDropDownList>
             </div>
             <div class="e-footer-content">
                 <div class="button-container">
@@ -140,15 +140,15 @@
             </div>
         </EditForm>
     </ChildContent>
-</EjsDialog>
+</SfDialog>
 
 @code{
 
     [Parameter]
     public int Id { get; set; }
 
-    EjsDialog EdiDialogObj;
-    private EjsMaskedTextBox maskObj { get; set; }
+    SfDialog EdiDialogObj;
+    private SfMaskedTextBox maskObj { get; set; }
 
     private bool isConfirmDelete { get; set; }
 

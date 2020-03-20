@@ -25,13 +25,13 @@
                           title="Search" aria-label="search"></span>
                 </div>
             </div>
-            <EjsButton CssClass="e-normal add-details" @onclick="@onAddPatient" IsPrimary="true">
+            <SfButton CssClass="e-normal add-details" @onclick="@onAddPatient" IsPrimary="true">
                 Add
                 New Patient
-            </EjsButton>
+            </SfButton>
         </div>
         <div class="patient-display">
-            <EjsGrid ID="Grid" @ref="gridObj" DataSource="@FilteredPatients">
+            <SfGrid ID="Grid" @ref="gridObj" DataSource="@FilteredPatients">
                 <GridEvents TValue="PatientsData" RowSelected="onRowSelected" OnRecordDoubleClick="onDoubleClick"></GridEvents>
                 <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" AllowEditOnDblClick="false" Mode="EditMode.Dialog">
                 </GridEditSettings>
@@ -48,14 +48,14 @@
                     <GridColumn Field=@nameof(PatientsData.Mobile) HeaderText="Mobile Number" TextAlign="@TextAlign.Left" Width="100"></GridColumn>
                     <GridColumn Field=@nameof(PatientsData.Email) HeaderText="Email" TextAlign="@TextAlign.Left" Width="120"></GridColumn>
                 </GridColumns>
-            </EjsGrid>
+            </SfGrid>
         </div>
     </div>
 </div>
 
 @if (activePatientData !=null)
 {
-<EjsDialog @ref="GridEditDialogObj" Target="body" Width="390px" @bind-Visible="@GridEditDialog" CssClass="e-edit-dialog" IsModal="true" ShowCloseIcon="true" Header="@gridEditHeader" AnimationSettings="@dialogAnnimation">
+<SfDialog @ref="GridEditDialogObj" Target="body" Width="390px" @bind-Visible="@GridEditDialog" CssClass="e-edit-dialog" IsModal="true" ShowCloseIcon="true" Header="@gridEditHeader" AnimationSettings="@dialogAnnimation">
     <DialogTemplates>
         <Content>
             <div class="grid-edit-dialog">
@@ -97,21 +97,21 @@
         </Content>
         <FooterTemplate>
             <div class="button-container" style="display: flex; float: right">
-                <EjsButton CssClass="e-normal" @onclick="@onDeleteClick">Delete</EjsButton>
-                <EjsButton CssClass="e-normal" IsPrimary="true" @onclick="@gridEditDialog">Edit</EjsButton>
+                <SfButton CssClass="e-normal" @onclick="@onDeleteClick">Delete</SfButton>
+                <SfButton CssClass="e-normal" IsPrimary="true" @onclick="@gridEditDialog">Edit</SfButton>
             </div>
         </FooterTemplate>
     </DialogTemplates>
-</EjsDialog>
+</SfDialog>
 }
 
 
-<EjsDialog @ref="DialogObj" Target="body" Width="390px" CssClass="new-patient-dialog" IsModal="true" @bind-Visible="@IsShowPatientEditDialog" ShowCloseIcon="true" Header="@patientHeader" AnimationSettings="@dialogAnnimation">
+<SfDialog @ref="DialogObj" Target="body" Width="390px" CssClass="new-patient-dialog" IsModal="true" @bind-Visible="@IsShowPatientEditDialog" ShowCloseIcon="true" Header="@patientHeader" AnimationSettings="@dialogAnnimation">
     <ChildContent>
         <EditForm Model="@PatientEditModel" OnValidSubmit="@HandleValidSubmit">
             <DataAnnotationsValidator></DataAnnotationsValidator>
             <div class="name-container">
-                <EjsTextBox CssClass="patient-name e-field" Placeholder="Patient Name" FloatLabelType="@FloatLabelType.Always" @bind-Value="@PatientEditModel.Name"></EjsTextBox>
+                <SfTextBox CssClass="patient-name e-field" Placeholder="Patient Name" FloatLabelType="@FloatLabelType.Always" @bind-Value="@PatientEditModel.Name"></SfTextBox>
                 <ValidationMessage For="@(() => PatientEditModel.Name)" />
             </div>
             <div class="field-container gender-container">
@@ -125,28 +125,28 @@
                     </div>
                 </div>
                 <div class="dob">
-                    <EjsDatePicker ID="DOB" CssClass="e-field" Placeholder="DOB" @bind-Value="@PatientEditModel.DOB" Max="DateTime.Now" FloatLabelType="@FloatLabelType.Always" ShowClearButton="false"></EjsDatePicker>
+                    <SfDatePicker ID="DOB" CssClass="e-field" Placeholder="DOB" @bind-Value="@PatientEditModel.DOB" Max="DateTime.Now" FloatLabelType="@FloatLabelType.Always" ShowClearButton="false"></SfDatePicker>
                     <ValidationMessage For="@(() => PatientEditModel.DOB)" />
                 </div>
             </div>
             <div class="field-container contact-container">
                 <div class="mobile" style="width:345px">
-                    <EjsMaskedTextBox CssClass="e-field" @ref="maskObj" Placeholder="Mobile Number" FloatLabelType="@FloatLabelType.Always" @bind-Value="@PatientEditModel.Mobile" Mask="(999) 999-9999"></EjsMaskedTextBox>
+                    <SfMaskedTextBox CssClass="e-field" @ref="maskObj" Placeholder="Mobile Number" FloatLabelType="@FloatLabelType.Always" @bind-Value="@PatientEditModel.Mobile" Mask="(999) 999-9999"></SfMaskedTextBox>
                     <ValidationMessage For="@(() => PatientEditModel.Mobile)" />
                 </div>
                 <div class="blood-group">
-                    <EjsDropDownList FloatLabelType="@FloatLabelType.Always" CssClass="e-field" Placeholder="Blood Group" @bind-Value="@PatientEditModel.BloodGroup" DataSource="@bloodGroupData">
+                    <SfDropDownList FloatLabelType="@FloatLabelType.Always" CssClass="e-field" Placeholder="Blood Group" @bind-Value="@PatientEditModel.BloodGroup" DataSource="@bloodGroupData">
                         <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
-                    </EjsDropDownList>
+                    </SfDropDownList>
                     <ValidationMessage For="@(() => PatientEditModel.BloodGroup)" />
                 </div>
             </div>
             <div class="field-container email-container">
-                <EjsTextBox CssClass="e-field" Placeholder="Email" FloatLabelType="@FloatLabelType.Always" @bind-Value="@PatientEditModel.Email"></EjsTextBox>
+                <SfTextBox CssClass="e-field" Placeholder="Email" FloatLabelType="@FloatLabelType.Always" @bind-Value="@PatientEditModel.Email"></SfTextBox>
                 <ValidationMessage For="@(() => PatientEditModel.Email)" />
             </div>
             <div class="field-container symptom-container">
-                <EjsTextBox CssClass="e-field" Placeholder="Symptoms" FloatLabelType="@FloatLabelType.Always" @bind-Value="@PatientEditModel.Symptoms"></EjsTextBox>
+                <SfTextBox CssClass="e-field" Placeholder="Symptoms" FloatLabelType="@FloatLabelType.Always" @bind-Value="@PatientEditModel.Symptoms"></SfTextBox>
                 <ValidationMessage For="@(() => PatientEditModel.Symptoms)" />
             </div>
             <div class="e-footer-content">
@@ -157,9 +157,9 @@
             </div>
         </EditForm>
     </ChildContent>
-</EjsDialog>
+</SfDialog>
 
-<EjsDialog @bind-Visible="@this.isConfirmDelete" CssClass="confirm-dialog" Width="auto" IsModal="true" ShowCloseIcon="true">
+<SfDialog @bind-Visible="@this.isConfirmDelete" CssClass="confirm-dialog" Width="auto" IsModal="true" ShowCloseIcon="true">
     <DialogTemplates>
         <Header>
             <span>Patient Details</span>
@@ -172,14 +172,14 @@
         <DialogButton ButtonModel="@deleteDoctorBtn" OnClick="@DeleteBtnClick"></DialogButton>
         <DialogButton ButtonModel="@cancelDoctorBtn" OnClick="@CancelBtnClick"></DialogButton>
     </DialogButtons>
-</EjsDialog>
+</SfDialog>
 
 @code{
-    EjsGrid<PatientsData> gridObj;
-    EjsDialog DialogObj, GridEditDialogObj;
+    SfGrid<PatientsData> gridObj;
+    SfDialog DialogObj, GridEditDialogObj;
 
     private string searchValue { get; set; }
-    private EjsMaskedTextBox maskObj { get; set; }
+    private SfMaskedTextBox maskObj { get; set; }
 
     public PatientsData PatientEditModel = new PatientsData();
     public List<PatientsData> FilteredPatients { get; set; }

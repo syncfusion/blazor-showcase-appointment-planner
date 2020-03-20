@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="e-card-content">
-                            <EjsGrid id="Grid" DataSource="@gridData" Height="160px">
+                            <SfGrid id="Grid" DataSource="@gridData" Height="160px">
                                 <GridColumns>
                                     <GridColumn Field="Time" HeaderText="Time" TextAlign="@TextAlign.Left" Width="80"></GridColumn>
                                     <GridColumn Field="Name" HeaderText="Name" Width="120"></GridColumn>
@@ -57,7 +57,7 @@
                                     </GridColumn>
                                     <GridColumn Field="Symptoms" HeaderText="Symptoms" TextAlign="@TextAlign.Left" Width="150"></GridColumn>
                                 </GridColumns>
-                            </EjsGrid>
+                            </SfGrid>
                         </div>
                     </div>
                 </div>
@@ -66,10 +66,10 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 dashboard-control">
                     <div class="e-card chart-container">
                         <div class="e-card-content">
-                            <EjsChart Height="340px" Width="100%" Title="Consultation">
+                            <SfChart Height="340px" Width="100%" Title="Consultation">
                                 <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
                                 <ChartTitleStyle TextAlignment="@Alignment.Near"></ChartTitleStyle>
-                                <ChartPrimaryXAxis Title="Date" ValueType="Syncfusion.EJ2.Blazor.Charts.ValueType.DateTime" Interval="1" IntervalType="@IntervalType.Days" LabelFormat="MM/dd" Minimum="@firstDayOfWeek" Maximum="@max" EdgeLabelPlacement="@EdgeLabelPlacement.Shift">
+                                <ChartPrimaryXAxis Title="Date" ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime" Interval="1" IntervalType="@IntervalType.Days" LabelFormat="MM/dd" Minimum="@firstDayOfWeek" Maximum="@max" EdgeLabelPlacement="@EdgeLabelPlacement.Shift">
                                     <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
                                     <ChartAxisMinorGridLines Width="0"></ChartAxisMinorGridLines>
                                     <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
@@ -77,17 +77,17 @@
                                 <ChartPrimaryYAxis Title="Patient" Minimum="0" Maximum="6" Interval="2"></ChartPrimaryYAxis>
                                 <ChartLegendSettings Visible="true" Position="@LegendPosition.Top" Padding="20"></ChartLegendSettings>
                                 <ChartSeriesCollection>
-                                    <ChartSeries DataSource="@chartData" Type="Syncfusion.EJ2.Blazor.Charts.ChartSeriesType.Spline" Width="2" XName="Date" YName="EventCount"
-                                                 Name="Diabetology" LegendShape="Syncfusion.EJ2.Blazor.Charts.LegendShape.Circle" Fill="#60F238">
+                                    <ChartSeries DataSource="@chartData" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Spline" Width="2" XName="Date" YName="EventCount"
+                                                 Name="Diabetology" LegendShape="Syncfusion.Blazor.Charts.LegendShape.Circle" Fill="#60F238">
                                     </ChartSeries>
-                                    <ChartSeries DataSource="@chartData1" Type="Syncfusion.EJ2.Blazor.Charts.ChartSeriesType.Spline" Width="2" XName="Date" YName="EventCount"
-                                                 Name="Orthopaedics" LegendShape="Syncfusion.EJ2.Blazor.Charts.LegendShape.Circle" Fill="#388CF5">
+                                    <ChartSeries DataSource="@chartData1" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Spline" Width="2" XName="Date" YName="EventCount"
+                                                 Name="Orthopaedics" LegendShape="Syncfusion.Blazor.Charts.LegendShape.Circle" Fill="#388CF5">
                                     </ChartSeries>
-                                    <ChartSeries DataSource="@chartData2" Type="Syncfusion.EJ2.Blazor.Charts.ChartSeriesType.Spline" Width="2" XName="Date" YName="EventCount"
-                                                 Name="Cardiology" LegendShape="Syncfusion.EJ2.Blazor.Charts.LegendShape.Circle" Fill="#F29438">
+                                    <ChartSeries DataSource="@chartData2" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Spline" Width="2" XName="Date" YName="EventCount"
+                                                 Name="Cardiology" LegendShape="Syncfusion.Blazor.Charts.LegendShape.Circle" Fill="#F29438">
                                     </ChartSeries>
                                 </ChartSeriesCollection>
-                            </EjsChart>
+                            </SfChart>
                         </div>
                     </div>
                 </div>
@@ -95,8 +95,8 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 list-display" style="padding-right: 0px;">
             <div class="recent-activity">
-                <EjsListView Height="100%" Width="100%" ShowHeader="true" DataSource="@listDataSource" CssClass="activity-template" HeaderTitle="Recent Activities">
-                    <ListViewTemplates>
+                <SfListView Height="100%" Width="100%" TValue="ActivityData" ShowHeader="true" DataSource="@listDataSource" CssClass="activity-template" HeaderTitle="Recent Activities">
+                    <ListViewTemplates TValue="ActivityData">
                         <Template>
                             <div class="activity-container @((context as ActivityData).Type)">
                                 <div class="activity-message"><span class="type-name">@((context as ActivityData).Name)</span> - <span>@((context as ActivityData).Message)</span></div>
@@ -104,11 +104,12 @@
                             </div>
                         </Template>
                     </ListViewTemplates>
-                </EjsListView>
+                    <ListViewFieldSettings Text="Name" Id="Name"></ListViewFieldSettings>
+                </SfListView>
             </div>
             <div class="doctor-availability">
-                <EjsListView Height="100%" Width="100%" ShowHeader="true" DataSource="@doctorAvailability" CssClass="e-list-template">
-                    <ListViewTemplates>
+                <SfListView Height="100%" Width="100%" TValue="DoctorsData" ShowHeader="true" DataSource="@doctorAvailability" CssClass="e-list-template">
+                    <ListViewTemplates TValue="DoctorsData">
                         <HeaderTemplate>
                             <div class="availability-title">
                                 <span class="header-text">Doctor's Availability</span><span class="all-text">
@@ -130,7 +131,8 @@
                             </div>
                         </Template>
                     </ListViewTemplates>
-                </EjsListView>
+                    <ListViewFieldSettings Text="Text" Id="Id"></ListViewFieldSettings>
+                </SfListView>
             </div>
         </div>
     </div>

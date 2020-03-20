@@ -36,16 +36,15 @@
     <link href="css/appoinment/calendar.css" rel="stylesheet" />
     <link href="css/appoinment/doctoreditdialog.css" rel="stylesheet" />
     <link href="css/appoinment/about.css" rel="stylesheet" />
-    <script src="~/ej2/ej2.min.js"></script>
     <script type="text/javascript">
-        if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
-            document.write('<script src="ej2/ejs.interop-ie.min.js"><\/script>');
-            document.write('<script src="ej2/blazor.polyfill.min.js"><\/script>');
-        } else {
-            document.write('<script src="ej2/ejs.interop.min.js"><\/script>');
-        }
         window.checkBrowserDevice = function () {
-            return ejs.base.Browser.isDevice;
+            return (navigator.userAgent.match(/Android/i) 
+                || navigator.userAgent.match(/webOS/i) 
+                || navigator.userAgent.match(/iPhone/i)  
+                || navigator.userAgent.match(/iPad/i)  
+                || navigator.userAgent.match(/iPod/i) 
+                || navigator.userAgent.match(/BlackBerry/i) 
+                || navigator.userAgent.match(/Windows Phone/i)) ? true : false;
         }
     </script>
 </head>
