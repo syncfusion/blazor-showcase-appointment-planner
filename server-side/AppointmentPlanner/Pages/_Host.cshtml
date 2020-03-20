@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
     <link rel="shortcut icon" href="~/favicon.ico" />
-    <link href="ej2/bootstrap.min.css" rel="stylesheet" />
+    <link href="SFResource/bootstrap.min.css" rel="stylesheet" />
     <link href="css/appoinment/main.css" rel="stylesheet" />
     <link href="css/appoinment/dashboard.css" rel="stylesheet" />
     <link href="css/appoinment/doctor.css" rel="stylesheet" />
@@ -37,6 +37,9 @@
     <link href="css/appoinment/doctoreditdialog.css" rel="stylesheet" />
     <link href="css/appoinment/about.css" rel="stylesheet" />
     <script type="text/javascript">
+        if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+            document.write('<script src="SFResource/blazor.polyfill.min.js"><\/script>');
+        }
         window.checkBrowserDevice = function () {
             return (navigator.userAgent.match(/Android/i) 
                 || navigator.userAgent.match(/webOS/i) 
