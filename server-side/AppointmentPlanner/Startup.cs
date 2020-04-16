@@ -27,10 +27,6 @@ namespace AppointmentPlanner
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSignalR(e =>
-            {
-                e.MaximumReceiveMessageSize = 102400000;
-            });
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSyncfusionBlazor();
