@@ -7,7 +7,8 @@
 
 @inject NavigationManager UriHelper
 
-<div class="doctors-wrapper">
+
+<div id="doctors" class="doctors-wrapper">
     <header>
         <div class="module-title">
             <div class="title">DOCTORS LIST</div>
@@ -20,7 +21,7 @@
     </header>
     <div class="specialization-detail-wrapper">
         <div class="specialization-types">
-            <SfDropDownList id="Specialization" @ref="specObj" TItem="SpecializationData" TValue="string" Width="200px" ShowClearButton="true" DataSource="@specializationData" Placeholder="Select a Specialization" PopupHeight="230px">
+            <SfDropDownList @ref="specObj" TItem="SpecializationData" TValue="string" Width="200px" ShowClearButton="true" DataSource="@specializationData" Placeholder="Select a Specialization" PopupHeight="230px">
                 <DropDownListEvents TValue="string" ValueChange="@(e => onSpecializationChange(e))"></DropDownListEvents>
                 <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
                 <DropDownListTemplates TItem="SpecializationData">
@@ -77,7 +78,7 @@
     <SfDialog Target="body" @ref="DialogObj" Width="390px" CssClass="new-doctor-dialog" IsModal="true" @bind-Visible="@IsShowNewDialog" ShowCloseIcon="true" Header="@editHeader" AnimationSettings="@dialogAnnimation">
         <ChildContent>
             <DialogEvents Closed="dialogClosed"></DialogEvents>
-            <EditForm ID="new-doctor-form" Model="@DoctorEditModel" OnValidSubmit="@HandleValidSubmit">
+            <EditForm Model="@DoctorEditModel" OnValidSubmit="@HandleValidSubmit">
                 <DataAnnotationsValidator></DataAnnotationsValidator>
                 <div class="name-container">
                     <SfTextBox CssClass="doctor-name e-field" Placeholder="Doctor Name" FloatLabelType="@FloatLabelType.Always" @bind-Value="@DoctorEditModel.Name"></SfTextBox>
