@@ -4,7 +4,7 @@
 @using Newtonsoft.Json.Converters;
 @using AppointmentPlanner.Data;
 @using AppointmentPlanner.Models;
- 
+@implements IDisposable;
 <div id="preference" class='preference-container'>
     <header>
         <div class="module-title">
@@ -36,7 +36,7 @@
     <div class="control-container">
         <div class='label-text'>Slot Duration</div>
         <SfDropDownList CssClass='preference-drop-down' ID='Duration' @bind-Value="@timeInterval" Width="335px" DataSource="@timeSlots">
-            <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
+            <DropDownListEvents TValue="int?" ValueChange="onValueChangeUpdate"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
         </SfDropDownList>
     </div>
@@ -50,7 +50,7 @@
     <div class="control-container">
         <div class='label-text'>First Day of the Week</div>
         <SfDropDownList CssClass='preference-drop-down' ID='FirstDayOfWeek' @bind-Value="@selectedDayOfWeek" Width="335px" DataSource="@dayOfWeeks">
-            <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
+            <DropDownListEvents TValue="int?" ValueChange="onValueChangeUpdate"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
         </SfDropDownList>
     </div>
@@ -58,42 +58,76 @@
 
 
 @code{
-
-    private List<TextValueData> views { get; set; } = AppointmentService.Views;
-    private List<TextValueData> startHours { get; set; } = AppointmentService.StartHours;
-    private List<TextValueData> endHours { get; set; } = AppointmentService.EndHours;
-    private List<TextValueNumericData> timeSlots { get; set; } = AppointmentService.TimeSlot;
-    private List<TextValueData> colorCategory { get; set; } = AppointmentService.ColorCategory;
-    private List<TextValueNumericData> dayOfWeeks { get; set; } = AppointmentService.DayOfWeekList;
-    private string selectedView = AppointmentService.CalendarSettings.currentView;
-    private string selectedStartHour = AppointmentService.CalendarSettings.calendar.start;
-    private string selectedEndHour = AppointmentService.CalendarSettings.calendar.end;
-    private string selectedCategory = AppointmentService.CalendarSettings.bookingColor;
-    private int timeInterval = AppointmentService.CalendarSettings.interval;
-    private int selectedDayOfWeek = AppointmentService.CalendarSettings.firstDayOfWeek;
+    [Inject]
+    protected AppointmentService Service { get; set; }
+    private List<TextValueData> views { get; set; }
+    private List<TextValueData> startHours { get; set; }
+    private List<TextValueData> endHours { get; set; }
+    private List<TextValueNumericData> timeSlots { get; set; }
+    private List<TextValueData> colorCategory { get; set; }
+    private List<TextValueNumericData> dayOfWeeks { get; set; }
+    private string selectedView { get; set; }
+    private string selectedStartHour { get; set; }
+    private string selectedEndHour { get; set; }
+    private string selectedCategory { get; set; }
+    private int? timeInterval { get; set; }
+    private int? selectedDayOfWeek { get; set; }
     private CalendarSetting cal { get; set; } = new CalendarSetting();
+    protected override void OnInitialized()
+    {
+        this.views = Service.Views;
+        this.startHours = Service.StartHours;
+        this.endHours = Service.EndHours;
+        this.timeSlots = Service.TimeSlot;
+        this.colorCategory = Service.ColorCategory;
+        this.dayOfWeeks = Service.DayOfWeekList;
+        this.selectedView = Service.CalendarSettings.currentView;
+        this.selectedStartHour = Service.CalendarSettings.calendar.start;
+        this.selectedEndHour = Service.CalendarSettings.calendar.end;
+        this.selectedCategory = Service.CalendarSettings.bookingColor;
+        this.timeInterval = Service.CalendarSettings.interval;
+        this.selectedDayOfWeek = Service.CalendarSettings.firstDayOfWeek;
+    }
+
+    private void onValueChangeUpdate(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?> args)
+    {
+        switch (args.Element.ID)
+        {
+            case "Duration":
+                Service.CalendarSettings.interval = (int)args.Value;
+                break;
+            case "FirstDayOfWeek":
+                Service.CalendarSettings.firstDayOfWeek = (int)args.Value;
+                break;
+        }
+    }
     private void onValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
     {
         switch (args.Element.ID)
         {
             case "CurrentView":
-                AppointmentService.CalendarSettings.currentView = args.Value;
+                Service.CalendarSettings.currentView = args.Value;
                 break;
             case "CalendarStart":
-                AppointmentService.CalendarSettings.calendar.start = args.Value;
+                Service.CalendarSettings.calendar.start = args.Value;
                 break;
             case "CalendarEnd":
-                AppointmentService.CalendarSettings.calendar.end = args.Value;
+                Service.CalendarSettings.calendar.end = args.Value;
                 break;
             case "Duration":
-                AppointmentService.CalendarSettings.interval = Int32.Parse(args.Value);
+                Service.CalendarSettings.interval = Int32.Parse(args.Value);
                 break;
             case "BookingColor":
-                AppointmentService.CalendarSettings.bookingColor = (string)args.Value;
+                Service.CalendarSettings.bookingColor = (string)args.Value;
                 break;
             case "FirstDayOfWeek":
-                AppointmentService.CalendarSettings.firstDayOfWeek = Int32.Parse(args.Value);
+                Service.CalendarSettings.firstDayOfWeek = Int32.Parse(args.Value);
                 break;
         }
+    }
+
+    public void Dispose()
+    {
+        GC.SuppressFinalize(this);
     }
 }

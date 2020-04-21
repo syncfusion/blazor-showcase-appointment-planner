@@ -46,7 +46,7 @@ namespace AppointmentPlanner.Models
                 this.Symptoms = Symptoms;
             }
 
-            public static List<HospitalData> GetHospitalData()
+            public List<HospitalData> GetHospitalData()
             {
                 List<HospitalData> data = new List<HospitalData>();
 
@@ -128,7 +128,7 @@ namespace AppointmentPlanner.Models
                 this.Symptoms = Symptoms;
             }
 
-            public static List<PatientsData> GetPatientsData()
+            public List<PatientsData> GetPatientsData()
             {
                 List<PatientsData> data = new List<PatientsData>();
 
@@ -216,7 +216,7 @@ namespace AppointmentPlanner.Models
             }
 
 
-            public static List<DoctorsData> GetDoctorsData()
+            public List<DoctorsData> GetDoctorsData()
             {
                 List<DoctorsData> data = new List<DoctorsData>();
                 List<WorkDaysData> workData = new List<WorkDaysData>();
@@ -337,7 +337,7 @@ namespace AppointmentPlanner.Models
             public int DepartmentId { get; set; }
             public int PatientId { get; set; }
 
-            public static List<WaitingList> GetWaitingList()
+            public List<WaitingList> GetWaitingList()
             {
 
                 List<WaitingList> wait = new List<WaitingList>()
@@ -360,7 +360,7 @@ namespace AppointmentPlanner.Models
 
         public class SpecializationData
         {
-            public int DepartmentId { get; set; }
+            public int? DepartmentId { get; set; }
             public string Id { get; set; }
             public string Text { get; set; }
             public string Color { get; set; }
@@ -370,7 +370,7 @@ namespace AppointmentPlanner.Models
 
             }
 
-            public SpecializationData(int DepartmentId, string Id, string Text, string Color)
+            public SpecializationData(int? DepartmentId, string Id, string Text, string Color)
             {
                 this.DepartmentId = DepartmentId;
                 this.Id = Id;
@@ -379,7 +379,7 @@ namespace AppointmentPlanner.Models
             }
 
 
-            public static List<SpecializationData> GetSpecializationData()
+            public List<SpecializationData> GetSpecializationData()
             {
                 List<SpecializationData> data = new List<SpecializationData>();
 
@@ -408,7 +408,7 @@ namespace AppointmentPlanner.Models
                 this.Id = Id;
                 this.Text = Text;
             }
-            public static List<TextIdData> ExperienceData()
+            public List<TextIdData> ExperienceData()
             {
                 List<TextIdData> data = new List<TextIdData>();
                 data.Add(new TextIdData("1+ years", "1+ years"));
@@ -419,7 +419,7 @@ namespace AppointmentPlanner.Models
                 data.Add(new TextIdData("20+ years", "20+ years"));
                 return data;
             }
-            public static List<TextIdData> DutyTimingsData()
+            public List<TextIdData> DutyTimingsData()
             {
                 List<TextIdData> data = new List<TextIdData>();
                 data.Add(new TextIdData("Shift1", "08:00 AM - 5:00 PM"));
@@ -443,7 +443,7 @@ namespace AppointmentPlanner.Models
                 this.Text = Text;
             }
 
-            public static List<TextValueData> GetStartHours()
+            public List<TextValueData> GetStartHours()
             {
                 List<TextValueData> data = new List<TextValueData>();
 
@@ -454,7 +454,7 @@ namespace AppointmentPlanner.Models
                 data.Add(new TextValueData("12:00", "12.00 am"));
                 return data;
             }
-            public static List<TextValueData> GetEndHours()
+            public List<TextValueData> GetEndHours()
             {
                 List<TextValueData> data = new List<TextValueData>();
 
@@ -466,7 +466,7 @@ namespace AppointmentPlanner.Models
                 data.Add(new TextValueData("21:00", "9.00 pm"));
                 return data;
             }
-            public static List<TextValueData> GetViews()
+            public List<TextValueData> GetViews()
             {
                 List<TextValueData> data = new List<TextValueData>();
 
@@ -475,7 +475,7 @@ namespace AppointmentPlanner.Models
                 data.Add(new TextValueData("Month", "Monthly"));
                 return data;
             }
-            public static List<TextValueData> GetColorCategory()
+            public List<TextValueData> GetColorCategory()
             {
                 List<TextValueData> data = new List<TextValueData>();
 
@@ -483,7 +483,7 @@ namespace AppointmentPlanner.Models
                 data.Add(new TextValueData("Doctors", "Doctors Colors"));
                 return data;
             }
-            public static List<TextValueData> GetBloodGroupData()
+            public List<TextValueData> GetBloodGroupData()
             {
                 List<TextValueData> data = new List<TextValueData>();
 
@@ -512,7 +512,7 @@ namespace AppointmentPlanner.Models
                 this.Value = Value;
                 this.Text = Text;
             }
-            public static List<TextValueNumericData> GetTimeSlot()
+            public List<TextValueNumericData> GetTimeSlot()
             {
                 List<TextValueNumericData> data = new List<TextValueNumericData>();
 
@@ -524,7 +524,7 @@ namespace AppointmentPlanner.Models
                 return data;
             }
 
-            public static List<TextValueNumericData> GetDayOfWeekList()
+            public List<TextValueNumericData> GetDayOfWeekList()
             {
                 List<TextValueNumericData> data = new List<TextValueNumericData>();
 
@@ -559,7 +559,7 @@ namespace AppointmentPlanner.Models
                 this.Type = Type;
                 this.ActivityTime = ActivityTime;
             }
-            public static List<ActivityData> GetActivityData()
+            public List<ActivityData> GetActivityData()
             {
                 List<ActivityData> data = new List<ActivityData>();
 
@@ -619,7 +619,7 @@ namespace AppointmentPlanner.Models
                 this.Value = Value;
                 this.Icon = Icon;
             }
-            public static List<NavigationMenuData> GetNavigationItems()
+            public List<NavigationMenuData> GetNavigationItems()
             {
                 List<NavigationMenuData> data = new List<NavigationMenuData>();
                 data.Add(new NavigationMenuData("Dashboard", "dashboard", "icon-dashboard"));

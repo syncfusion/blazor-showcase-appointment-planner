@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29519.161
+VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppointmentPlanner", "AppointmentPlanner\AppointmentPlanner.csproj", "{85C6C73F-486E-471A-AD02-60A8302B3B6D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentPlanner", "AppointmentPlanner\AppointmentPlanner.csproj", "{CD342D22-C6DC-4EBB-9C6B-3D10D7701EFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,19 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{85C6C73F-486E-471A-AD02-60A8302B3B6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85C6C73F-486E-471A-AD02-60A8302B3B6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85C6C73F-486E-471A-AD02-60A8302B3B6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85C6C73F-486E-471A-AD02-60A8302B3B6D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BF2B7B2F-ACD5-4A48-8323-7349240CB1A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF2B7B2F-ACD5-4A48-8323-7349240CB1A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF2B7B2F-ACD5-4A48-8323-7349240CB1A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF2B7B2F-ACD5-4A48-8323-7349240CB1A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD342D22-C6DC-4EBB-9C6B-3D10D7701EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD342D22-C6DC-4EBB-9C6B-3D10D7701EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD342D22-C6DC-4EBB-9C6B-3D10D7701EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD342D22-C6DC-4EBB-9C6B-3D10D7701EFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {C185DD0B-0C36-4C3B-AF07-008D60A6858E}
+		SolutionGuid = {838A6EDA-54AC-41BD-876B-1B30680C6D46}
 	EndGlobalSection
 EndGlobal

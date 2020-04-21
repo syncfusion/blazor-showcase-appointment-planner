@@ -33,7 +33,7 @@
                                     var baseUri = UriHelper.BaseUri;
                                     var checkPath = currentPath.Contains("dashboard") || currentPath.Contains("schedule") || currentPath.Contains("doctors") || currentPath.Contains("patients") || currentPath.Contains("preference") || currentPath.Contains("about");
                                     activeClass = (!checkPath && (context as NavigationMenuData).Value == "dashboard") ? "nav-link sidebar-item active" : "nav-link sidebar-item";
-                                    <NavLink class="@(activeClass)" href="@((context as NavigationMenuData).Value)" Match="NavLinkMatch.Prefix">
+                                    <NavLink class="@(activeClass)" href="@((context as NavigationMenuData).Value)" Match="NavLinkMatch.All">
                                         <span class="dashboard-image">
                                             <span class="item-image @((context as NavigationMenuData).Icon)"></span>
                                         </span>
@@ -76,7 +76,8 @@
 </div>
 
 @code{
-
+    [Inject]
+    protected AppointmentService Service { get; set; }
     SfSidebar SidebarObj;
     [Inject]
     protected IJSRuntime JsRuntime { get; set; }
@@ -93,7 +94,7 @@
     private string hide { get; set; }
     private string opacity { get; set; } = "0";
     public NavigationMenuData ListModel = new NavigationMenuData();
-    private List<NavigationMenuData> navigationItems = NavigationMenuData.GetNavigationItems();
+    private List<NavigationMenuData> navigationItems { get; set; }
     private string activeClass { get; set; } = null;
 
     public void OnCreate()
@@ -105,26 +106,7 @@
 
     protected override void OnInitialized()
     {
-        AppointmentService.startDate = new DateTime(2019, 7, 5, 0, 0, 0, 0);
-        AppointmentService.ActiveDoctorData = DoctorsData.GetDoctorsData().FirstOrDefault();
-        AppointmentService.ActivePatientData = PatientsData.GetPatientsData().FirstOrDefault();
-        AppointmentService.StartHours = TextValueData.GetStartHours();
-        AppointmentService.EndHours = TextValueData.GetEndHours();
-        AppointmentService.Views = TextValueData.GetViews();
-        AppointmentService.ColorCategory = TextValueData.GetColorCategory();
-        AppointmentService.BloodGroupData = TextValueData.GetBloodGroupData();
-        AppointmentService.DayOfWeekList = TextValueNumericData.GetDayOfWeekList();
-        AppointmentService.TimeSlot = TextValueNumericData.GetTimeSlot();
-        AppointmentService.HospitalDatas = HospitalData.GetHospitalData();
-        AppointmentService.PatientsDatas = PatientsData.GetPatientsData();
-        AppointmentService.DoctorsDatas = DoctorsData.GetDoctorsData();
-        AppointmentService.WaitingLists = WaitingList.GetWaitingList();
-        AppointmentService.SpecializationDatas = SpecializationData.GetSpecializationData();
-        AppointmentService.DutyTimings = TextIdData.DutyTimingsData();
-        AppointmentService.ExperienceData = TextIdData.ExperienceData();
-        AppointmentService.ActivityDatas = ActivityData.GetActivityData();
-        AppointmentService.NavigationMenuDatas = NavigationMenuData.GetNavigationItems();
-        AppointmentService.CalendarSettings = new CalendarSetting { bookingColor = "Doctors", calendar = new AppointmentPlanner.Models.Calendar { start = "08:00", end = "21:00" }, currentView = "Week", interval = 60, firstDayOfWeek = 0 };
+        this.navigationItems = Service.NavigationMenuDatas;
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
