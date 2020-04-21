@@ -9,8 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Syncfusion.Blazor;
 using AppointmentPlanner.Data;
+using Syncfusion.Blazor;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace AppointmentPlanner
 {
@@ -29,6 +30,7 @@ namespace AppointmentPlanner
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddScoped<AppointmentService>();
             services.AddSyncfusionBlazor();
             
         }

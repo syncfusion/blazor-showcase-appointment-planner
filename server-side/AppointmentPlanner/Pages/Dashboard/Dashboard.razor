@@ -4,6 +4,7 @@
 @using AppointmentPlanner.Models;
 @using System;
 @using System.Globalization;
+@implements IDisposable;
 
 <div id="dashboard" class="planner-dashboard">
     <div class="row content view-detail-display" style="margin: 0px;">
@@ -99,7 +100,7 @@
                         <Template>
                             <div class="activity-container @((context as ActivityData).Type)">
                                 <div class="activity-message"><span class="type-name">@((context as ActivityData).Name)</span> - <span>@((context as ActivityData).Message)</span></div>
-                                <span class="activity-time">@(AppointmentService.timeSlince((context as ActivityData).ActivityTime))</span>
+                                <span class="activity-time">@(Service.timeSlince((context as ActivityData).ActivityTime))</span>
                             </div>
                         </Template>
                     </ListViewTemplates>
@@ -140,6 +141,8 @@
 
 @code {
 
+    [Inject]
+    protected AppointmentService Service { get; set; }
     private string dayEventCount { get; set; }
     private string weekEventCount { get; set; }
     private List<AppointmentData> gridData { get; set; } = new List<AppointmentData>();
@@ -147,8 +150,8 @@
     private DoctorsData doctorAvail = new DoctorsData();
     private AppointmentData model = new AppointmentData();
     private List<HospitalData> hospitalData { get; set; }
-    private List<ActivityData> listDataSource { get; set; } = AppointmentService.ActivityDatas;
-    public List<DoctorsData> doctorAvailability { get; set; } = AppointmentService.DoctorsDatas;
+    private List<ActivityData> listDataSource { get; set; }
+    public List<DoctorsData> doctorAvailability { get; set; }
     private List<DoctorsData> doctorsData { get; set; }
     private List<PatientsData> patientsData { get; set; }
 
@@ -166,23 +169,25 @@
 
     protected override void OnInitialized()
     {
-        hospitalData = HospitalData.GetHospitalData();
-        doctorsData = DoctorsData.GetDoctorsData();
-        patientsData = PatientsData.GetPatientsData();
-        firstDayOfWeek = AppointmentService.GetWeekFirstDate(AppointmentService.startDate);
-        max = AppointmentService.GetWeekFirstDate(AppointmentService.startDate).AddDays(6);
-        endDate = AppointmentService.startDate.AddDays(1);
-        List<HospitalData> currentDayEvents = AppointmentService.GetFilteredData(startDate, endDate);
+        this.doctorAvailability = Service.DoctorsDatas;
+        hospitalData = Service.HospitalDatas;
+        doctorsData = Service.DoctorsDatas;
+        listDataSource = Service.ActivityDatas;
+        patientsData = Service.PatientsDatas;
+        firstDayOfWeek = Service.GetWeekFirstDate(Service.startDate);
+        max = Service.GetWeekFirstDate(Service.startDate).AddDays(6);
+        endDate = Service.startDate.AddDays(1);
+        List<HospitalData> currentDayEvents = Service.GetFilteredData(startDate, endDate);
         this.gridData = this.GetAppoinment(currentDayEvents);
-        List<HospitalData> currentViewEvents = AppointmentService.GetFilteredData(firstDayOfWeek, this.AddDate(startDate, 6));
+        List<HospitalData> currentViewEvents = Service.GetFilteredData(firstDayOfWeek, this.AddDate(startDate, 6));
         this.dayEventCount = currentDayEvents.Count().ToString();
         this.weekEventCount = currentViewEvents.Count().ToString();
         List<HospitalData> diabetologyData = currentViewEvents.Where(item => item.DepartmentId == 5).ToList();
         List<HospitalData> orthopaedicsData = currentViewEvents.Where(item => item.DepartmentId == 4).ToList();
         List<HospitalData> cardiologyData = currentViewEvents.Where(item => item.DepartmentId == 6).ToList();
-        chartData = AppointmentService.GetAllChartData(diabetologyData, firstDayOfWeek);
-        chartData1 = AppointmentService.GetAllChartData(orthopaedicsData, firstDayOfWeek);
-        chartData2 = AppointmentService.GetAllChartData(cardiologyData, firstDayOfWeek);
+        chartData = Service.GetAllChartData(diabetologyData, firstDayOfWeek);
+        chartData1 = Service.GetAllChartData(orthopaedicsData, firstDayOfWeek);
+        chartData2 = Service.GetAllChartData(cardiologyData, firstDayOfWeek);
     }
 
     private List<AppointmentData> GetAppoinment(List<HospitalData> currentDayEvents)
@@ -195,7 +200,7 @@
             var filteredDoctors = doctorsData.Where(item => item.Id.Equals(eventData.DoctorId)).FirstOrDefault();
             if (filteredPatients != null && filteredDoctors != null)
             {
-                data.Add(new AppointmentData(AppointmentService.GetFormatDate(eventData.StartTime, "hh:mm tt"), filteredPatients.Name, filteredDoctors.Name, eventData.Symptoms, filteredDoctors.Id));
+                data.Add(new AppointmentData(Service.GetFormatDate(eventData.StartTime, "hh:mm tt"), filteredPatients.Name, filteredDoctors.Name, eventData.Symptoms, filteredDoctors.Id));
             }
         }
         return data;
@@ -208,7 +213,12 @@
 
     private string getSpecializationText(string text)
     {
-        return SpecializationData.GetSpecializationData().Where(item => item.Id.Equals(text)).FirstOrDefault().Text.ToUpper();
+        return Service.SpecializationDatas.Where(item => item.Id.Equals(text)).FirstOrDefault().Text.ToUpper();
+    }
+
+    public void Dispose()
+    {
+        GC.SuppressFinalize(this);
     }
 
 }

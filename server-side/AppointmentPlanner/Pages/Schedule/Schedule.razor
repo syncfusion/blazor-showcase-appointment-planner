@@ -4,6 +4,7 @@
 @using AppointmentPlanner.Data;
 @using AppointmentPlanner.Models;
 @using Microsoft.JSInterop;
+@implements IDisposable;
 
 <div class="planner-calendar">
     <div class="drag-sample-wrapper droppable">
@@ -119,10 +120,12 @@
 
 @code {
 
-    SfSchedule<HospitalData> scheduleObj;
+    SfSchedule<HospitalData> scheduleObj { get; set; }
 
     [Inject]
     protected IJSRuntime JsRuntime { get; set; }
+    [Inject]
+    protected AppointmentService Service { get; set; }
     public bool EditUpcoming = false;
 
     public bool OpenDialog { get; set; } = false;
@@ -132,27 +135,27 @@
 
     SfDropDownList<int?, DoctorsData> ddlObj { get; set; }
 
-    private List<HospitalData> scheduleEventData { get; set; } = AppointmentService.HospitalDatas;
+    private List<HospitalData> scheduleEventData { get; set; }
 
-    private DoctorsData dropdownAppointModel = new DoctorsData();
+    private DoctorsData dropdownAppointModel { get; set; }
 
-    private List<DoctorsData> doctorsListData { get; set; } = AppointmentService.DoctorsDatas;
+    private List<DoctorsData> doctorsListData { get; set; }
 
-    private TemplateArgs model = new TemplateArgs();
+    private TemplateArgs model { get; set; }
 
-    private WaitingList treeviewModel = new WaitingList();
+    private WaitingList treeviewModel;
 
     private string[] resourceGroup { get; set; } = new string[] { "Departments", "Doctors" };
 
-    private string startHour { get; set; } = AppointmentService.CalendarSettings.calendar.start;
-    private string endHour { get; set; } = AppointmentService.CalendarSettings.calendar.end;
+    private string startHour { get; set; }
+    private string endHour { get; set; }
     private int[] workDay { get; set; } = new int[] { 0, 1, 2, 3, 4, 5, 6 };
-    private Calendar workHours { get; set; } = AppointmentService.CalendarSettings.calendar;
+    private Calendar workHours { get; set; }
 
     private View sceduleView { get; set; }
 
-    private List<SpecializationData> specialistCategory { get; set; } = AppointmentService.SpecializationDatas;
-    private List<DoctorsData> resourceDataSource { get; set; } = AppointmentService.DoctorsDatas;
+    private List<SpecializationData> specialistCategory { get; set; }
+    private List<DoctorsData> resourceDataSource { get; set; }
 
     private object nameValid { get; set; } = new Dictionary<string, object>() { { "required", true } };
 
@@ -163,28 +166,39 @@
     private Dictionary<string, object> subjectHtmlAttr { get; set; } = new Dictionary<string, object>() { { "name", "Subject" } };
     private Dictionary<string, object> locationHtmlAttr { get; set; } = new Dictionary<string, object>() { { "name", "Location" } };
 
-    private List<WaitingList> waitingList { get; set; } = AppointmentService.WaitingLists;
+    private List<WaitingList> waitingList { get; set; }
 
     private List<DoctorsData> specialistData { get; set; }
     private List<DoctorsData> doctorsData { get; set; }
-    public Query QueryData { get; set; } = new Query();
+    public Query QueryData { get; set; }
     private List<DoctorsData> activeDoctorData { get; set; }
     protected override void OnInitialized()
     {
-        sceduleView = (View)Enum.Parse(typeof(View), (AppointmentService.CalendarSettings.currentView as string));
-        specialistData = doctorsData = AppointmentService.DoctorsDatas;
-        this.viewInterval = AppointmentService.CalendarSettings.interval;
-        this.calendarDayOfWeek = AppointmentService.CalendarSettings.firstDayOfWeek;
-        this.resourceColorField = AppointmentService.CalendarSettings.bookingColor;
+        sceduleView = (View)Enum.Parse(typeof(View), (Service.CalendarSettings.currentView as string));
+        specialistData = doctorsData = Service.DoctorsDatas;
+        this.viewInterval = Service.CalendarSettings.interval;
+        this.calendarDayOfWeek = Service.CalendarSettings.firstDayOfWeek;
+        this.resourceColorField = Service.CalendarSettings.bookingColor;
+        this.waitingList = Service.WaitingLists;
+        this.resourceDataSource = Service.DoctorsDatas;
+        this.specialistCategory = Service.SpecializationDatas;
+        this.startHour = Service.CalendarSettings.calendar.start;
+        this.endHour = Service.CalendarSettings.calendar.end;
+        this.scheduleEventData = Service.HospitalDatas;
+        this.workHours = Service.CalendarSettings.calendar;
+        this.doctorsListData = Service.DoctorsDatas;
+        this.dropdownAppointModel = new DoctorsData();
+        this.model = new TemplateArgs();
+        this.QueryData = new Query();
     }
     private string getPatientName(HospitalData data)
     {
         if(data.PatientId != 0)
         {
-            return AppointmentService.PatientsDatas.Where(item => item.Id.Equals(data.PatientId)).FirstOrDefault().Name;
+            return Service.PatientsDatas.Where(item => item.Id.Equals(data.PatientId)).FirstOrDefault().Name;
         } else
         {
-            return AppointmentService.PatientsDatas[0].Name;
+            return Service.PatientsDatas[0].Name;
         }
     }
 
@@ -192,10 +206,10 @@
     {
         if (data.DoctorId != 0)
         {
-            return AppointmentService.DoctorsDatas.Where(item => item.Id.Equals(data.DoctorId)).FirstOrDefault().Name;
+            return Service.DoctorsDatas.Where(item => item.Id.Equals(data.DoctorId)).FirstOrDefault().Name;
         } else
         {
-            return AppointmentService.DoctorsDatas[0].Color;
+            return Service.DoctorsDatas[0].Color;
         }
     }
 
@@ -225,7 +239,7 @@
     }
     private string getEventTime(WaitingList data)
     {
-        return AppointmentService.GetFormatDate(data.StartTime, "MMMd") + ", " + AppointmentService.GetFormatDate(data.StartTime, "h:mm tt") + "-" + AppointmentService.GetFormatDate(data.EndTime, "h:mm tt");
+        return Service.GetFormatDate(data.StartTime, "MMMd") + ", " + Service.GetFormatDate(data.StartTime, "h:mm tt") + "-" + Service.GetFormatDate(data.EndTime, "h:mm tt");
     }
 
     private string getDepartmentName(int id)
@@ -236,12 +250,12 @@
 
     private string getDateHeaderText(DateTime? date)
     {
-        return AppointmentService.GetFormatDate((DateTime)date, "ddd, MMMM d");
+        return Service.GetFormatDate((DateTime)date, "ddd, MMMM d");
     }
 
     private string getEventDetails(HospitalData data)
     {
-        return AppointmentService.GetFormatDate(data.StartTime, "dddd dd, MMMM yyyy") + "(" + AppointmentService.GetFormatDate(data.StartTime, "hh:mm tt") + "-" + AppointmentService.GetFormatDate(data.EndTime, "hh:mm tt") + ")";
+        return Service.GetFormatDate(data.StartTime, "dddd dd, MMMM yyyy") + "(" + Service.GetFormatDate(data.StartTime, "hh:mm tt") + "-" + Service.GetFormatDate(data.EndTime, "hh:mm tt") + ")";
     }
     private string getTreatmentDetail(WaitingList data)
     {
@@ -270,7 +284,7 @@
         if (args.Value != null)
         {
             SpecializationData items = JsonConvert.DeserializeObject<SpecializationData>(args.ItemData.ToString());
-            refreshDataSource(items.DepartmentId, items.Id);
+            refreshDataSource((int)items.DepartmentId, items.Id);
         }
         else
         {
@@ -291,14 +305,14 @@
         }
         else
         {
-            scheduleEventData = AppointmentService.HospitalDatas;
+            scheduleEventData = Service.HospitalDatas;
         }
         this.updateWaitingList((int)deptId);
     }
 
     private void updateWaitingList(int? deptId)
     {
-        var filteredData = AppointmentService.WaitingLists;
+        var filteredData = Service.WaitingLists;
         if (deptId != null)
         {
             filteredData = filteredData.Where(item => item.DepartmentId.Equals(deptId)).ToList();
@@ -308,24 +322,24 @@
 
     private void setDefaultData()
     {
-        specialistCategory = AppointmentService.SpecializationDatas;
-        resourceDataSource = AppointmentService.DoctorsDatas;
+        specialistCategory = Service.SpecializationDatas;
+        resourceDataSource = Service.DoctorsDatas;
 
         QueryData = new Query();
 
-        scheduleEventData = AppointmentService.HospitalDatas;
+        scheduleEventData = Service.HospitalDatas;
         updateWaitingList(null);
-        startHour = AppointmentService.CalendarSettings.calendar.start;
-        endHour = AppointmentService.CalendarSettings.calendar.end;
+        startHour = Service.CalendarSettings.calendar.start;
+        endHour = Service.CalendarSettings.calendar.end;
         workDay = new int[] { 0, 1, 2, 3, 4, 5, 6 };
-        workHours = AppointmentService.CalendarSettings.calendar;
+        workHours = Service.CalendarSettings.calendar;
         activeDoctorData = new List<DoctorsData>();
     }
     private List<HospitalData> generateEvents(DoctorsData activeData)
     {
         List<HospitalData> filteredEvents = new List<HospitalData>();
 
-        List<HospitalData> datas = AppointmentService.HospitalDatas.Where(item => item.DoctorId == activeData.Id).ToList();
+        List<HospitalData> datas = Service.HospitalDatas.Where(item => item.DoctorId == activeData.Id).ToList();
 
         datas.ForEach((ele) => filteredEvents.Add(ele));
 
@@ -369,7 +383,7 @@
     private void updateBreakHours(DateTime currentDate)
     {
         List<DateTime> currentViewDates = new List<DateTime>();
-        DateTime firstDayOfWeek = AppointmentService.GetWeekFirstDate(currentDate);
+        DateTime firstDayOfWeek = Service.GetWeekFirstDate(currentDate);
         DateTime startDate = firstDayOfWeek;
         DateTime endDate = firstDayOfWeek.AddDays(7);
         do
@@ -446,5 +460,12 @@
             this.scheduleObj.OpenEditor(eventData, CurrentAction.Add, true);
         }
 
+    }
+
+    public void Dispose()
+    {
+        scheduleObj = null;
+        ddlObj = null;
+        GC.SuppressFinalize(this);
     }
 }
