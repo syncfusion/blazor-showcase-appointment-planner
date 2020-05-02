@@ -25,7 +25,6 @@
     }
 
         .planner-dashboard .text-display {
-            display: flex;
             text-align: center;
             line-height: 30px;
         }

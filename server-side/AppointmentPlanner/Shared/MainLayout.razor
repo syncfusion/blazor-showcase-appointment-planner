@@ -16,36 +16,67 @@
 <div class="planner-wrapper" style="width: 100%; visibility:@(visible); opacity:@(opacity)">
     <SfSidebar ID="plannerSiderBar" @ref="SidebarObj" EnableGestures="false"  MediaQuery="(min-width: 600px)" Type="SidebarType.Auto" Created="OnCreate" CloseOnDocumentClick="onDocumentClick">
         <ChildContent>
-                <div class="dock">
-                    <div class="info align-center">
-                        <div class="image"><img src="css/appoinment/assets/images/Admin.png" alt="Admin" /></div>
-                        <div class="content nameContent">
-                            <p class='name'>Jane Doe</p>
-                            <p class='user-type'>Admin</p>
-                        </div>
+            <div class="dock">
+                <div class="info align-center">
+                    <div class="image"><img src="css/appoinment/assets/images/Admin.png" alt="Admin" /></div>
+                    <div class="content nameContent">
+                        <p class='name'>Jane Doe</p>
+                        <p class='user-type'>Admin</p>
                     </div>
-                    <SfListView CssClass="menulist" TValue="NavigationMenuData" ShowIcon="true" DataSource="@navigationItems" Enable="true">
-                        <ListViewTemplates TValue="NavigationMenuData">
-                            <Template>
-                                @if ((context as NavigationMenuData) != null)
-                                {
-                                    var currentPath = UriHelper.Uri;
-                                    var baseUri = UriHelper.BaseUri;
-                                    var checkPath = currentPath.Contains("dashboard") || currentPath.Contains("schedule") || currentPath.Contains("doctors") || currentPath.Contains("patients") || currentPath.Contains("preference") || currentPath.Contains("about");
-                                    activeClass = (!checkPath && (context as NavigationMenuData).Value == "dashboard") ? "nav-link sidebar-item active" : "nav-link sidebar-item";
-                                    <NavLink class="@(activeClass)" href="@((context as NavigationMenuData).Value)" Match="NavLinkMatch.All">
-                                        <span class="dashboard-image">
-                                            <span class="item-image @((context as NavigationMenuData).Icon)"></span>
-                                        </span>
-                                        <span class="text" title="@((context as NavigationMenuData).Text)">@((context as NavigationMenuData).Text)</span>
-                                    </NavLink>
-                                }
-                            </Template>
-                        </ListViewTemplates>
-                        <ListViewFieldSettings Text="Text" Id="Value" IconCss="Icon" Tooltip="Text"></ListViewFieldSettings>
-                        <ListViewEvents TValue="NavigationMenuData" Selected="@onSelectedItem"></ListViewEvents>
-                    </SfListView>
                 </div>
+                <div class="sideparent menulist">
+                    <ul class="nav flex-column">
+                        <li class="nav-item e-list-item">
+                            <NavLink class="nav-link sidebar-item" href="" Match="NavLinkMatch.All">
+                                <span class="dashboard-image">
+                                    <span class="item-image icon-dashboard"></span>
+                                </span>
+                                <span class="text" aria-hidden="true" title="Dashboard">Dashboard</span>
+                            </NavLink>
+                        </li>
+                        <li class="nav-item e-list-item">
+                            <NavLink class="nav-link sidebar-item" href="schedule">
+                                <span class="dashboard-image">
+                                    <span class="item-image icon-schedule"></span>
+                                </span>
+                                <span class="text" aria-hidden="true" title="Schedule">Schedule</span>
+                            </NavLink>
+                        </li>
+                        <li class="nav-item e-list-item">
+                            <NavLink class="nav-link sidebar-item" href="doctors">
+                                <span class="dashboard-image">
+                                    <span class="item-image icon-doctors"></span>
+                                </span>
+                                <span class="text" aria-hidden="true" title="Doctors">Doctors</span>
+                            </NavLink>
+                        </li>
+                        <li class="nav-item e-list-item">
+                            <NavLink class="nav-link sidebar-item" href="patients">
+                                <span class="dashboard-image">
+                                    <span class="item-image icon-patients"></span>
+                                </span>
+                                <span class="text" aria-hidden="true" title="Patients">Patients</span>
+                            </NavLink>
+                        </li>
+                        <li class="nav-item e-list-item">
+                            <NavLink class="nav-link sidebar-item" href="preference">
+                                <span class="dashboard-image">
+                                    <span class="item-image icon-preference"></span>
+                                </span>
+                                <span class="text" aria-hidden="true" title="Preference">Preference</span>
+                            </NavLink>
+                        </li>
+                        <li class="nav-item e-list-item">
+                            <NavLink class="nav-link sidebar-item" href="about">
+                                <span class="dashboard-image">
+                                    <span class="item-image icon-about"></span>
+                                </span>
+                                <span class="text" aria-hidden="true" title="About">About</span>
+                            </NavLink>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </ChildContent>
     </SfSidebar>
     <main>
@@ -121,16 +152,5 @@
     private void showSideBar()
     {
         this.SidebarObj.Show();
-    }
-    private void onSelect()
-    {
-        
-    }
-    private void onSelectedItem(Syncfusion.Blazor.Lists.SelectEventArgs<NavigationMenuData> args)
-    {
-        if (this.isDevice)
-        {
-            this.SidebarObj.Hide();
-        }
     }
 }
