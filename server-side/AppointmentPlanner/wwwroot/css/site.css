@@ -82,7 +82,7 @@ app {
 }
 
 .nav-item a.active {
-    background-color: rgba(255,255,255,0.25);
+    background-color: transparent;
     color: white;
 }
 
@@ -167,4 +167,29 @@ app {
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
+}
+.nav-item.e-list-item {
+    height: 50px;
+    line-height: 50px;
+    padding: 0px;
+    border-radius: 3px;
+    border-bottom: 0px;
+    align-items: center;
+    color: #666;
+    cursor: pointer;
+}
+.nav-item.e-list-item:hover {
+    background-color: #f5f5f5;
+    border-color: transparent;
+    color: rgba(51,51,51,.87);
+}
+ul.nav.flex-column {
+    margin: 0 16px;
+    width: 210px;
+}
+
+.sideparent.menulist {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "-apple-system", BlinkMacSystemFont;
+    font-size: 12px;
+    font-weight: 400;
 }
