@@ -10,10 +10,10 @@
     <div class="drag-sample-wrapper droppable">
         <div class="col-lg-9 col-md-9 col-sm-9" style="padding: 0px">
             <div class="schedule-container e-droppable">
-                <SfSchedule ID="schedule" TValue="HospitalData" @ref="scheduleObj" Width="100%" Height="800px" RowAutoHeight="true" CssClass="doctor-appointment-planner" ShowWeekend="false" StartHour="@startHour" EndHour="@endHour" SelectedDate="@(new DateTime(2019, 7, 5))" WorkDays="@workDay" FirstDayOfWeek="@calendarDayOfWeek" @bind-CurrentView="@sceduleView">
-                    <ScheduleEvents TValue="HospitalData" OnCellClick="OnCellClick"></ScheduleEvents>
+                <SfSchedule ID="schedule" TValue="Hospital" @ref="scheduleObj" Width="100%" Height="800px" RowAutoHeight="true" CssClass="doctor-appointment-planner" ShowWeekend="false" StartHour="@startHour" EndHour="@endHour" SelectedDate="@(new DateTime(2020, 2, 5))" WorkDays="@workDay" FirstDayOfWeek="@calendarDayOfWeek" @bind-CurrentView="@sceduleView">
+                    <ScheduleEvents TValue="Hospital" OnCellClick="OnCellClick"></ScheduleEvents>
                     <ScheduleWorkHours Start="08:00" End="21:00"></ScheduleWorkHours>
-                    <ScheduleEventSettings DataSource="@scheduleEventData" ResourceColorField="@resourceColorField" EditFollowingEvents="@EditUpcoming">
+                    <ScheduleEventSettings DataSource="@scheduleEventData" ResourceColorField="@resourceColorField" EditFollowingEvents="@editUpcoming">
                         <ScheduleField>
                             <FieldSubject Name="Name"></FieldSubject>
                             <FieldStartTime Name="StartTime" Title="From"></FieldStartTime>
@@ -22,8 +22,8 @@
                         </ScheduleField>
                     </ScheduleEventSettings>
                     <ScheduleResources>
-                        <ScheduleResource TValue="SpecializationData" DataSource="@specialistCategory" Field="DepartmentId" Title="Department" Name="Departments" TextField="Text" IdField="DepartmentId" ColorField="Color"></ScheduleResource>
-                        <ScheduleResource TValue="DoctorsData" DataSource="@resourceDataSource" Query="@QueryData" Field="DoctorId" Title="Consultation" Name="Doctors" TextField="Name" IdField="Id" ColorField="Color" GroupIDField="DepartmentId" WorkDaysField="AvailableDays" StartHourField="StartHour" EndHourField="EndHour"></ScheduleResource>
+                        <ScheduleResource TValue="Specialization" DataSource="@specialistCategory" Field="DepartmentId" Title="Department" Name="Departments" TextField="Text" IdField="DepartmentId" ColorField="Color"></ScheduleResource>
+                        <ScheduleResource TValue="Doctor" DataSource="@resourceDataSource" Query="@queryData" Field="DoctorId" Title="Consultation" Name="Doctors" TextField="Name" IdField="Id" ColorField="Color" GroupIDField="DepartmentId" WorkDaysField="AvailableDays" StartHourField="StartHour" EndHourField="EndHour"></ScheduleResource>
                     </ScheduleResources>
                     <ScheduleViews>
                         <ScheduleView Option="@View.Day">
@@ -63,16 +63,16 @@
         <div class="col-lg-3 col-md-3 col-sm-3 treeview-container-wrapper">
             <div class="treeview-container">
                 <div>
-                    <SfDropDownList @ref="ddlObj" Placeholder="Choose Specialist" Width="220px" TItem="DoctorsData" PopupHeight="auto" DataSource="@resourceDataSource" TValue="int?" CssClass="planner-dropdown" ShowClearButton="true">
+                    <SfDropDownList @ref="ddlObj" Placeholder="Choose Specialist" Width="220px" TItem="Doctor" PopupHeight="auto" DataSource="@resourceDataSource" TValue="int?" CssClass="planner-dropdown" ShowClearButton="true">
                         <DropDownListEvents TValue="int?" ValueChange="onValueChange"></DropDownListEvents>
                         <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
-                        <DropDownListTemplates TItem="DoctorsData">
+                        <DropDownListTemplates TItem="Doctor">
                             <ItemTemplate>
                                 <div class="specialist-item">
-                                    <img class="value" src="css/appoinment/assets/images/@((context as DoctorsData).Text).png" alt="doctor" />
+                                    <img class="value" src="css/appoinment/assets/images/@((context as Doctor).Text).png" alt="doctor" />
                                     <div class="doctor-details">
-                                        <div class="name">Dr.@((context as DoctorsData).Name)</div>
-                                        <div class="designation">@((context as DoctorsData).Designation)</div>
+                                        <div class="name">Dr.@((context as Doctor).Name)</div>
+                                        <div class="designation">@((context as Doctor).Designation)</div>
                                     </div>
                                 </div>
                             </ItemTemplate>
@@ -113,37 +113,26 @@
         </div>
     </div>
 </div>
-@if (OpenDialog)
-{
-    <AppointmentPlanner.Pages.Doctors.AddEditDoctor IsShow="@OpenDialog" DDLInstance="ddlObj"></AppointmentPlanner.Pages.Doctors.AddEditDoctor>
-}
+
 
 @code {
 
-    SfSchedule<HospitalData> scheduleObj { get; set; }
+    SfSchedule<Hospital> scheduleObj { get; set; }
 
     [Inject]
     protected IJSRuntime JsRuntime { get; set; }
     [Inject]
     protected AppointmentService Service { get; set; }
-    public bool EditUpcoming = false;
+    private bool editUpcoming = false;
 
-    public bool OpenDialog { get; set; } = false;
+    private bool openDialog { get; set; } = false;
     private int viewInterval { get; set; } = 60;
     private int calendarDayOfWeek { get; set; } = 1;
     private string resourceColorField { get; set; }
 
-    SfDropDownList<int?, DoctorsData> ddlObj { get; set; }
+    SfDropDownList<int?, Doctor> ddlObj { get; set; }
 
-    private List<HospitalData> scheduleEventData { get; set; }
-
-    private DoctorsData dropdownAppointModel { get; set; }
-
-    private List<DoctorsData> doctorsListData { get; set; }
-
-    private TemplateArgs model { get; set; }
-
-    private WaitingList treeviewModel;
+    private List<Hospital> scheduleEventData { get; set; }
 
     private string[] resourceGroup { get; set; } = new string[] { "Departments", "Doctors" };
 
@@ -154,89 +143,31 @@
 
     private View sceduleView { get; set; }
 
-    private List<SpecializationData> specialistCategory { get; set; }
-    private List<DoctorsData> resourceDataSource { get; set; }
-
-    private object nameValid { get; set; } = new Dictionary<string, object>() { { "required", true } };
-
-    private object startValid { get; set; } = new Dictionary<string, object>() { { "required", true } };
-    private object endValid { get; set; } = new Dictionary<string, object>() { { "required", true } };
-    private object symValid { get; set; } = new Dictionary<string, object>() { { "required", true }, { "minLength", 5 } };
-
-    private Dictionary<string, object> subjectHtmlAttr { get; set; } = new Dictionary<string, object>() { { "name", "Subject" } };
-    private Dictionary<string, object> locationHtmlAttr { get; set; } = new Dictionary<string, object>() { { "name", "Location" } };
+    private List<Specialization> specialistCategory { get; set; }
+    private List<Doctor> resourceDataSource { get; set; }
 
     private List<WaitingList> waitingList { get; set; }
 
-    private List<DoctorsData> specialistData { get; set; }
-    private List<DoctorsData> doctorsData { get; set; }
-    public Query QueryData { get; set; }
-    private List<DoctorsData> activeDoctorData { get; set; }
+   
+    private Query queryData { get; set; }
+    private List<Doctor> activeDoctorData { get; set; }
+
     protected override void OnInitialized()
     {
-        sceduleView = (View)Enum.Parse(typeof(View), (Service.CalendarSettings.currentView as string));
-        specialistData = doctorsData = Service.DoctorsDatas;
-        this.viewInterval = Service.CalendarSettings.interval;
-        this.calendarDayOfWeek = Service.CalendarSettings.firstDayOfWeek;
-        this.resourceColorField = Service.CalendarSettings.bookingColor;
+        sceduleView = (View)Enum.Parse(typeof(View), (Service.CalendarSettings.CurrentView as string));
+        this.viewInterval = Service.CalendarSettings.Interval;
+        this.calendarDayOfWeek = Service.CalendarSettings.FirstDayOfWeek;
+        this.resourceColorField = Service.CalendarSettings.BookingColor;
         this.waitingList = Service.WaitingLists;
-        this.resourceDataSource = Service.DoctorsDatas;
-        this.specialistCategory = Service.SpecializationDatas;
-        this.startHour = Service.CalendarSettings.calendar.start;
-        this.endHour = Service.CalendarSettings.calendar.end;
-        this.scheduleEventData = Service.HospitalDatas;
-        this.workHours = Service.CalendarSettings.calendar;
-        this.doctorsListData = Service.DoctorsDatas;
-        this.dropdownAppointModel = new DoctorsData();
-        this.model = new TemplateArgs();
-        this.QueryData = new Query();
+        this.resourceDataSource = Service.Doctors;
+        this.specialistCategory = Service.Specializations;
+        this.startHour = Service.CalendarSettings.Calendar.Start;
+        this.endHour = Service.CalendarSettings.Calendar.End;
+        this.scheduleEventData = Service.Hospitals;
+        this.workHours = Service.CalendarSettings.Calendar;
+        this.queryData = new Query();
     }
-    private string getPatientName(HospitalData data)
-    {
-        if(data.PatientId != 0)
-        {
-            return Service.PatientsDatas.Where(item => item.Id.Equals(data.PatientId)).FirstOrDefault().Name;
-        } else
-        {
-            return Service.PatientsDatas[0].Name;
-        }
-    }
-
-    private string getDoctorName(HospitalData data)
-    {
-        if (data.DoctorId != 0)
-        {
-            return Service.DoctorsDatas.Where(item => item.Id.Equals(data.DoctorId)).FirstOrDefault().Name;
-        } else
-        {
-            return Service.DoctorsDatas[0].Color;
-        }
-    }
-
-    private string getBackGroundColor(HospitalData data)
-    {
-        string color;
-        string fontColor;
-        if (scheduleObj.EventSettings.ResourceColorField == "Doctors")
-        {
-            color = this.doctorsData.Where(item => item.Id.Equals(data.DoctorId)).FirstOrDefault().Color;
-
-        }
-        else
-        {
-            color = this.specialistCategory.Where(item => item.DepartmentId.Equals((data.DepartmentId !=0) ? data.DepartmentId : 1)).FirstOrDefault()?.Color;
-        }
-        string[] colors = new string[] { "#60F238", "#fec200" };
-        if (colors.IndexOf(color) != -1)
-        {
-            fontColor = "#333333";
-        }
-        else
-        {
-            fontColor = "#FFFFFF";
-        }
-        return "background:" + color + "; color:" + fontColor + ";";
-    }
+   
     private string getEventTime(WaitingList data)
     {
         return Service.GetFormatDate(data.StartTime, "MMMd") + ", " + Service.GetFormatDate(data.StartTime, "h:mm tt") + "-" + Service.GetFormatDate(data.EndTime, "h:mm tt");
@@ -244,7 +175,7 @@
 
     private string getDepartmentName(int id)
     {
-        SpecializationData specData = this.specialistCategory.Where(item => item.DepartmentId.Equals(id)).FirstOrDefault();
+        Specialization specData = this.specialistCategory.Where(item => item.DepartmentId.Equals(id)).FirstOrDefault();
         return specData.Text.ToUpper();
     }
 
@@ -253,10 +184,6 @@
         return Service.GetFormatDate((DateTime)date, "ddd, MMMM d");
     }
 
-    private string getEventDetails(HospitalData data)
-    {
-        return Service.GetFormatDate(data.StartTime, "dddd dd, MMMM yyyy") + "(" + Service.GetFormatDate(data.StartTime, "hh:mm tt") + "-" + Service.GetFormatDate(data.EndTime, "hh:mm tt") + ")";
-    }
     private string getTreatmentDetail(WaitingList data)
     {
         if (data.Treatment != null)
@@ -269,11 +196,6 @@
         }
     }
 
-    private void createNewEvent(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
-    {
-        var data = new { startTime = new DateTime(2019, 7, 5, 8, 0, 0), endTime = new DateTime(2019, 7, 5, 8, 30, 0) };
-        this.scheduleObj.OpenEditor(data, CurrentAction.Add, false, null);
-    }
 
     public void OnCellClick(CellClickEventArgs args)
     {
@@ -283,7 +205,7 @@
     {
         if (args.Value != null)
         {
-            SpecializationData items = JsonConvert.DeserializeObject<SpecializationData>(args.ItemData.ToString());
+            Specialization items = JsonConvert.DeserializeObject<Specialization>(args.ItemData.ToString());
             refreshDataSource((int)items.DepartmentId, items.Id);
         }
         else
@@ -293,19 +215,19 @@
     }
     private void refreshDataSource(int deptId, string doctorId)
     {
-        List<DoctorsData> filterItem = doctorsListData.Where(item => item.Id.Equals(Int32.Parse(doctorId))).ToList();
+        List<Doctor> filterItem = Service.Doctors.Where(item => item.Id.Equals(Int32.Parse(doctorId))).ToList();
         activeDoctorData = filterItem;
         workDay = filterItem[0].AvailableDays;
-        workHours = new Calendar { start = filterItem[0].StartHour, end = filterItem[0].EndHour };
-        QueryData = new Query().Where(new WhereFilter() { Field = "Id", Operator = "equal", value = Int32.Parse(doctorId) });
-        if (filterItem.Count() > 0)
+        workHours = new Calendar { Start = filterItem[0].StartHour, End = filterItem[0].EndHour };
+        queryData = new Query().Where(new WhereFilter() { Field = "Id", Operator = "equal", value = Int32.Parse(doctorId) });
+        if (filterItem.Any())
         {
             updateBreakHours(scheduleObj.SelectedDate);
             scheduleEventData = generateEvents(activeDoctorData[0]);
         }
         else
         {
-            scheduleEventData = Service.HospitalDatas;
+            scheduleEventData = Service.Hospitals;
         }
         this.updateWaitingList((int)deptId);
     }
@@ -322,24 +244,24 @@
 
     private void setDefaultData()
     {
-        specialistCategory = Service.SpecializationDatas;
-        resourceDataSource = Service.DoctorsDatas;
+        specialistCategory = Service.Specializations;
+        resourceDataSource = Service.Doctors;
 
-        QueryData = new Query();
+        queryData = new Query();
 
-        scheduleEventData = Service.HospitalDatas;
+        scheduleEventData = Service.Hospitals;
         updateWaitingList(null);
-        startHour = Service.CalendarSettings.calendar.start;
-        endHour = Service.CalendarSettings.calendar.end;
+        startHour = Service.CalendarSettings.Calendar.Start;
+        endHour = Service.CalendarSettings.Calendar.End;
         workDay = new int[] { 0, 1, 2, 3, 4, 5, 6 };
-        workHours = Service.CalendarSettings.calendar;
-        activeDoctorData = new List<DoctorsData>();
+        workHours = Service.CalendarSettings.Calendar;
+        activeDoctorData = new List<Doctor>();
     }
-    private List<HospitalData> generateEvents(DoctorsData activeData)
+    private List<Hospital> generateEvents(Doctor activeData)
     {
-        List<HospitalData> filteredEvents = new List<HospitalData>();
+        List<Hospital> filteredEvents = new List<Hospital>();
 
-        List<HospitalData> datas = Service.HospitalDatas.Where(item => item.DoctorId == activeData.Id).ToList();
+        List<Hospital> datas = Service.Hospitals.Where(item => item.DoctorId == activeData.Id).ToList();
 
         datas.ForEach((ele) => filteredEvents.Add(ele));
 
@@ -347,34 +269,34 @@
         {
             if (ele.State != "RemoveBreak")
             {
-                int id = (filteredEvents.Count() > 0) ? filteredEvents.Select(item => item.Id).Max() + 1 : 0;
+                int id = (filteredEvents.Any()) ? filteredEvents.Select(item => item.Id).Max() + 1 : 0;
 
-                filteredEvents.Add(new HospitalData() { Id = id, Name = "Break Time", StartTime = (DateTime)ele.BreakStartHour, EndTime = (DateTime)ele.BreakEndHour, DoctorId = activeData.Id });
+                filteredEvents.Add(new Hospital() { Id = id, Name = "Break Time", StartTime = (DateTime)ele.BreakStartHour, EndTime = (DateTime)ele.BreakEndHour, DoctorId = activeData.Id });
             }
             if (ele.Enable)
             {
                 string shiftValue = (string)activeData.DutyTiming;
-                List<HospitalData> createData = new List<HospitalData>();
+                List<Hospital> createData = new List<Hospital>();
                 var workend = (DateTime)ele.WorkEndHour;
                 var workstart = (DateTime)ele.WorkStartHour;
                 if (shiftValue == "Shift1")
                 {
-                    createData.Add(new HospitalData() { StartTime = new DateTime(workstart.Year, workstart.Month, workstart.Day, 17, 0, 0), EndTime = new DateTime(workend.Year, workend.Month, workend.Day, 21, 0, 0) });
+                    createData.Add(new Hospital() { StartTime = new DateTime(workstart.Year, workstart.Month, workstart.Day, 17, 0, 0), EndTime = new DateTime(workend.Year, workend.Month, workend.Day, 21, 0, 0) });
                 }
                 else if (shiftValue == "Shift2")
                 {
-                    createData.Add(new HospitalData() { StartTime = new DateTime(workstart.Year, workstart.Month, workstart.Day, 8, 0, 0), EndTime = new DateTime(workend.Year, workend.Month, workend.Day, 10, 0, 0) });
-                    createData.Add(new HospitalData() { StartTime = new DateTime(workstart.Year, workstart.Month, workstart.Day, 19, 0, 0), EndTime = new DateTime(workend.Year, workend.Month, workend.Day, 21, 0, 0) });
+                    createData.Add(new Hospital() { StartTime = new DateTime(workstart.Year, workstart.Month, workstart.Day, 8, 0, 0), EndTime = new DateTime(workend.Year, workend.Month, workend.Day, 10, 0, 0) });
+                    createData.Add(new Hospital() { StartTime = new DateTime(workstart.Year, workstart.Month, workstart.Day, 19, 0, 0), EndTime = new DateTime(workend.Year, workend.Month, workend.Day, 21, 0, 0) });
                 }
                 else
                 {
-                    createData.Add(new HospitalData() { StartTime = new DateTime(workstart.Year, workstart.Month, workstart.Day, 8, 0, 0), EndTime = new DateTime(workend.Year, workend.Month, workend.Day, 12, 0, 0) });
+                    createData.Add(new Hospital() { StartTime = new DateTime(workstart.Year, workstart.Month, workstart.Day, 8, 0, 0), EndTime = new DateTime(workend.Year, workend.Month, workend.Day, 12, 0, 0) });
                 }
                 createData.ForEach((item) =>
                 {
                     int id = filteredEvents.Select(data => data.Id).Max() + 1;
 
-                    filteredEvents.Add(new HospitalData() { Id = id, Name = "Off Work", IsBlock = true, StartTime = (DateTime)item.StartTime, EndTime = (DateTime)item.EndTime, DoctorId = activeData.Id });
+                    filteredEvents.Add(new Hospital() { Id = id, Name = "Off Work", IsBlock = true, StartTime = (DateTime)item.StartTime, EndTime = (DateTime)item.EndTime, DoctorId = activeData.Id });
                 });
             }
         });
@@ -411,10 +333,7 @@
     {
         return date = item;
     }
-    private void onAddClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
-    {
-        OpenDialog = true;
-    }
+  
 
     public async void NodeDragStop(DragAndDropEventArgs args)
     {
@@ -425,13 +344,13 @@
         {
             CellClickEventArgs cellData = await scheduleObj.GetCellDetails(args.Target);
             var filteredData = waitingList.Where(item => item.Id.Equals(Int32.Parse(args.DraggedNodeData.Id))).ToList();
-            HospitalData eventData;
+            Hospital eventData;
             object isGroup = await args.Target.GetAttribute("data-group-index");
             if (isGroup != null)
             {
-                ResourceDetails<HospitalData> resData = await scheduleObj.GetResourcesByIndex(cellData.GroupIndex);
+                ResourceDetails<Hospital> resData = await scheduleObj.GetResourcesByIndex(cellData.GroupIndex);
                 TimeSheetGroupData groupData = JsonConvert.DeserializeObject<TimeSheetGroupData>(resData.GroupData.ToString());
-                eventData = new HospitalData
+                eventData = new Hospital
                 {
                     Name = filteredData[0].Name,
                     StartTime = cellData.StartTime,
@@ -445,7 +364,7 @@
             }
             else
             {
-                eventData = new HospitalData
+                eventData = new Hospital
                 {
                     Name = filteredData[0].Name,
                     StartTime = cellData.StartTime,
@@ -457,7 +376,7 @@
                     DoctorId = Int32.Parse(args.DraggedNodeData.Id)
                 };
             }
-            this.scheduleObj.OpenEditor(eventData, CurrentAction.Add, true);
+            await this.scheduleObj.OpenEditor(eventData, CurrentAction.Add, true);
         }
 
     }
@@ -466,6 +385,5 @@
     {
         scheduleObj = null;
         ddlObj = null;
-        GC.SuppressFinalize(this);
     }
 }

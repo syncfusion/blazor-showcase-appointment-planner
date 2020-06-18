@@ -4,7 +4,7 @@
 @using Newtonsoft.Json.Converters;
 @using AppointmentPlanner.Data;
 @using AppointmentPlanner.Models;
-@implements IDisposable;
+
 <div id="preference" class='preference-container'>
     <header>
         <div class="module-title">
@@ -72,7 +72,7 @@
     private string selectedCategory { get; set; }
     private int? timeInterval { get; set; }
     private int? selectedDayOfWeek { get; set; }
-    private CalendarSetting cal { get; set; } = new CalendarSetting();
+   
     protected override void OnInitialized()
     {
         this.views = Service.Views;
@@ -81,12 +81,12 @@
         this.timeSlots = Service.TimeSlot;
         this.colorCategory = Service.ColorCategory;
         this.dayOfWeeks = Service.DayOfWeekList;
-        this.selectedView = Service.CalendarSettings.currentView;
-        this.selectedStartHour = Service.CalendarSettings.calendar.start;
-        this.selectedEndHour = Service.CalendarSettings.calendar.end;
-        this.selectedCategory = Service.CalendarSettings.bookingColor;
-        this.timeInterval = Service.CalendarSettings.interval;
-        this.selectedDayOfWeek = Service.CalendarSettings.firstDayOfWeek;
+        this.selectedView = Service.CalendarSettings.CurrentView;
+        this.selectedStartHour = Service.CalendarSettings.Calendar.Start;
+        this.selectedEndHour = Service.CalendarSettings.Calendar.End;
+        this.selectedCategory = Service.CalendarSettings.BookingColor;
+        this.timeInterval = Service.CalendarSettings.Interval;
+        this.selectedDayOfWeek = Service.CalendarSettings.FirstDayOfWeek;
     }
 
     private void onValueChangeUpdate(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?> args)
@@ -94,10 +94,10 @@
         switch (args.Element.ID)
         {
             case "Duration":
-                Service.CalendarSettings.interval = (int)args.Value;
+                Service.CalendarSettings.Interval = (int)args.Value;
                 break;
             case "FirstDayOfWeek":
-                Service.CalendarSettings.firstDayOfWeek = (int)args.Value;
+                Service.CalendarSettings.FirstDayOfWeek = (int)args.Value;
                 break;
         }
     }
@@ -106,28 +106,24 @@
         switch (args.Element.ID)
         {
             case "CurrentView":
-                Service.CalendarSettings.currentView = args.Value;
+                Service.CalendarSettings.CurrentView = args.Value;
                 break;
             case "CalendarStart":
-                Service.CalendarSettings.calendar.start = args.Value;
+                Service.CalendarSettings.Calendar.Start = args.Value;
                 break;
             case "CalendarEnd":
-                Service.CalendarSettings.calendar.end = args.Value;
+                Service.CalendarSettings.Calendar.End = args.Value;
                 break;
             case "Duration":
-                Service.CalendarSettings.interval = Int32.Parse(args.Value);
+                Service.CalendarSettings.Interval = Int32.Parse(args.Value);
                 break;
             case "BookingColor":
-                Service.CalendarSettings.bookingColor = (string)args.Value;
+                Service.CalendarSettings.BookingColor = (string)args.Value;
                 break;
             case "FirstDayOfWeek":
-                Service.CalendarSettings.firstDayOfWeek = Int32.Parse(args.Value);
+                Service.CalendarSettings.FirstDayOfWeek = Int32.Parse(args.Value);
                 break;
         }
     }
 
-    public void Dispose()
-    {
-        GC.SuppressFinalize(this);
-    }
 }

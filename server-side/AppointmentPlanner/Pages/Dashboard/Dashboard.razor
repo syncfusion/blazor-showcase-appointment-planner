@@ -4,7 +4,7 @@
 @using AppointmentPlanner.Models;
 @using System;
 @using System.Globalization;
-@implements IDisposable;
+
 
 <div id="dashboard" class="planner-dashboard">
     <div class="row content view-detail-display" style="margin: 0px;">
@@ -46,13 +46,13 @@
                             </div>
                         </div>
                         <div class="e-card-content">
-                            <SfGrid id="Grid" DataSource="@gridData" Height="160px">
+                            <SfGrid id="Grid" DataSource="@appointments" Height="160px">
                                 <GridColumns>
                                     <GridColumn Field="Time" HeaderText="Time" TextAlign="@TextAlign.Left" Width="80"></GridColumn>
                                     <GridColumn Field="Name" HeaderText="Name" Width="120"></GridColumn>
                                     <GridColumn HeaderText="Doctor Name" TextAlign="@TextAlign.Left" Width="150">
                                         <Template>
-                                            <NavLink ActiveClass="doctors" Match="NavLinkMatch.Prefix" href="@($"doctors/doctorsdetails/{(context as AppointmentData).DoctorId}")">@((context as AppointmentData).DoctorName)</NavLink>
+                                            <NavLink ActiveClass="doctors" Match="NavLinkMatch.Prefix" href="@($"doctors/doctorsdetails/{(context as Appointment).DoctorId}")">@((context as Appointment).DoctorName)</NavLink>
                                         </Template>
                                     </GridColumn>
                                     <GridColumn Field="Symptoms" HeaderText="Symptoms" TextAlign="@TextAlign.Left" Width="150"></GridColumn>
@@ -95,12 +95,12 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 list-display" style="padding-right: 0px;">
             <div class="recent-activity">
-                <SfListView Height="100%" Width="100%" TValue="ActivityData" ShowHeader="true" DataSource="@listDataSource" CssClass="activity-template" HeaderTitle="Recent Activities">
-                    <ListViewTemplates TValue="ActivityData">
+                <SfListView Height="100%" Width="100%" TValue="Activity" ShowHeader="true" DataSource="@activities" CssClass="activity-template" HeaderTitle="Recent Activities">
+                    <ListViewTemplates TValue="Activity">
                         <Template>
-                            <div class="activity-container @((context as ActivityData).Type)">
-                                <div class="activity-message"><span class="type-name">@((context as ActivityData).Name)</span> - <span>@((context as ActivityData).Message)</span></div>
-                                <span class="activity-time">@(Service.timeSlince((context as ActivityData).ActivityTime))</span>
+                            <div class="activity-container @((context as Activity).Type)">
+                                <div class="activity-message"><span class="type-name">@((context as Activity).Name)</span> - <span>@((context as Activity).Message)</span></div>
+                                <span class="activity-time">@(Service.TimeSince((context as Activity).ActivityTime))</span>
                             </div>
                         </Template>
                     </ListViewTemplates>
@@ -108,8 +108,8 @@
                 </SfListView>
             </div>
             <div class="doctor-availability">
-                <SfListView Height="100%" Width="100%" TValue="DoctorsData" ShowHeader="true" DataSource="@doctorAvailability" CssClass="e-list-template">
-                    <ListViewTemplates TValue="DoctorsData">
+                <SfListView Height="100%" Width="100%" TValue="Doctor" ShowHeader="true" DataSource="@availableDoctors" CssClass="e-list-template">
+                    <ListViewTemplates TValue="Doctor">
                         <HeaderTemplate>
                             <div class="availability-title">
                                 <span class="header-text">Doctor's Availability</span><span class="all-text">
@@ -121,12 +121,12 @@
                             <div class="availabilty-container">
                                 <div class="image-container">
                                     <span class="doctor-image">
-                                        <img src="css/appoinment/assets/images/@((context as DoctorsData).Text).png" /><span class="availability @((context as DoctorsData).Availability)"></span>
+                                        <img src="css/appoinment/assets/images/@((context as Doctor).Text).png" /><span class="availability @((context as Doctor).Availability)"></span>
                                     </span>
                                 </div>
                                 <div class="detail-container">
-                                    <span class="doctor-name">Dr.@((context as DoctorsData).Name)</span>
-                                    <span class="doctor-speciality">@getSpecializationText((context as DoctorsData).Specialization)</span>
+                                    <span class="doctor-name">Dr.@((context as Doctor).Name)</span>
+                                    <span class="doctor-speciality">@getSpecializationText((context as Doctor).Specialization)</span>
                                 </div>
                             </div>
                         </Template>
@@ -145,65 +145,62 @@
     protected AppointmentService Service { get; set; }
     private string dayEventCount { get; set; }
     private string weekEventCount { get; set; }
-    private List<AppointmentData> gridData { get; set; } = new List<AppointmentData>();
-    private ActivityData listData = new ActivityData();
-    private DoctorsData doctorAvail = new DoctorsData();
-    private AppointmentData model = new AppointmentData();
-    private List<HospitalData> hospitalData { get; set; }
-    private List<ActivityData> listDataSource { get; set; }
-    public List<DoctorsData> doctorAvailability { get; set; }
-    private List<DoctorsData> doctorsData { get; set; }
-    private List<PatientsData> patientsData { get; set; }
+    private List<Appointment> appointments { get; set; } = new List<Appointment>();
 
-    private DateTime startDate { get; set; } = new DateTime(2019, 7, 5, 0, 0, 0, 0);
+
+    private List<Activity> activities { get; set; }
+    public List<Doctor> availableDoctors { get; set; }
+
+    private List<Patient> patients { get; set; }
+
+    private DateTime startDate { get; set; } = new DateTime(2020, 2, 5, 0, 0, 0, 0);
 
     private DateTime endDate { get; set; }
 
     private DateTime firstDayOfWeek { get; set; }
     private DateTime max { get; set; }
 
-    private List<ChartDataModel> chartData { get; set; }
-    private List<ChartDataModel> chartData1 { get; set; }
-    private List<ChartDataModel> chartData2 { get; set; }
+    private List<ChartData> chartData { get; set; }
+    private List<ChartData> chartData1 { get; set; }
+    private List<ChartData> chartData2 { get; set; }
 
 
     protected override void OnInitialized()
     {
-        this.doctorAvailability = Service.DoctorsDatas;
-        hospitalData = Service.HospitalDatas;
-        doctorsData = Service.DoctorsDatas;
-        listDataSource = Service.ActivityDatas;
-        patientsData = Service.PatientsDatas;
-        firstDayOfWeek = Service.GetWeekFirstDate(Service.startDate);
-        max = Service.GetWeekFirstDate(Service.startDate).AddDays(6);
-        endDate = Service.startDate.AddDays(1);
-        List<HospitalData> currentDayEvents = Service.GetFilteredData(startDate, endDate);
-        this.gridData = this.GetAppoinment(currentDayEvents);
-        List<HospitalData> currentViewEvents = Service.GetFilteredData(firstDayOfWeek, this.AddDate(startDate, 6));
+        availableDoctors = Service.Doctors;
+
+
+        activities = Service.Activities;
+        patients = Service.Patients;
+        firstDayOfWeek = Service.GetWeekFirstDate(Service.StartDate);
+        max = Service.GetWeekFirstDate(Service.StartDate).AddDays(6);
+        endDate = Service.StartDate.AddDays(1);
+        List<Hospital> currentDayEvents = Service.GetFilteredData(startDate, endDate);
+        this.appointments = this.GetAppoinment(currentDayEvents);
+        List<Hospital> currentViewEvents = Service.GetFilteredData(firstDayOfWeek, this.AddDate(startDate, 6));
         this.dayEventCount = currentDayEvents.Count().ToString();
         this.weekEventCount = currentViewEvents.Count().ToString();
-        List<HospitalData> diabetologyData = currentViewEvents.Where(item => item.DepartmentId == 5).ToList();
-        List<HospitalData> orthopaedicsData = currentViewEvents.Where(item => item.DepartmentId == 4).ToList();
-        List<HospitalData> cardiologyData = currentViewEvents.Where(item => item.DepartmentId == 6).ToList();
-        chartData = Service.GetAllChartData(diabetologyData, firstDayOfWeek);
-        chartData1 = Service.GetAllChartData(orthopaedicsData, firstDayOfWeek);
-        chartData2 = Service.GetAllChartData(cardiologyData, firstDayOfWeek);
+        List<Hospital> diabetologyData = currentViewEvents.Where(item => item.DepartmentId == 5).ToList();
+        List<Hospital> orthopaedicsData = currentViewEvents.Where(item => item.DepartmentId == 4).ToList();
+        List<Hospital> cardiologyData = currentViewEvents.Where(item => item.DepartmentId == 6).ToList();
+        chartData = Service.GetAllChartPoints(diabetologyData, firstDayOfWeek);
+        chartData1 = Service.GetAllChartPoints(orthopaedicsData, firstDayOfWeek);
+        chartData2 = Service.GetAllChartPoints(cardiologyData, firstDayOfWeek);
     }
 
-    private List<AppointmentData> GetAppoinment(List<HospitalData> currentDayEvents)
+    private List<Appointment> GetAppoinment(List<Hospital> currentDayEvents)
     {
-        List<AppointmentData> data = new List<AppointmentData>();
-        for (int i = 0; i < currentDayEvents.Count(); i++)
+        List<Appointment> apts = new List<Appointment>();
+        foreach(var eventData in currentDayEvents)
         {
-            var eventData = currentDayEvents[i];
-            var filteredPatients = patientsData.Where(item => item.Id.Equals(eventData.PatientId)).FirstOrDefault();
-            var filteredDoctors = doctorsData.Where(item => item.Id.Equals(eventData.DoctorId)).FirstOrDefault();
+            var filteredPatients = patients.Where(item => item.Id.Equals(eventData.PatientId)).FirstOrDefault();
+            var filteredDoctors = availableDoctors.Where(item => item.Id.Equals(eventData.DoctorId)).FirstOrDefault();
             if (filteredPatients != null && filteredDoctors != null)
             {
-                data.Add(new AppointmentData(Service.GetFormatDate(eventData.StartTime, "hh:mm tt"), filteredPatients.Name, filteredDoctors.Name, eventData.Symptoms, filteredDoctors.Id));
+                apts.Add(new Appointment(Service.GetFormatDate(eventData.StartTime, "hh:mm tt"), filteredPatients.Name, filteredDoctors.Name, eventData.Symptoms, filteredDoctors.Id));
             }
         }
-        return data;
+        return apts;
     }
 
     private DateTime AddDate(DateTime date, int value)
@@ -213,12 +210,9 @@
 
     private string getSpecializationText(string text)
     {
-        return Service.SpecializationDatas.Where(item => item.Id.Equals(text)).FirstOrDefault().Text.ToUpper();
+        return Service.Specializations.Where(item => item.Id.Equals(text)).FirstOrDefault().Text.ToUpper();
     }
 
-    public void Dispose()
-    {
-        GC.SuppressFinalize(this);
-    }
+
 
 }

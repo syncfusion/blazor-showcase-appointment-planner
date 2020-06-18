@@ -112,8 +112,7 @@
     SfSidebar SidebarObj;
     [Inject]
     protected IJSRuntime JsRuntime { get; set; }
-
-    private string SideBarToggleClass { get; set; }
+   
     private bool onDocumentClick { get; set; }
     private bool isDevice { get; set; }
 
@@ -124,9 +123,9 @@
 
     private string hide { get; set; }
     private string opacity { get; set; } = "0";
-    public NavigationMenuData ListModel = new NavigationMenuData();
-    private List<NavigationMenuData> navigationItems { get; set; }
-    private string activeClass { get; set; } = null;
+
+    private List<NavigationMenu> navigationItems { get; set; }
+   
 
     public void OnCreate()
     {
@@ -137,7 +136,7 @@
 
     protected override void OnInitialized()
     {
-        this.navigationItems = Service.NavigationMenuDatas;
+        this.navigationItems = Service.NavigationMenu;
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)

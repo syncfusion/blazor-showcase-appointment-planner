@@ -1,60 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Globalization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Http;
 using AppointmentPlanner.Models;
 
 namespace AppointmentPlanner.Data
-{ 
+{
     public class AppointmentService
     {
         public AppointmentService()
         {
-            this.ActivityDatas = new ActivityData().GetActivityData();
-            this.startDate = new DateTime(2019, 7, 5, 0, 0, 0, 0);
-            this.ActiveDoctorData = new DoctorsData().GetDoctorsData().FirstOrDefault();
-            this.ActivePatientData = new PatientsData().GetPatientsData().FirstOrDefault();
+            this.Activities = new Activity().GetActivityData();
+            this.StartDate = new DateTime(2020, 2, 5, 0, 0, 0, 0);
+            this.ActiveDoctors = new Doctor().GetDoctorsData().FirstOrDefault();
+            this.ActivePatients = new Patient().GetPatientsData().FirstOrDefault();
             this.StartHours = new TextValueData().GetStartHours();
             this.EndHours = new TextValueData().GetEndHours();
             this.Views = new TextValueData().GetViews();
             this.ColorCategory = new TextValueData().GetColorCategory();
-            this.BloodGroupData = new TextValueData().GetBloodGroupData();
+            this.BloodGroups = new TextValueData().GetBloodGroupData();
             this.DayOfWeekList = new TextValueNumericData().GetDayOfWeekList();
             this.TimeSlot = new TextValueNumericData().GetTimeSlot();
-            this.HospitalDatas = new HospitalData().GetHospitalData();
-            this.PatientsDatas = new PatientsData().GetPatientsData();
-            this.DoctorsDatas = new DoctorsData().GetDoctorsData();
+            this.Hospitals = new Hospital().GetHospitalData();
+            this.Patients = new Patient().GetPatientsData();
+            this.Doctors = new Doctor().GetDoctorsData();
             this.WaitingLists = new WaitingList().GetWaitingList();
-            this.SpecializationDatas = new SpecializationData().GetSpecializationData();
+            this.Specializations = new Specialization().GetSpecializationData();
             this.DutyTimings = new TextIdData().DutyTimingsData();
-            this.ExperienceData = new TextIdData().ExperienceData();
-            this.NavigationMenuDatas = new NavigationMenuData().GetNavigationItems();
-            this.CalendarSettings = new CalendarSetting { bookingColor = "Doctors", calendar = new AppointmentPlanner.Models.Calendar { start = "08:00", end = "21:00" }, currentView = "Week", interval = 60, firstDayOfWeek = 0 };
+            this.Experience = new TextIdData().ExperienceData();
+            this.NavigationMenu = new NavigationMenu().GetNavigationMenuItems();
+            this.CalendarSettings = new CalendarSetting { BookingColor = "Doctors", Calendar = new AppointmentPlanner.Models.Calendar { Start = "08:00", End = "21:00" }, CurrentView = "Week", Interval = 60, FirstDayOfWeek = 0 };
         }
-        public DateTime startDate { get; set; }
-        public DoctorsData ActiveDoctorData { get; set; }
+        public DateTime StartDate { get; set; }
+        public Doctor ActiveDoctors { get; set; }
 
-        public PatientsData ActivePatientData { get; set; }
+        public Patient ActivePatients { get; set; }
         public List<TextValueData> StartHours { get; set; } 
         public List<TextValueData> EndHours { get; set; }
         public List<TextValueData> Views { get; set; }
         public List<TextValueData> ColorCategory { get; set; }
-        public List<TextValueData> BloodGroupData { get; set; }
+        public List<TextValueData> BloodGroups { get; set; }
         public List<TextValueNumericData> DayOfWeekList { get; set; }
         public List<TextValueNumericData> TimeSlot { get; set; }
-        public List<HospitalData> HospitalDatas { get; set; }
-        public List<PatientsData> PatientsDatas { get; set; }
-        public List<DoctorsData> DoctorsDatas { get; set; }
+        public List<Hospital> Hospitals { get; set; }
+        public List<Patient> Patients { get; set; }
+        public List<Doctor> Doctors { get; set; }
         public List<WaitingList> WaitingLists { get; set; }
-        public List<SpecializationData> SpecializationDatas { get; set; }
+        public List<Specialization> Specializations { get; set; }
         public List<TextIdData> DutyTimings { get; set; }
-        public List<TextIdData> ExperienceData { get; set; }
-        public List<ActivityData> ActivityDatas { get; set; }
-        public List<NavigationMenuData> NavigationMenuDatas { get; set; }
+        public List<TextIdData> Experience { get; set; }
+        public List<Activity> Activities { get; set; }
+        public List<NavigationMenu> NavigationMenu { get; set; }
         public CalendarSetting CalendarSettings { get; set; }
 
         public DateTime GetWeekFirstDate(DateTime date)
@@ -67,7 +63,7 @@ namespace AppointmentPlanner.Data
             return date.ToString(type, CultureInfo.InvariantCulture);
         }
 
-        public string timeSlince(DateTime activityTime)
+        public string TimeSince(DateTime activityTime)
         {
             if(Math.Round((DateTime.Now - activityTime).Days / (365.25 / 12)) > 0)
             {
@@ -88,53 +84,37 @@ namespace AppointmentPlanner.Data
             return Math.Round((DateTime.Now - activityTime).TotalMilliseconds).ToString() + " milliSeconds ago";
         }
 
-        public DoctorsData getDoctorDetails(int id)
+        public Doctor GetDoctorDetails(int id)
         {
-            List<DoctorsData> doctors = this.DoctorsDatas;
-
-            DoctorsData filteredItems = doctors.Where(i => i.Id.Equals(id)).FirstOrDefault();
-
-            return filteredItems;
+            return Doctors.Where(i => i.Id.Equals(id)).FirstOrDefault();
         }
 
-        public string getSpecializationText(string text)
+        public string GetSpecializationText(string text)
         {
-            var data = this.SpecializationDatas;
-            SpecializationData specText = data.Where(item => item.Id.Equals(text)).FirstOrDefault();
-            return specText.Text;
+            return Specializations.Where(item => item.Id.Equals(text)).FirstOrDefault().Text;
         }
-        public string getAvailability(DoctorsData data)
+        public string GetAvailability(Doctor doctor)
         {
-            var workDays = data.WorkDays;
+            var workDays = doctor.WorkDays;
             if (workDays != null)
             {
-                List<WorkDaysData> filteredData = workDays.Where(item => item.Enable.Equals(true)).ToList();
-                var result = filteredData.Select(item => item.Day.Substring(0, 3).ToUpper());
-                var resultItem = String.Join(",", result);
-                string.Concat("-", resultItem);
-                return resultItem.ToString();
-            } else
-            {
-                return "";
+                var result = workDays.Where(item => item.Enable.Equals(true)).Select(item => item.Day.Substring(0, 3).ToUpper());
+                return string.Join(",", result).ToString();
+                
             }
+            return string.Empty;
         }
 
-        public List<HospitalData> GetFilteredData(DateTime StartDate, DateTime EndDate)
+        public List<Hospital> GetFilteredData(DateTime StartDate, DateTime EndDate)
         {
-            return this.HospitalDatas.Where(data => (data.StartTime >= StartDate && data.EndTime <= EndDate)).ToList();
+            return this.Hospitals.Where(hospital => (hospital.StartTime >= StartDate && hospital.EndTime <= EndDate)).ToList();
         }
 
-        public ChartDataModel GetChartData(List<HospitalData> data, DateTime startDate)
+        public ChartData GetChartData(List<Hospital> hospitals, DateTime startDate)
         {
-            List<HospitalData> chartData = new List<HospitalData>();
-            for (int i = 0; i < data.Count(); i++)
-            {
-                if (DateTime.Compare(ResetTime(data[i].StartTime), ResetTime(startDate)) == 0)
-                {
-                    chartData.Add(data[i]);
-                }
-            }
-            return new ChartDataModel() { Date = startDate, EventCount = chartData.Count() };
+            List<Hospital> chartData = new List<Hospital>();
+            var eventCount = hospitals.Where(hospital => ResetTime(hospital.StartTime) == ResetTime(startDate)).Count();
+            return new ChartData() { Date = startDate, EventCount = eventCount };
         }
 
 
@@ -143,15 +123,15 @@ namespace AppointmentPlanner.Data
             return new DateTime(date.Year, date.Month, date.Day, 0, 0, 0, 0);
         }
 
-        public List<ChartDataModel> GetAllChartData(List<HospitalData> chartData, DateTime date)
+        public List<ChartData> GetAllChartPoints(List<Hospital> hospitals, DateTime date)
         {
-            List<ChartDataModel> data = new List<ChartDataModel>();
+            List<ChartData> chartPoints = new List<ChartData>();
             for (int i = 0; i < 7; i++)
             {
-                data.Add(GetChartData(chartData, date));
+                chartPoints.Add(GetChartData(hospitals, date));
                 date = date.AddDays(1);
             }
-            return data;
+            return chartPoints;
         }
 
         
