@@ -23,7 +23,10 @@ namespace AppointmentPlanner.Models
         public Nullable<int> RecurrenceID { get; set; }
         public string RecurrenceException { get; set; }
 
-        public Hospital() { }
+        public Hospital()
+        {
+
+        }
 
         public Hospital(int Id, string Name, DateTime StartTime, DateTime EndTime, string Disease, string DepartmentName, int DepartmentId, int DoctorId, int PatientId, string Symptoms)
         {
@@ -147,7 +150,6 @@ namespace AppointmentPlanner.Models
         public int DoctorId { get; set; }
 
         public Appointment() { }
-
         public Appointment(string Time, string Name, string DoctorName, string Symptoms, int DoctorId)
         {
             this.Time = Time;
@@ -184,7 +186,10 @@ namespace AppointmentPlanner.Models
         public int[] AvailableDays { get; set; }
         public List<WorkDay> WorkDays { get; set; }
 
-        public Doctor() { }
+        public Doctor()
+        {
+
+        }
 
         public Doctor(string Name, string Gender, string Text, int Id, int DepartmentId, string Color, string Education, string Specialization, string Experience, string Designation, string DutyTiming, string Email, string Mobile, string Availability, string StartHour, string EndHour, int[] AvailableDays, List<WorkDay> WorkDays)
         {
@@ -316,9 +321,10 @@ namespace AppointmentPlanner.Models
         [Required(ErrorMessage = "Enter valid Hour")]
         public DateTime? BreakEndHour { get; set; } = new DateTime(2020, 2, 01, 13, 0, 0);
         public string State { get; set; }
+        public WorkDay()
+        {
 
-        public WorkDay() { }
-
+        }
         public WorkDay(string Day, int Index, bool Enable, DateTime? WorkStartHour, DateTime? WorkEndHour, DateTime? BreakStartHour, DateTime? BreakEndHour, string State)
         {
             this.Day = Day;
@@ -372,7 +378,10 @@ namespace AppointmentPlanner.Models
         public string Text { get; set; }
         public string Color { get; set; }
 
-        public Specialization() { }
+        public Specialization()
+        {
+
+        }
 
         public Specialization(int? DepartmentId, string Id, string Text, string Color)
         {
@@ -404,15 +413,15 @@ namespace AppointmentPlanner.Models
     {
         public string Id { get; set; }
         public string Text { get; set; }
+        public TextIdData()
+        {
 
-        public TextIdData() { }
-
+        }
         public TextIdData(string Id, string Text)
         {
             this.Id = Id;
             this.Text = Text;
         }
-
         public List<TextIdData> ExperienceData()
         {
             List<TextIdData> data = new List<TextIdData>
@@ -442,9 +451,10 @@ namespace AppointmentPlanner.Models
     {
         public string Value { get; set; }
         public string Text { get; set; }
+        public TextValueData()
+        {
 
-        public TextValueData() { }
-
+        }
         public TextValueData(string Value, string Text)
         {
             this.Value = Value;
@@ -516,14 +526,15 @@ namespace AppointmentPlanner.Models
         public int Value { get; set; }
         public string Text { get; set; }
 
-        public TextValueNumericData() { }
+        public TextValueNumericData()
+        {
 
+        }
         public TextValueNumericData(int Value, string Text)
         {
             this.Value = Value;
             this.Text = Text;
         }
-
         public List<TextValueNumericData> GetTimeSlot()
         {
             List<TextValueNumericData> data = new List<TextValueNumericData>
@@ -551,6 +562,8 @@ namespace AppointmentPlanner.Models
             };
             return data;
         }
+
+
     }
     public class Activity
     {
@@ -559,9 +572,10 @@ namespace AppointmentPlanner.Models
         public string Time { get; set; }
         public string Type { get; set; }
         public DateTime ActivityTime { get; set; }
+        public Activity()
+        {
 
-        public Activity() { }
-
+        }
         public Activity(string Name, string Message, string Time, string Type, DateTime ActivityTime)
         {
             this.Name = Name;
@@ -593,9 +607,10 @@ namespace AppointmentPlanner.Models
         public bool IsAllDay { get; set; }
         public bool IsBlock { get; set; }
         public int[] DoctorId { get; set; }
+        public Block()
+        {
 
-        public Block() { }
-
+        }
         public Block(int Id, string Name, string StartTime, string EndTime, string RecurrenceRule, bool IsAllDay, bool IsBlock, int[] DoctorId)
         {
             this.Id = Id;
@@ -620,9 +635,10 @@ namespace AppointmentPlanner.Models
         public string Text { get; set; }
         public string Value { get; set; } = "dashboard";
         public string Icon { get; set; }
+        public NavigationMenu()
+        {
 
-        public NavigationMenu() { }
-
+        }
         public NavigationMenu(string Text, string Value, string Icon)
         {
             this.Text = Text;

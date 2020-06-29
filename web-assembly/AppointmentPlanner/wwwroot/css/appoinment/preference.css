@@ -1,0 +1,46 @@
+﻿.preference-container {
+    margin: 50px 64px;
+}
+
+    .preference-container .module-title {
+        margin-left: 2.5px;
+    }
+
+    .preference-container .control-container {
+        padding-top: 16px;
+    }
+
+        .preference-container .control-container .label-text {
+            font-weight: 600;
+            font-size: 12px;
+            color: #666;
+            letter-spacing: 0.33px;
+            padding-bottom: 7px;
+        }
+
+        .preference-container .control-container:nth-child(2) {
+            padding-top: 34px;
+        }
+
+@media (max-width: 850px) {
+    .preference-container {
+        margin: 20px 13px;
+    }
+
+        .preference-container .module-title {
+            padding-left: 12.5px !important;
+        }
+
+        .preference-container .control-container {
+            padding-top: 16px;
+        }
+
+            .preference-container .control-container .label-text {
+                padding-bottom: 7px;
+                margin-left: 11.5px;
+            }
+
+            .preference-container .control-container:nth-child(2) {
+                padding-top: 30px;
+            }
+}
