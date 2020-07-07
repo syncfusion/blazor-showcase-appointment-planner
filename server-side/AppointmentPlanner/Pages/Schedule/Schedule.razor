@@ -11,7 +11,7 @@
         <div class="col-lg-9 col-md-9 col-sm-9" style="padding: 0px">
             <div class="schedule-container e-droppable">
                 <SfSchedule ID="schedule" TValue="Hospital" @ref="scheduleObj" Width="100%" Height="800px" RowAutoHeight="true" CssClass="doctor-appointment-planner" ShowWeekend="false" StartHour="@startHour" EndHour="@endHour" SelectedDate="@(new DateTime(2020, 2, 5))" WorkDays="@workDay" FirstDayOfWeek="@calendarDayOfWeek" @bind-CurrentView="@sceduleView">
-                    <ScheduleEvents TValue="Hospital" OnCellClick="OnCellClick"></ScheduleEvents>
+                    <ScheduleEvents TValue="Hospital" OnCellClick="OnCellClick" OnActionBegin="OnActionBegin"></ScheduleEvents>
                     <ScheduleWorkHours Start="08:00" End="21:00"></ScheduleWorkHours>
                     <ScheduleEventSettings DataSource="@scheduleEventData" ResourceColorField="@resourceColorField" EditFollowingEvents="@editUpcoming">
                         <ScheduleField>
@@ -148,7 +148,7 @@
 
     private List<WaitingList> waitingList { get; set; }
 
-   
+
     private Query queryData { get; set; }
     private List<Doctor> activeDoctorData { get; set; }
 
@@ -167,10 +167,10 @@
         this.workHours = Service.CalendarSettings.Calendar;
         this.queryData = new Query();
     }
-   
+
     private string getEventTime(WaitingList data)
     {
-        return Service.GetFormatDate(data.StartTime, "MMMd") + ", " + Service.GetFormatDate(data.StartTime, "h:mm tt") + "-" + Service.GetFormatDate(data.EndTime, "h:mm tt");
+        return Service.GetFormatDate(data.StartTime, "MMM d") + ", " + Service.GetFormatDate(data.StartTime, "h:mm tt") + "-" + Service.GetFormatDate(data.EndTime, "h:mm tt");
     }
 
     private string getDepartmentName(int id)
@@ -200,6 +200,17 @@
     public void OnCellClick(CellClickEventArgs args)
     {
         args.Cancel = true;
+    }
+    public void OnActionBegin(Syncfusion.Blazor.Schedule.ActionEventArgs<Hospital> args)
+    {
+        if (args.RequestType == "eventCreate" && args.AddedRecords.Count >0)
+        {
+            foreach(Hospital Data in args.AddedRecords)
+            {
+                Random random = new Random();
+                Data.PatientId = Data.PatientId == 0 ? random.Next(1, Service.Patients.Max(p => p.Id)) : Data.PatientId;
+            }
+        }
     }
     private void onValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?> args)
     {
@@ -333,8 +344,6 @@
     {
         return date = item;
     }
-  
-
     public async void NodeDragStop(DragAndDropEventArgs args)
     {
         args.Cancel = true;

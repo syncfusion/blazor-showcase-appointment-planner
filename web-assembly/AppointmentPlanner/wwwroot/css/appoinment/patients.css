@@ -64,7 +64,7 @@
     max-height: 495px !important;
 }
 .e-dialog.new-patient-dialog {
-    max-height: 500px !important;
+    max-height: 505px !important;
 }
 
 .e-dialog.e-edit-dialog .e-dlg-content .grid-edit-dialog {
@@ -207,11 +207,6 @@
     font-size: 10px;
 }
 
-.e-btn-group input:checked + label.e-btn {
-    background-color: #e6e6e6;
-    border-color: #adadad;
-    color: #333;
-    outline: #fff 0 solid;
-    outline-offset: 0;
-    box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+.e-btn-group .e-radio-wrapper {
+    padding: 4px;
 }

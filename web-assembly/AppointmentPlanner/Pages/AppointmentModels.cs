@@ -23,10 +23,7 @@ namespace AppointmentPlanner.Models
         public Nullable<int> RecurrenceID { get; set; }
         public string RecurrenceException { get; set; }
 
-        public Hospital()
-        {
-
-        }
+        public Hospital() { }
 
         public Hospital(int Id, string Name, DateTime StartTime, DateTime EndTime, string Disease, string DepartmentName, int DepartmentId, int DoctorId, int PatientId, string Symptoms)
         {
@@ -101,7 +98,7 @@ namespace AppointmentPlanner.Models
         public string Disease { get; set; }
         public string DepartmentName { get; set; }
         [Required]
-        public string BloodGroup { get; set; } = "AB+ve";
+        public string BloodGroup { get; set; } = "AB +ve";
         public string Gender { get; set; } = "Male";
         public string Symptoms { get; set; }
         public Patient()
@@ -129,13 +126,13 @@ namespace AppointmentPlanner.Models
         {
             List<Patient> data = new List<Patient>
             {
-                new Patient(1, "Laura", "Laura", new DateTime(1980, 8, 3), "(071) 555-4444", "laura90@mail.com", "507 - 20th Ave. E.\r\nApt. 2A", "Eye Checkup", "GENERAL", "O+ve", "Female", "Sweating, Chills and Shivering"),
-                new Patient(2, "Milka", "Milka", new DateTime(2000, 3, 5), "(071) 555-4445", "milka40@sample.com", "908 W. Capital Way", "Bone Fracture", "ORTHOPEDICS", "AB+ve", "Female", "Swelling or bruising over a bone, Pain in the injured area"),
-                new Patient(3, "Adams", "Adams", new DateTime(1985, 2, 3), "(071) 555-4454", "adams89@rpy.com", "722 Moss Bay Blvd.", "Eye and Spectactles", "GENERAL", "B+ve", "Male", "Frequent squinting, Eye fatigue or strain"),
-                new Patient(4, "Janet", "Janet", new DateTime(2000, 7, 3), "(071) 555-4544", "janet79@rpy.com", "4110 Old Redmond Rd.", "Biological Problem", "GENERAL", "B+ve", "Male", "Physical aches or pain, Memory difficulties or personality change"),
-                new Patient(5, "Mercy", "Mercy", new DateTime(2005, 4, 29), "(071) 555-5444", "mercy60@sample.com", "14 Garrett Hill", "Skin Hives", "DERMATOLOGY", "AB-ve", "Female", "outbreak of swollen, pale red bumps or plaques"),
-                new Patient(6, "Richa", "Richa", new DateTime(1989, 10, 29), "(206) 555-4444", "richa46@mail.com", "Coventry House\r\nMiner Rd.", "Arm Fracture", "ORTHOPEDICS", "B+ve", "Female", "Swelling, warmth, or redness in the joint"),
-                new Patient(7, "Maud Oliver", "Maud Oliver", new DateTime(1989, 10, 29), "(206) 666-4444", "moud46@rpy.com", "Coventry House\r\nMiner Rd.", "Racing heartbeat", "CARDIOLOGY", "B+ve", "Male", "A fluttering in your chest")
+                new Patient(1, "Laura", "Laura", new DateTime(1980, 8, 3), "(071) 555-4444", "laura90@mail.com", "507 - 20th Ave. E.\r\nApt. 2A", "Eye Checkup", "GENERAL", "O +ve", "Female", "Sweating, Chills and Shivering"),
+                new Patient(2, "Milka", "Milka", new DateTime(2000, 3, 5), "(071) 555-4445", "milka40@sample.com", "908 W. Capital Way", "Bone Fracture", "ORTHOPEDICS", "AB +ve", "Female", "Swelling or bruising over a bone, Pain in the injured area"),
+                new Patient(3, "Adams", "Adams", new DateTime(1985, 2, 3), "(071) 555-4454", "adams89@rpy.com", "722 Moss Bay Blvd.", "Eye and Spectactles", "GENERAL", "B +ve", "Male", "Frequent squinting, Eye fatigue or strain"),
+                new Patient(4, "Janet", "Janet", new DateTime(2000, 7, 3), "(071) 555-4544", "janet79@rpy.com", "4110 Old Redmond Rd.", "Biological Problem", "GENERAL", "B +ve", "Male", "Physical aches or pain, Memory difficulties or personality change"),
+                new Patient(5, "Mercy", "Mercy", new DateTime(2005, 4, 29), "(071) 555-5444", "mercy60@sample.com", "14 Garrett Hill", "Skin Hives", "DERMATOLOGY", "AB  -ve", "Female", "outbreak of swollen, pale red bumps or plaques"),
+                new Patient(6, "Richa", "Richa", new DateTime(1989, 10, 29), "(206) 555-4444", "richa46@mail.com", "Coventry House\r\nMiner Rd.", "Arm Fracture", "ORTHOPEDICS", "B +ve", "Female", "Swelling, warmth, or redness in the joint"),
+                new Patient(7, "Maud Oliver", "Maud Oliver", new DateTime(1989, 10, 29), "(206) 666-4444", "moud46@rpy.com", "Coventry House\r\nMiner Rd.", "Racing heartbeat", "CARDIOLOGY", "B +ve", "Male", "A fluttering in your chest")
             };
             return data;
         }
@@ -150,6 +147,7 @@ namespace AppointmentPlanner.Models
         public int DoctorId { get; set; }
 
         public Appointment() { }
+
         public Appointment(string Time, string Name, string DoctorName, string Symptoms, int DoctorId)
         {
             this.Time = Time;
@@ -186,10 +184,7 @@ namespace AppointmentPlanner.Models
         public int[] AvailableDays { get; set; }
         public List<WorkDay> WorkDays { get; set; }
 
-        public Doctor()
-        {
-
-        }
+        public Doctor() { }
 
         public Doctor(string Name, string Gender, string Text, int Id, int DepartmentId, string Color, string Education, string Specialization, string Experience, string Designation, string DutyTiming, string Email, string Mobile, string Availability, string StartHour, string EndHour, int[] AvailableDays, List<WorkDay> WorkDays)
         {
@@ -321,10 +316,9 @@ namespace AppointmentPlanner.Models
         [Required(ErrorMessage = "Enter valid Hour")]
         public DateTime? BreakEndHour { get; set; } = new DateTime(2020, 2, 01, 13, 0, 0);
         public string State { get; set; }
-        public WorkDay()
-        {
 
-        }
+        public WorkDay() { }
+
         public WorkDay(string Day, int Index, bool Enable, DateTime? WorkStartHour, DateTime? WorkEndHour, DateTime? BreakStartHour, DateTime? BreakEndHour, string State)
         {
             this.Day = Day;
@@ -378,10 +372,7 @@ namespace AppointmentPlanner.Models
         public string Text { get; set; }
         public string Color { get; set; }
 
-        public Specialization()
-        {
-
-        }
+        public Specialization() { }
 
         public Specialization(int? DepartmentId, string Id, string Text, string Color)
         {
@@ -413,15 +404,15 @@ namespace AppointmentPlanner.Models
     {
         public string Id { get; set; }
         public string Text { get; set; }
-        public TextIdData()
-        {
 
-        }
+        public TextIdData() { }
+
         public TextIdData(string Id, string Text)
         {
             this.Id = Id;
             this.Text = Text;
         }
+
         public List<TextIdData> ExperienceData()
         {
             List<TextIdData> data = new List<TextIdData>
@@ -441,7 +432,7 @@ namespace AppointmentPlanner.Models
             {
                 new TextIdData("Shift1", "08:00 AM - 5:00 PM"),
                 new TextIdData("Shift2", "10:00 AM - 7:00 PM"),
-                new TextIdData("Shift3", "12:00 AM - 9:00 PM")
+                new TextIdData("Shift3", "12:00 PM - 9:00 PM")
             };
             return data;
         }
@@ -451,10 +442,9 @@ namespace AppointmentPlanner.Models
     {
         public string Value { get; set; }
         public string Text { get; set; }
-        public TextValueData()
-        {
 
-        }
+        public TextValueData() { }
+
         public TextValueData(string Value, string Text)
         {
             this.Value = Value;
@@ -465,11 +455,11 @@ namespace AppointmentPlanner.Models
         {
             List<TextValueData> data = new List<TextValueData>
             {
-                new TextValueData("08:00", "8.00 am"),
-                new TextValueData("9:00", "9.00 am"),
-                new TextValueData("10:00", "10.00 am"),
-                new TextValueData("11:00", "11.00 am"),
-                new TextValueData("12:00", "12.00 am")
+                new TextValueData("08:00", "8.00 AM"),
+                new TextValueData("9:00", "9.00 AM"),
+                new TextValueData("10:00", "10.00 AM"),
+                new TextValueData("11:00", "11.00 AM"),
+                new TextValueData("12:00", "12.00 AM")
             };
             return data;
         }
@@ -477,12 +467,12 @@ namespace AppointmentPlanner.Models
         {
             List<TextValueData> data = new List<TextValueData>
             {
-                new TextValueData("16:00", "4.00 pm"),
-                new TextValueData("17:00", "5.00 pm"),
-                new TextValueData("18:00", "6.00 pm"),
-                new TextValueData("19:00", "7.00 pm"),
-                new TextValueData("20:00", "8.00 pm"),
-                new TextValueData("21:00", "9.00 pm")
+                new TextValueData("16:00", "4.00 PM"),
+                new TextValueData("17:00", "5.00 PM"),
+                new TextValueData("18:00", "6.00 PM"),
+                new TextValueData("19:00", "7.00 PM"),
+                new TextValueData("20:00", "8.00 PM"),
+                new TextValueData("21:00", "9.00 PM")
             };
             return data;
         }
@@ -509,14 +499,14 @@ namespace AppointmentPlanner.Models
         {
             List<TextValueData> data = new List<TextValueData>
             {
-                new TextValueData("AB+ve", "AB+ ve"),
-                new TextValueData("A+ve", "A+ ve"),
-                new TextValueData("B+ve", "B+ ve"),
-                new TextValueData("O+ve", "O+ ve"),
-                new TextValueData("AB-ve", "AB- ve"),
-                new TextValueData("A-ve", "A- ve"),
-                new TextValueData("B-ve", "B- ve"),
-                new TextValueData("O-ve", "O- ve")
+                new TextValueData("AB +ve", "AB +ve"),
+                new TextValueData("A +ve", "A +ve"),
+                new TextValueData("B +ve", "B +ve"),
+                new TextValueData("O +ve", "O +ve"),
+                new TextValueData("AB -ve", "AB -ve"),
+                new TextValueData("A -ve", "A -ve"),
+                new TextValueData("B -ve", "B -ve"),
+                new TextValueData("O -ve", "O -ve")
             };
             return data;
         }
@@ -526,24 +516,23 @@ namespace AppointmentPlanner.Models
         public int Value { get; set; }
         public string Text { get; set; }
 
-        public TextValueNumericData()
-        {
+        public TextValueNumericData() { }
 
-        }
         public TextValueNumericData(int Value, string Text)
         {
             this.Value = Value;
             this.Text = Text;
         }
+
         public List<TextValueNumericData> GetTimeSlot()
         {
             List<TextValueNumericData> data = new List<TextValueNumericData>
             {
-                new TextValueNumericData(10, "10 min"),
-                new TextValueNumericData(20, "20 min"),
-                new TextValueNumericData(30, "30 min"),
-                new TextValueNumericData(60, "60 min"),
-                new TextValueNumericData(120, "120 min")
+                new TextValueNumericData(10, "10 mins"),
+                new TextValueNumericData(20, "20 mins"),
+                new TextValueNumericData(30, "30 mins"),
+                new TextValueNumericData(60, "60 mins"),
+                new TextValueNumericData(120, "120 mins")
             };
             return data;
         }
@@ -562,8 +551,6 @@ namespace AppointmentPlanner.Models
             };
             return data;
         }
-
-
     }
     public class Activity
     {
@@ -572,10 +559,9 @@ namespace AppointmentPlanner.Models
         public string Time { get; set; }
         public string Type { get; set; }
         public DateTime ActivityTime { get; set; }
-        public Activity()
-        {
 
-        }
+        public Activity() { }
+
         public Activity(string Name, string Message, string Time, string Type, DateTime ActivityTime)
         {
             this.Name = Name;
@@ -591,7 +577,7 @@ namespace AppointmentPlanner.Models
                 new Activity("Added New Doctor", "Dr.Johnson James, Cardiologist", "5 mins ago", "doctor", new DateTime(2020, 2, 1, 9, 0, 0)),
                 new Activity("Added New Appointment", "Laura for General Checkup on 7th March, 2020 @ 8.30 AM with Dr.Molli Cobb, Cardiologist", "5 mins ago", "appointment", new DateTime(2020, 2, 1, 11, 0, 0)),
                 new Activity("Added New Patient", "James Richard for Fever and cold", "5 mins ago", "patient", new DateTime(2020, 2, 1, 10, 0, 0)),
-                new Activity("Added New Appointment", "Joseph for consultation on 7th Feb, 2020 @ 11.10AM with Dr.Molli Cobb", "5 mins ago", "appointment", new DateTime(2020, 2, 1, 11, 0, 0))
+                new Activity("Added New Appointment", "Joseph for consultation on 7th Feb, 2020 @ 11.10 AM with Dr.Molli Cobb", "5 mins ago", "appointment", new DateTime(2020, 2, 1, 11, 0, 0))
             };
             return data;
         }
@@ -607,10 +593,9 @@ namespace AppointmentPlanner.Models
         public bool IsAllDay { get; set; }
         public bool IsBlock { get; set; }
         public int[] DoctorId { get; set; }
-        public Block()
-        {
 
-        }
+        public Block() { }
+
         public Block(int Id, string Name, string StartTime, string EndTime, string RecurrenceRule, bool IsAllDay, bool IsBlock, int[] DoctorId)
         {
             this.Id = Id;
@@ -635,10 +620,9 @@ namespace AppointmentPlanner.Models
         public string Text { get; set; }
         public string Value { get; set; } = "dashboard";
         public string Icon { get; set; }
-        public NavigationMenu()
-        {
 
-        }
+        public NavigationMenu() { }
+
         public NavigationMenu(string Text, string Value, string Icon)
         {
             this.Text = Text;

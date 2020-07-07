@@ -125,7 +125,7 @@
                     }
 
                     .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item {
-                        height: 60px;
+                        height: 65px;
                         border-radius: 4px;
                         margin: 5px 0;
                     }
@@ -141,12 +141,12 @@
                         }
 
                         .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-fullrow {
-                            height: 55px;
+                            height: 60px;
                         }
 
                         .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-text-content {
                             padding: 0;
-                            height: 60px;
+                            height: 65px;
                         }
 
                             .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-text-content .e-list-text {
@@ -179,7 +179,7 @@
                                 }
 
                                     .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-list-text #waiting #waitdetails #waitlist {
-                                        height: 16px;
+                                        height: 18px;
                                         font-weight: 500;
                                         font-size: 13px;
                                         color: #333;
@@ -190,12 +190,12 @@
                                         font-size: 10px;
                                         color: #333;
                                         letter-spacing: 0.3px;
-                                        height: 13px;
+                                        height: 17px;
                                         padding: 2px 0;
                                     }
 
                                     .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-list-text #waiting #waitdetails #waitcategory {
-                                        height: 13px;
+                                        height: 17px;
                                         font-size: 10px;
                                         color: #999;
                                         letter-spacing: 0.3px;
@@ -631,4 +631,8 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+}
+
+.e-schedule .e-schedule-toolbar.e-toolbar .e-toolbar-pop .e-toolbar-item .e-tbar-btn.e-btn {
+    padding: 8px 4px;
 }

@@ -112,7 +112,7 @@
         <DialogAnimationSettings Effect="DialogEffect.Zoom"></DialogAnimationSettings>
         <EditForm Model="@patientEditModel" OnValidSubmit="@HandleValidSubmit">
             <DataAnnotationsValidator></DataAnnotationsValidator>
-            <div class="name-container">
+            <div class="field-container name-container">
                 <SfTextBox CssClass="patient-name e-field" Placeholder="Patient Name" FloatLabelType="@FloatLabelType.Always" @bind-Value="@patientEditModel.Name"></SfTextBox>
                 <ValidationMessage For="@(() => patientEditModel.Name)" />
             </div>
@@ -120,10 +120,8 @@
                 <div class="gender">
                     <div><label>Gender</label></div>
                     <div class="e-btn-group e-round-corner e-field">
-                        <input type="radio" ID="patientCheckMale" name="Gender" Value="Male" @onchange="@(()=> patientEditModel.Gender = "Male")" checked />
-                        <label class="e-btn" for="patientCheckMale">Male</label>
-                        <input type="radio" ID="patientCheckFemale" name="Gender" Value="Female" @onchange="@(()=> patientEditModel.Gender = "Female")" />
-                        <label class="e-btn" for="patientCheckFemale">Female</label>
+                        <SfRadioButton Label="Male" Name="Gender" Value="Male" @bind-Checked="@patientEditModel.Gender"></SfRadioButton>
+                        <SfRadioButton Label="Female" Name="Gender" Value="Female" @bind-Checked="@patientEditModel.Gender"></SfRadioButton>
                     </div>
                 </div>
                 <div class="dob">
@@ -205,7 +203,7 @@
 
     private bool IsShowPatientEditDialog { get; set; } = false;
     private bool showGridEditDialog { get; set; } = false;
-    private string patientHeader { get; set; } = "New Patient";
+    private string patientHeader { get; set; }
     private string gridEditHeader { get; set; } = "Patient Details";
 
     private List<TextValueData> bloodGroupData { get; set; }
@@ -225,7 +223,8 @@
     private void onAddPatient(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {
         saveButton = "Save";
-        patientEditModel = new Patient { Name = null, Gender = "Male", Mobile = null, Email = null, Symptoms = null };
+        patientEditModel = new Patient { Name = null, Gender = "Male", DOB= new DateTime(1996, 1, 31), BloodGroup = "B +ve", Mobile = null, Email = null, Symptoms = null };
+        this.patientHeader = "New Patient";
         this.IsShowPatientEditDialog = true;
     }
     private async Task onCancelClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
@@ -284,7 +283,8 @@
     private void hideGridEditDialog()
     {
         showGridEditDialog = false;
-        patientEditModel = new Patient { Name = activePatientData.Name, Gender = activePatientData.Gender, Mobile = activePatientData.Mobile, Email = activePatientData.Email, Symptoms = activePatientData.Symptoms };
+        patientEditModel = new Patient { Name = activePatientData.Name, Gender = activePatientData.Gender, Mobile = activePatientData.Mobile, Email = activePatientData.Email, Symptoms = activePatientData.Symptoms, BloodGroup = activePatientData.BloodGroup, DOB = activePatientData.DOB };
+        this.patientHeader = "Edit Patient";
         this.IsShowPatientEditDialog = true;
     }
 

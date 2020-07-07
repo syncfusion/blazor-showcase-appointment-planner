@@ -632,3 +632,7 @@
     overflow: hidden;
     white-space: nowrap;
 }
+
+.e-schedule .e-schedule-toolbar.e-toolbar .e-toolbar-pop .e-toolbar-item .e-tbar-btn.e-btn {
+    padding: 8px 4px;
+}

@@ -83,3 +83,7 @@
         flex: 1;
     }
 }
+
+.e-btn-group .e-radio-wrapper {
+    padding: 4px;
+}
