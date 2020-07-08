@@ -149,6 +149,7 @@
         .planner-header .logout-container .logout-image {
             color: #fff;
             font-size: 25px;
+            cursor: pointer;
         }
 
     .planner-header:not(.device-header) {
@@ -166,6 +167,7 @@
             .planner-header:not(.device-header) .logout-container .logout-name {
                 flex: initial;
                 display: block;
+                cursor: pointer;
             }
 
             .planner-header:not(.device-header) .logout-container .logout-icon-container {

@@ -64,7 +64,7 @@
     max-height: 495px !important;
 }
 .e-dialog.new-patient-dialog {
-    max-height: 500px !important;
+    max-height: 505px !important;
 }
 
 .e-dialog.e-edit-dialog .e-dlg-content .grid-edit-dialog {
@@ -205,4 +205,8 @@
 
 .patient-search.e-input-group .e-clear-icon::before {
     font-size: 10px;
+}
+
+.e-btn-group .e-radio-wrapper {
+    padding: 4px;
 }

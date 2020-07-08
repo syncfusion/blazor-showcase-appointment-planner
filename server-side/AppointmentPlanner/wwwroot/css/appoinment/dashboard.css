@@ -329,6 +329,11 @@
     color: -webkit-link;
 }
 
+.e-listview .e-list-header .e-text {
+    cursor: initial;
+    text-indent: 0;
+}
+
 @media (max-width: 850px) {
     .planner-dashboard {
         margin: 20px 10px;
