@@ -172,12 +172,8 @@
         </Content>
     </DialogTemplates>
     <DialogButtons>
-        <DialogButton OnClick="@DeleteBtnClick">
-            <DialogButtonModel IsPrimary="true" Content="Ok" />
-        </DialogButton>
-        <DialogButton OnClick="@CancelBtnClick">
-            <DialogButtonModel Content="Cancel" />
-        </DialogButton>
+        <DialogButton IsPrimary="true" Content="Ok" OnClick="@DeleteBtnClick"></DialogButton>
+        <DialogButton Content="Cancel" OnClick="@CancelBtnClick"></DialogButton>
     </DialogButtons>
 </SfDialog>
 }
@@ -241,6 +237,7 @@
         {
             getRecord = new Patient(Service.Patients.LastOrDefault().Id + 1, patientEditModel.Name, patientEditModel.Name, patientEditModel.DOB, mobileNo, patientEditModel.Email, Service.Patients[0].Address, Service.Patients[0].Disease, Service.Patients[0].DepartmentName, patientEditModel.BloodGroup, patientEditModel.Gender, patientEditModel.Symptoms);
             await gridObj.AddRecord(getRecord, Service.Patients.Count());
+            filteredPatients = Service.Patients;
             message = " " + getRecord.Name + " for " + getRecord.Symptoms;
             name = "Added New Patient";
         }

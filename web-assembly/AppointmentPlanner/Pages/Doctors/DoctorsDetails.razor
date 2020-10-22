@@ -77,12 +77,8 @@
         </Content>
     </DialogTemplates>
     <DialogButtons>
-        <DialogButton OnClick="@deleteBtnClick">
-            <DialogButtonModel IsPrimary="true" Content="Ok" />
-        </DialogButton>
-        <DialogButton OnClick="@cancelBtnClick">
-            <DialogButtonModel Content="Cancel" />
-        </DialogButton>
+        <DialogButton IsPrimary="true" Content="Ok" OnClick="@deleteBtnClick"></DialogButton>
+        <DialogButton Content="Cancel" OnClick="@cancelBtnClick"></DialogButton>
     </DialogButtons>
 </SfDialog>
 }

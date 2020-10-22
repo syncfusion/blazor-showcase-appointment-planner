@@ -1,6 +1,5 @@
 ﻿@page "/schedule"
 
-@using Newtonsoft.Json;
 @using AppointmentPlanner.Data;
 @using AppointmentPlanner.Models;
 @using Microsoft.JSInterop;
@@ -10,10 +9,10 @@
     <div class="drag-sample-wrapper droppable">
         <div class="col-lg-9 col-md-9 col-sm-9" style="padding: 0px">
             <div class="schedule-container e-droppable">
-                <SfSchedule ID="schedule" TValue="Hospital" @ref="scheduleObj" Width="100%" Height="800px" RowAutoHeight="true" CssClass="doctor-appointment-planner" ShowWeekend="false" StartHour="@startHour" EndHour="@endHour" SelectedDate="@(new DateTime(2020, 2, 5))" WorkDays="@workDay" FirstDayOfWeek="@calendarDayOfWeek" @bind-CurrentView="@sceduleView">
+                <SfSchedule ID="schedule" TValue="Hospital" @ref="scheduleObj" Width="100%" Height="800px" EnableAutoRowHeight="true" CssClass="doctor-appointment-planner" ShowWeekend="false" StartHour="@startHour" EndHour="@endHour" @bind-SelectedDate="@currentDate" WorkDays="@workDay" FirstDayOfWeek="@calendarDayOfWeek" @bind-CurrentView="@sceduleView">
                     <ScheduleEvents TValue="Hospital" OnCellClick="OnCellClick" OnActionBegin="OnActionBegin"></ScheduleEvents>
                     <ScheduleWorkHours Start="08:00" End="21:00"></ScheduleWorkHours>
-                    <ScheduleEventSettings DataSource="@scheduleEventData" ResourceColorField="@resourceColorField" EditFollowingEvents="@editUpcoming">
+                    <ScheduleEventSettings DataSource="@scheduleEventData" ResourceColorField="@resourceColorField" AllowEditFollowingEvents="@editUpcoming">
                         <ScheduleField>
                             <FieldSubject Name="Name"></FieldSubject>
                             <FieldStartTime Name="StartTime" Title="From"></FieldStartTime>
@@ -22,8 +21,8 @@
                         </ScheduleField>
                     </ScheduleEventSettings>
                     <ScheduleResources>
-                        <ScheduleResource TValue="Specialization" DataSource="@specialistCategory" Field="DepartmentId" Title="Department" Name="Departments" TextField="Text" IdField="DepartmentId" ColorField="Color"></ScheduleResource>
-                        <ScheduleResource TValue="Doctor" DataSource="@resourceDataSource" Query="@queryData" Field="DoctorId" Title="Consultation" Name="Doctors" TextField="Name" IdField="Id" ColorField="Color" GroupIDField="DepartmentId" WorkDaysField="AvailableDays" StartHourField="StartHour" EndHourField="EndHour"></ScheduleResource>
+                        <ScheduleResource TItem="Specialization" TValue="int?" DataSource="@specialistCategory" Field="DepartmentId" Title="Department" Name="Departments" TextField="Text" IdField="DepartmentId" ColorField="Color"></ScheduleResource>
+                        <ScheduleResource TItem="Doctor" TValue="int" DataSource="@resourceDataSource" Query="@queryData" Field="DoctorId" Title="Consultation" Name="Doctors" TextField="Name" IdField="Id" ColorField="Color" GroupIDField="DepartmentId" WorkDaysField="AvailableDays" StartHourField="StartHour" EndHourField="EndHour"></ScheduleResource>
                     </ScheduleResources>
                     <ScheduleViews>
                         <ScheduleView Option="@View.Day">
@@ -64,7 +63,7 @@
             <div class="treeview-container">
                 <div>
                     <SfDropDownList @ref="ddlObj" Placeholder="Choose Specialist" Width="220px" TItem="Doctor" PopupHeight="auto" DataSource="@resourceDataSource" TValue="int?" CssClass="planner-dropdown" ShowClearButton="true">
-                        <DropDownListEvents TValue="int?" ValueChange="onValueChange"></DropDownListEvents>
+                        <DropDownListEvents TItem="Doctor" TValue="int?" ValueChange="onValueChange"></DropDownListEvents>
                         <DropDownListFieldSettings Text="Name" Value="Id"></DropDownListFieldSettings>
                         <DropDownListTemplates TItem="Doctor">
                             <ItemTemplate>
@@ -91,8 +90,8 @@
                 </div>
             <SfTreeView TValue="WaitingList" LoadOnDemand="false" CssClass="treeview-external-drag" AllowDragAndDrop="true">
                 <TreeViewFieldsSettings Id="Id" Text="Name" DataSource="@waitingList"></TreeViewFieldsSettings>
-                <TreeViewEvents TValue="WaitingList" OnNodeDragged="NodeDragStop"></TreeViewEvents>
-                <TreeViewTemplates>
+                <TreeViewEvents TValue="WaitingList" OnNodeDragStop="NodeDragStop"></TreeViewEvents>
+                <TreeViewTemplates TValue="WaitingList">
                     <NodeTemplate>
                         <div id="waiting">
                             <div id="waitdetails">
@@ -129,6 +128,7 @@
     private int viewInterval { get; set; } = 60;
     private int calendarDayOfWeek { get; set; } = 1;
     private string resourceColorField { get; set; }
+    private DateTime currentDate { get; set; }
 
     SfDropDownList<int?, Doctor> ddlObj { get; set; }
 
@@ -155,6 +155,7 @@
     protected override void OnInitialized()
     {
         sceduleView = (View)Enum.Parse(typeof(View), (Service.CalendarSettings.CurrentView as string));
+        currentDate = Service.StartDate;
         this.viewInterval = Service.CalendarSettings.Interval;
         this.calendarDayOfWeek = Service.CalendarSettings.FirstDayOfWeek;
         this.resourceColorField = Service.CalendarSettings.BookingColor;
@@ -203,7 +204,7 @@
     }
     public void OnActionBegin(Syncfusion.Blazor.Schedule.ActionEventArgs<Hospital> args)
     {
-        if (args.RequestType == "eventCreate" && args.AddedRecords.Count >0)
+        if (args.ActionType == ActionType.EventCreate && args.AddedRecords.Count > 0)
         {
             foreach(Hospital Data in args.AddedRecords)
             {
@@ -212,12 +213,11 @@
             }
         }
     }
-    private void onValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?> args)
+    private void onValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, Doctor> args)
     {
         if (args.Value != null)
         {
-            Specialization items = JsonConvert.DeserializeObject<Specialization>(args.ItemData.ToString());
-            refreshDataSource((int)items.DepartmentId, items.Id);
+            refreshDataSource((int)args.ItemData.DepartmentId, args.ItemData.Id.ToString());
         }
         else
         {
@@ -347,47 +347,42 @@
     public async void NodeDragStop(DragAndDropEventArgs args)
     {
         args.Cancel = true;
-        object isScheduleSlot = await args.Target.GetAttribute("role");
-        var groupedResource = await args.Target.GetClassList();
-        if (isScheduleSlot != null && isScheduleSlot.ToString() == "gridcell" && groupedResource.IndexOf("e-resource-group-cells") == -1)
+        CellClickEventArgs cellData = await scheduleObj.GetTargetCell((int)args.Left, (int)args.Top);
+        if (cellData != null)
         {
-            CellClickEventArgs cellData = await scheduleObj.GetCellDetails(args.Target);
-            var filteredData = waitingList.Where(item => item.Id.Equals(Int32.Parse(args.DraggedNodeData.Id))).ToList();
+            var resourceDetails = scheduleObj.GetResourceByIndex(cellData.GroupIndex);
+            WaitingList TreeData = waitingList.Where(data => data.Id.ToString() == args.DraggedNodeData.Id).First();
             Hospital eventData;
-            object isGroup = await args.Target.GetAttribute("data-group-index");
-            if (isGroup != null)
+            if (resourceDetails != null)
             {
-                ResourceDetails<Hospital> resData = await scheduleObj.GetResourcesByIndex(cellData.GroupIndex);
-                TimeSheetGroupData groupData = JsonConvert.DeserializeObject<TimeSheetGroupData>(resData.GroupData.ToString());
                 eventData = new Hospital
                 {
-                    Name = filteredData[0].Name,
+                    Name = TreeData.Name,
                     StartTime = cellData.StartTime,
                     EndTime = cellData.EndTime,
                     IsAllDay = cellData.IsAllDay,
-                    Symptoms = filteredData[0].Disease,
-                    PatientId = filteredData[0].PatientId,
-                    DepartmentId = groupData.DepartmentId,
-                    DoctorId = groupData.DoctorId
+                    Symptoms = TreeData.Disease,
+                    PatientId = TreeData.PatientId,
+                    DepartmentId = resourceDetails.GroupData.DepartmentId,
+                    DoctorId = resourceDetails.GroupData.DoctorId
                 };
             }
             else
             {
                 eventData = new Hospital
                 {
-                    Name = filteredData[0].Name,
+                    Name = TreeData.Name,
                     StartTime = cellData.StartTime,
                     EndTime = cellData.EndTime,
                     IsAllDay = cellData.IsAllDay,
-                    Symptoms = filteredData[0].Disease,
-                    PatientId = filteredData[0].PatientId,
-                    DepartmentId = filteredData[0].DepartmentId,
+                    Symptoms = TreeData.Disease,
+                    PatientId = TreeData.PatientId,
+                    DepartmentId = TreeData.DepartmentId,
                     DoctorId = Int32.Parse(args.DraggedNodeData.Id)
                 };
             }
-            await this.scheduleObj.OpenEditor(eventData, CurrentAction.Add, true);
+            await this.scheduleObj.OpenEditor(eventData, CurrentAction.Add);
         }
-
     }
 
     public void Dispose()
