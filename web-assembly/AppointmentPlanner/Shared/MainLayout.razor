@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="planner-wrapper" style="width: 100%; visibility:@(visible); opacity:@(opacity)">
-    <SfSidebar ID="plannerSiderBar" @ref="SidebarObj" EnableGestures="false" MediaQuery="(min-width: 600px)" Type="SidebarType.Auto" Created="OnCreate" CloseOnDocumentClick="onDocumentClick">
+    <SfSidebar ID="plannerSiderBar" EnableGestures="false" @bind-IsOpen="open" MediaQuery="(min-width: 600px)" Type="SidebarType.Auto" Created="OnCreate" CloseOnDocumentClick="onDocumentClick">
         <ChildContent>
             <div class="dock">
                 <div class="info align-center">
@@ -109,10 +109,9 @@
 @code{
     [Inject]
     protected AppointmentService Service { get; set; }
-    SfSidebar SidebarObj;
     [Inject]
     protected IJSRuntime JsRuntime { get; set; }
-   
+
     private bool onDocumentClick { get; set; }
     private bool isDevice { get; set; }
 
@@ -123,9 +122,8 @@
 
     private string hide { get; set; }
     private string opacity { get; set; } = "0";
-
+    private bool open { get; set; }
     private List<NavigationMenu> navigationItems { get; set; }
-   
 
     public void OnCreate()
     {
@@ -150,6 +148,6 @@
 
     private void showSideBar()
     {
-        this.SidebarObj.Show();
+        open = true;
     }
 }

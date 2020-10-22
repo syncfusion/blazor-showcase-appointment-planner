@@ -1,7 +1,5 @@
 ﻿@page "/preference"
 
-@using Newtonsoft.Json;
-@using Newtonsoft.Json.Converters;
 @using AppointmentPlanner.Data;
 @using AppointmentPlanner.Models;
 
@@ -15,42 +13,42 @@
     <div class="control-container">
         <div class='label-text'>Default View</div>
         <SfDropDownList CssClass='preference-drop-down' ID='CurrentView' @bind-Value="@selectedView" Width="335px" DataSource="@views">
-            <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
+            <DropDownListEvents TItem="TextValueData" TValue="string" ValueChange="onViewChange"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
         </SfDropDownList>
     </div>
     <div class="control-container">
         <div class='label-text'>Calendar Start Time</div>
         <SfDropDownList CssClass='preference-drop-down' ID='CalendarStart' @bind-Value="@selectedStartHour" Width="335px" DataSource="@startHours">
-            <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
+            <DropDownListEvents TItem="TextValueData" TValue="string" ValueChange="onStartHourChange"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
         </SfDropDownList>
     </div>
     <div class="control-container">
         <div class='label-text'>Calendar End Time</div>
         <SfDropDownList CssClass='preference-drop-down' ID='CalendarEnd' @bind-Value="@selectedEndHour" Width="335px" DataSource="@endHours">
-            <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
+            <DropDownListEvents TItem="TextValueData" TValue="string" ValueChange="onEndhourChange"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
         </SfDropDownList>
     </div>
     <div class="control-container">
         <div class='label-text'>Slot Duration</div>
         <SfDropDownList CssClass='preference-drop-down' ID='Duration' @bind-Value="@timeInterval" Width="335px" DataSource="@timeSlots">
-            <DropDownListEvents TValue="int?" ValueChange="onValueChangeUpdate"></DropDownListEvents>
+            <DropDownListEvents TItem="TextValueNumericData" TValue="int?" ValueChange="onDurationChange"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
         </SfDropDownList>
     </div>
     <div class="control-container">
         <div class='label-text'>Booking Color</div>
         <SfDropDownList CssClass='preference-drop-down' ID='BookingColor' @bind-Value="@selectedCategory" Width="335px" DataSource="@colorCategory">
-            <DropDownListEvents TValue="string" ValueChange="onValueChange"></DropDownListEvents>
+            <DropDownListEvents TItem="TextValueData" TValue="string" ValueChange="onColorChange"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
         </SfDropDownList>
     </div>
     <div class="control-container">
         <div class='label-text'>First Day of the Week</div>
         <SfDropDownList CssClass='preference-drop-down' ID='FirstDayOfWeek' @bind-Value="@selectedDayOfWeek" Width="335px" DataSource="@dayOfWeeks">
-            <DropDownListEvents TValue="int?" ValueChange="onValueChangeUpdate"></DropDownListEvents>
+            <DropDownListEvents TItem="TextValueNumericData" TValue="int?" ValueChange="onFirstDayChange"></DropDownListEvents>
             <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
         </SfDropDownList>
     </div>
@@ -72,7 +70,7 @@
     private string selectedCategory { get; set; }
     private int? timeInterval { get; set; }
     private int? selectedDayOfWeek { get; set; }
-   
+
     protected override void OnInitialized()
     {
         this.views = Service.Views;
@@ -89,41 +87,28 @@
         this.selectedDayOfWeek = Service.CalendarSettings.FirstDayOfWeek;
     }
 
-    private void onValueChangeUpdate(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?> args)
+    private void onViewChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, TextValueData> args)
     {
-        switch (args.Element.ID)
-        {
-            case "Duration":
-                Service.CalendarSettings.Interval = (int)args.Value;
-                break;
-            case "FirstDayOfWeek":
-                Service.CalendarSettings.FirstDayOfWeek = (int)args.Value;
-                break;
-        }
+        Service.CalendarSettings.CurrentView = args.Value;
     }
-    private void onValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> args)
+    private void onStartHourChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, TextValueData> args)
     {
-        switch (args.Element.ID)
-        {
-            case "CurrentView":
-                Service.CalendarSettings.CurrentView = args.Value;
-                break;
-            case "CalendarStart":
-                Service.CalendarSettings.Calendar.Start = args.Value;
-                break;
-            case "CalendarEnd":
-                Service.CalendarSettings.Calendar.End = args.Value;
-                break;
-            case "Duration":
-                Service.CalendarSettings.Interval = Int32.Parse(args.Value);
-                break;
-            case "BookingColor":
-                Service.CalendarSettings.BookingColor = (string)args.Value;
-                break;
-            case "FirstDayOfWeek":
-                Service.CalendarSettings.FirstDayOfWeek = Int32.Parse(args.Value);
-                break;
-        }
+        Service.CalendarSettings.Calendar.Start = args.Value;
     }
-
+    private void onEndhourChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, TextValueData> args)
+    {
+        Service.CalendarSettings.Calendar.End = args.Value;
+    }
+    private void onColorChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, TextValueData> args)
+    {
+        Service.CalendarSettings.BookingColor = (string)args.Value;
+    }
+    private void onDurationChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, TextValueNumericData> args)
+    {
+        Service.CalendarSettings.Interval = (int)args.Value;
+    }
+    private void onFirstDayChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, TextValueNumericData> args)
+    {
+        Service.CalendarSettings.FirstDayOfWeek = (int)args.Value;
+    }
 }

@@ -1,7 +1,5 @@
 ﻿@page "/doctors"
 
-@using Newtonsoft.Json;
-@using Newtonsoft.Json.Converters;
 @using AppointmentPlanner.Data;
 @using AppointmentPlanner.Models;
 
@@ -22,7 +20,7 @@
     <div class="specialization-detail-wrapper">
         <div class="specialization-types">
             <SfDropDownList @ref="specObj" TItem="Specialization" TValue="string" Width="200px" ShowClearButton="true" DataSource="@specializationData" Placeholder="Select a Specialization" PopupHeight="230px">
-                <DropDownListEvents TValue="string" ValueChange="@(e => onSpecializationChange(e))"></DropDownListEvents>
+                <DropDownListEvents TItem="Specialization" TValue="string" ValueChange="@onSpecializationChange"></DropDownListEvents>
                 <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
                 <DropDownListTemplates TItem="Specialization">
                     <ItemTemplate>
@@ -126,7 +124,7 @@
             </div>
             <div class="duty-container">
                 <SfDropDownList FloatLabelType="@FloatLabelType.Always" Placeholder="Duty Timing" @bind-Value="@doctorEditModel.DutyTiming" DataSource="@dutyTimings">
-                    <DropDownListFieldSettings text="Text" value="Id"></DropDownListFieldSettings>
+                    <DropDownListFieldSettings Text="Text" Value="Id"></DropDownListFieldSettings>
                 </SfDropDownList>
             </div>
             <div class="e-footer-content">
@@ -229,14 +227,13 @@
 
     private int? selectedDepartmentId { get; set; }
 
-    private void onSpecializationChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string> eventArgs)
+    private void onSpecializationChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, Specialization> eventArgs)
     {
         List<Doctor> filteredData;
         if (eventArgs.Value != null)
         {
-            Specialization items = JsonConvert.DeserializeObject<Specialization>(eventArgs.ItemData.ToString());
-            this.selectedDepartmentId = items.DepartmentId;
-            filteredData = Service.Doctors.Where(i => i.Specialization.Equals(items.Id)).ToList();
+            this.selectedDepartmentId = eventArgs.ItemData.DepartmentId;
+            filteredData = Service.Doctors.Where(i => i.Specialization.Equals(eventArgs.ItemData.Id)).ToList();
         }
         else
         {
