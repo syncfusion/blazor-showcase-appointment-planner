@@ -182,7 +182,7 @@
         Doctor initialData = Service.Doctors.FirstOrDefault();
         initialData = initialData != null ? initialData : new Doctor();
         Doctor getHours = updateWorkHours(initialData);
-        string mobileNo = await this.maskObj.GetMaskedValue();
+        string mobileNo = this.maskObj.GetMaskedValue();
         var specialize = Service.Doctors.Where(i => i.DepartmentId == doctorEditModel.DepartmentId).FirstOrDefault().Specialization;
         Doctor newDoctor = new Doctor(doctorEditModel.Name, doctorEditModel.Gender, "default", filteredDoctors.LastOrDefault().Id + 1, doctorEditModel.DepartmentId, doctorEditModel.Color, doctorEditModel.Education, specialize, doctorEditModel.Experience, doctorEditModel.Designation, doctorEditModel.DutyTiming, doctorEditModel.Email, mobileNo, "available", getHours.StartHour, getHours.EndHour, initialData.AvailableDays, initialData.WorkDays);
         Service.Doctors.Add(newDoctor);
@@ -191,7 +191,7 @@
         {
             filteredDoctors = Service.Doctors.Where(i => i.Specialization.Equals(specObj.Value)).ToList();
         }
-        string message = $"Dr.{newDoctor.Name}, {newDoctor.Specialization.Substring(0, 1).ToUpper()} {newDoctor.Specialization.Substring(1)}";
+        string message = $"Dr.{newDoctor.Name}, {newDoctor.Specialization.Substring(0, 1).ToUpper()}{newDoctor.Specialization.Substring(1)}";
         Service.Activities.Insert(0, new Activity { Name = "Added New Doctor", Message = message, Time = "4 mins ago", Type = "doctor", ActivityTime = DateTime.Now });
         await DialogObj.Hide();
     }

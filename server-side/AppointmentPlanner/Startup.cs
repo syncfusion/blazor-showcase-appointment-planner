@@ -32,7 +32,6 @@ namespace AppointmentPlanner
             services.AddServerSideBlazor();
             services.AddScoped<AppointmentService>();
             services.AddSyncfusionBlazor();
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
