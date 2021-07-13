@@ -338,7 +338,7 @@
     public async void NodeDragStop(DragAndDropEventArgs args)
     {
         args.Cancel = true;
-        CellClickEventArgs cellData = await scheduleObj.GetTargetCell((int)args.Left, (int)args.Top);
+        CellClickEventArgs cellData = await scheduleObj.GetTargetCellAsync((int)args.Left, (int)args.Top);
         if (cellData != null)
         {
             var resourceDetails = scheduleObj.GetResourceByIndex(cellData.GroupIndex);
@@ -372,7 +372,7 @@
                     DoctorId = Int32.Parse(args.DraggedNodeData.Id)
                 };
             }
-            await this.scheduleObj.OpenEditor(eventData, CurrentAction.Add);
+            await this.scheduleObj.OpenEditorAsync(eventData, CurrentAction.Add);
         }
     }
 

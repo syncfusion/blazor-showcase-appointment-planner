@@ -1,15 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.5" PrivateAssets="all" />
-    <PackageReference Include="Syncfusion.Blazor.Charts" Version="19.1.0.57" />
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="19.1.0.57" />
-    <PackageReference Include="Syncfusion.Blazor.Schedule" Version="19.1.0.57" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.7" PrivateAssets="all" />
+    <PackageReference Include="Syncfusion.Blazor.Charts" Version="19.2.0.46" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="19.2.0.46" />
+    <PackageReference Include="Syncfusion.Blazor.Schedule" Version="19.2.0.46" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
