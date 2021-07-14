@@ -232,7 +232,7 @@
         Patient getRecord = null;
         string message = "";
         string name = "";
-        string mobileNo = await this.maskObj.GetMaskedValue();
+        string mobileNo = this.maskObj.GetMaskedValue();
         if (saveButton == "Save")
         {
             getRecord = new Patient(Service.Patients.LastOrDefault().Id + 1, patientEditModel.Name, patientEditModel.Name, patientEditModel.DOB, mobileNo, patientEditModel.Email, Service.Patients[0].Address, Service.Patients[0].Disease, Service.Patients[0].DepartmentName, patientEditModel.BloodGroup, patientEditModel.Gender, patientEditModel.Symptoms);
@@ -318,8 +318,8 @@
 
     private async Task DeleteBtnClick()
     {
-
-        filteredPatients = ((List<Patient>)filteredPatients).Where(item => item.Id != activePatientData.Id).ToList();
+        Service.Patients = filteredPatients = ((List<Patient>)filteredPatients).Where(item => item.Id != activePatientData.Id).ToList();
+        Service.WaitingLists = Service.WaitingLists.Where(item => item.PatientId != activePatientData.Id).ToList();
         var deleteData = ((List<Patient>)filteredPatients).Where(item => item.Id == activePatientData.Id).FirstOrDefault();
         await this.gridObj.DeleteRecord(null, deleteData);
         this.isConfirmDelete = false;

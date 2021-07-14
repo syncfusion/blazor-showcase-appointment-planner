@@ -20,34 +20,25 @@
                             <FieldDescription Name="Symptoms" Title="Symptoms"></FieldDescription>
                         </ScheduleField>
                     </ScheduleEventSettings>
+                    <ScheduleTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleTimeScale>
                     <ScheduleResources>
                         <ScheduleResource TItem="Specialization" TValue="int?" DataSource="@specialistCategory" Field="DepartmentId" Title="Department" Name="Departments" TextField="Text" IdField="DepartmentId" ColorField="Color"></ScheduleResource>
                         <ScheduleResource TItem="Doctor" TValue="int" DataSource="@resourceDataSource" Query="@queryData" Field="DoctorId" Title="Consultation" Name="Doctors" TextField="Name" IdField="Id" ColorField="Color" GroupIDField="DepartmentId" WorkDaysField="AvailableDays" StartHourField="StartHour" EndHourField="EndHour"></ScheduleResource>
                     </ScheduleResources>
                     <ScheduleViews>
-                        <ScheduleView Option="@View.Day">
-                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
-                        </ScheduleView>
-                        <ScheduleView Option="@View.Week">
-                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
-                        </ScheduleView>
-                        <ScheduleView Option="@View.Month">
-                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
-                        </ScheduleView>
+                        <ScheduleView Option="@View.Day"></ScheduleView>
+                        <ScheduleView Option="@View.Week"></ScheduleView>
+                        <ScheduleView Option="@View.Month"></ScheduleView>
                         <ScheduleView Option="@View.TimelineDay">
-                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
                             <ScheduleViewGroup EnableCompactView="false" Resources="@resourceGroup"></ScheduleViewGroup>
                         </ScheduleView>
                         <ScheduleView Option="@View.TimelineWeek">
-                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
                             <ScheduleViewGroup EnableCompactView="false" Resources="@resourceGroup"></ScheduleViewGroup>
                         </ScheduleView>
                         <ScheduleView Option="@View.TimelineWorkWeek">
-                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
                             <ScheduleViewGroup EnableCompactView="false" Resources="@resourceGroup"></ScheduleViewGroup>
                         </ScheduleView>
                         <ScheduleView Option="@View.TimelineMonth">
-                            <ScheduleViewTimeScale Enable="true" Interval="@this.viewInterval"></ScheduleViewTimeScale>
                             <ScheduleViewGroup EnableCompactView="false" Resources="@resourceGroup"></ScheduleViewGroup>
                         </ScheduleView>
                     </ScheduleViews>
@@ -347,7 +338,7 @@
     public async void NodeDragStop(DragAndDropEventArgs args)
     {
         args.Cancel = true;
-        CellClickEventArgs cellData = await scheduleObj.GetTargetCell((int)args.Left, (int)args.Top);
+        CellClickEventArgs cellData = await scheduleObj.GetTargetCellAsync((int)args.Left, (int)args.Top);
         if (cellData != null)
         {
             var resourceDetails = scheduleObj.GetResourceByIndex(cellData.GroupIndex);
@@ -381,7 +372,7 @@
                     DoctorId = Int32.Parse(args.DraggedNodeData.Id)
                 };
             }
-            await this.scheduleObj.OpenEditor(eventData, CurrentAction.Add);
+            await this.scheduleObj.OpenEditorAsync(eventData, CurrentAction.Add);
         }
     }
 

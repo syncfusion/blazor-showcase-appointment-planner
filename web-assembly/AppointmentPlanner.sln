@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.128
+VisualStudioVersion = 16.0.31019.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentPlanner", "AppointmentPlanner\AppointmentPlanner.csproj", "{04ABD89D-C51B-4029-95C3-B448733CFA9D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentPlanner", "AppointmentPlanner\AppointmentPlanner.csproj", "{80589C2C-CAFF-4839-8C56-36450FEF8086}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{04ABD89D-C51B-4029-95C3-B448733CFA9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04ABD89D-C51B-4029-95C3-B448733CFA9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04ABD89D-C51B-4029-95C3-B448733CFA9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04ABD89D-C51B-4029-95C3-B448733CFA9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80589C2C-CAFF-4839-8C56-36450FEF8086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80589C2C-CAFF-4839-8C56-36450FEF8086}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80589C2C-CAFF-4839-8C56-36450FEF8086}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80589C2C-CAFF-4839-8C56-36450FEF8086}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {70EAF451-880A-4248-8E51-959AD91F90EB}
+		SolutionGuid = {46902A7C-7382-45E8-A214-90978548A4E2}
 	EndGlobalSection
 EndGlobal

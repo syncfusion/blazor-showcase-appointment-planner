@@ -203,16 +203,17 @@
     {
         this.isConfirmDelete = true;
     }
-    private void deleteBtnClick()
+    private void deleteBtnClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {
-
         Service.Doctors = Service.Doctors.Where(item => item.Id != activeData.Id).ToList();
         Service.Hospitals = Service.Hospitals.Where(i => i.DoctorId != activeData.Id).ToList();
+        Service.WaitingLists = Service.WaitingLists.Where(item => item.DepartmentId != activeData.DepartmentId).ToList();
         if(Service.Doctors.Any())
         {
             this.getSpecializationText = Service.Doctors[0].Specialization;
         }
         this.isConfirmDelete = false;
+        onBackIconClick(args);
     }
     private void cancelBtnClick()
     {
@@ -250,10 +251,10 @@
 
     private List<Specialization> specializationData { get; set; }
 
-    public async Task UpdateEditModel(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
+    public void UpdateEditModel(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {
         Doctor getHours = updateWorkHours(activeData);
-        string mobileNo = await this.maskObj.GetMaskedValue();
+        string mobileNo = this.maskObj.GetMaskedValue();
         var specialize = Service.Doctors.Where(i => i.DepartmentId == doctorEditModel.DepartmentId).FirstOrDefault().Specialization;
         activeData = new Doctor(doctorEditModel.Name, doctorEditModel.Gender, activeData.Text, activeData.Id, doctorEditModel.DepartmentId, activeData.Color, doctorEditModel.Education, specialize, doctorEditModel.Experience, doctorEditModel.Designation, doctorEditModel.DutyTiming, doctorEditModel.Email, mobileNo, activeData.Availability, getHours.StartHour, getHours.EndHour, activeData.AvailableDays, getHours.WorkDays);
         getSpecializationText = activeData.Specialization;

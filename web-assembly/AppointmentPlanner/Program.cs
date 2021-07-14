@@ -22,7 +22,7 @@ namespace AppointmentPlanner
             builder.Services.AddSyncfusionBlazor();
             builder.Services.AddSingleton<AppointmentService, AppointmentService>();
             builder.Services.AddSingleton<Appointment, Appointment>();
-            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             await builder.Build().RunAsync();
         }
