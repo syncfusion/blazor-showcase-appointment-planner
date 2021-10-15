@@ -459,7 +459,10 @@ header .module-title .underline {
 
 .sb-content-overlay {
     z-index: 10000022;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     position: fixed;
     width: 100%;
     height: 100%;
@@ -476,15 +479,11 @@ header .module-title .underline {
 .sb-loading {
     width: 56px;
     height: 56px;
-    position: absolute;
-    top: calc(50% - 28px);
-    left: calc(50% - 28px);
     z-index: 10000;
     border-radius: 50%;
     padding: 3px;
     box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
     overflow: hidden;
-    display: inline-block;
     background: white;
 }
 

@@ -12,6 +12,9 @@
             <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="6" stroke-miterlimit="10" />
         </svg>
     </div>
+    <div class="sb-caption">
+        <h4 class="my-4">Appointment planner initializing...</h4>
+    </div>
 </div>
 <div class="planner-wrapper" style="width: 100%; visibility:@(visible); opacity:@(opacity)">
     <SfSidebar ID="plannerSiderBar" EnableGestures="false" @bind-IsOpen="open" MediaQuery="(min-width: 600px)" Type="SidebarType.Auto" Created="OnCreate" CloseOnDocumentClick="onDocumentClick">
@@ -96,7 +99,7 @@
                 <a href="https://github.com/syncfusion/ej2-showcase-blazor-appointment-planner" target="_blank">
                     <div id="github" class="sb-github-btn">
                         <div class="github-image">
-                            <img src="css/appoinment/mark.svg" />
+                            <img src="css/appoinment/mark.svg" alt="github" />
                         </div>
                     </div>
                 </a>

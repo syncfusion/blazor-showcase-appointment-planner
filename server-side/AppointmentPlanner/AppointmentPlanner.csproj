@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Syncfusion.Blazor.Charts" Version="19.2.0.46" />
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="19.2.0.46" />
-    <PackageReference Include="Syncfusion.Blazor.Schedule" Version="19.2.0.46" />
+    <PackageReference Include="Syncfusion.Blazor.Charts" Version="19.3.0.*" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="19.3.0.*" />
+    <PackageReference Include="Syncfusion.Blazor.Schedule" Version="19.3.0.*" />
   </ItemGroup>
 
 </Project>
