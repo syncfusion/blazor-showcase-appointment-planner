@@ -81,7 +81,7 @@
   margin-top: 9px;
 }
 
-.planner-header {
+.planner-header .e-appbar.custom-appbar {
     background: #7575ff !important;
     height: 50px;
     display: flex;
@@ -126,8 +126,8 @@
                 content: '\e941';
             }
 
-        .planner-header div.side-bar-opener {
-            display: none;
+        .e-appbar > div:first-child {
+            display: none !important;
         }
         .planner-header .logout-container {
             padding: 5px;
@@ -239,8 +239,8 @@ header .module-title .underline {
         padding-top: 20px;
         max-width: 100%;
     }
-    .planner-header div.side-bar-opener {
-        display: flex;
+    .e-appbar > div:first-child {
+        display: flex !important;
         flex-basis: 12%;
         order: 0;
         align-items: center;
