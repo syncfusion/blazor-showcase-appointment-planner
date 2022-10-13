@@ -37,7 +37,9 @@
                     </ValueTemplate>
                 </DropDownListTemplates>
             </SfDropDownList>
-            <SfButton CssClass="e-normal" @onclick="@onAddDoctor" IsPrimary="true">Add New Doctor</SfButton>
+            <div id="add-new-doctor" style="position:relative; width:136px;">
+                    <SfFab CssClass="e-normal" @onclick="@onAddDoctor" IsPrimary="true" Content="Add New Doctor"></SfFab>
+            </div>
         </div>
         <div class="specialist-display">
             @foreach (var data in filteredDoctors)

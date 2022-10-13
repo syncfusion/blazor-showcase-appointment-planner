@@ -5,6 +5,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Syncfusion.Blazor.Buttons" Version="20.3.0.49" />
 		<PackageReference Include="Syncfusion.Blazor.Charts" Version="20.3.0.49" />
 		<PackageReference Include="Syncfusion.Blazor.Grid" Version="20.3.0.49" />
 		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="20.3.0.49" />

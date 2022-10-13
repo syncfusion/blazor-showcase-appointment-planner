@@ -60,6 +60,24 @@
             cursor: pointer;
         }
 
+#add-new-patient .e-fab.e-btn {
+    right: 50px !important;
+    bottom: 305px;
+    background-color: #7575ff;
+    border-color: #4242ff;
+    border-radius: 4px;
+}
+
+    #add-new-patient .e-fab.e-btn:hover {
+        background-color: #4242ff;
+    }
+
+@media (max-width: 850px) {
+    #add-new-patient {
+        display: none;
+    }
+}
+
 .e-dialog.e-edit-dialog {
     max-height: 495px !important;
 }
