@@ -36,6 +36,7 @@
 
     .doctors-wrapper .specialization-detail-wrapper {
         /* Specialist list item display */
+        height: 650px;
     }
 
         .doctors-wrapper .specialization-detail-wrapper .specialization-types {
@@ -184,23 +185,6 @@
                                 color: #333;
                             }
 
-#add-new-doctor .e-fab.e-btn {
-    right: 50px !important;
-    bottom: 580px;
-    background-color: #7575ff;
-    border-color: #4242ff;
-    border-radius: 4px;
-}
-
-    #add-new-doctor .e-fab.e-btn:hover {
-        background-color: #4242ff;
-    }
-
-@media (max-width: 850px) {
-    #add-new-doctor {
-        display: none;
-    }
-}
 
 
 .e-tooltip-wrap {
