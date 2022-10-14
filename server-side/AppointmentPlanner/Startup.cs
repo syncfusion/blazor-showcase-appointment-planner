@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AppointmentPlanner.Data;
 using Syncfusion.Blazor;
+using Syncfusion.Blazor.Popups;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace AppointmentPlanner
@@ -30,6 +31,7 @@ namespace AppointmentPlanner
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddScoped<SfDialogService>();
             services.AddScoped<AppointmentService>();
             services.AddSyncfusionBlazor();
         }
