@@ -66,10 +66,7 @@
     }
 </div>
 
-@if (isConfirmDelete)
-{
 <Syncfusion.Blazor.Popups.SfDialogProvider/>
-}
 
 @if (editVisible)
 {
@@ -189,8 +186,10 @@
 
     private async void onDoctorDelete(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {
-        this.isConfirmDelete = true;
-        bool isConfirm = await DialogService.ConfirmAsync("Are you sure you want to delete this doctor?", "Doctor Details");
+        bool isConfirm = await DialogService.ConfirmAsync("Are you sure you want to delete this doctor?", "Doctor Details", new DialogOptions()
+        {
+            ShowCloseIcon =true,
+        });
         if (isConfirm)
         {
             this.deleteBtnClick(args);
@@ -206,7 +205,6 @@
         {
             this.getSpecializationText = Service.Doctors[0].Specialization;
         }
-        this.isConfirmDelete = false;
         onBackIconClick(args);
     }
     
