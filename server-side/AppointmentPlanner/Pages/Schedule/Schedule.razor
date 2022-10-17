@@ -5,6 +5,7 @@
 @using Microsoft.JSInterop;
 @implements IDisposable;
 
+@if(isDataLoaded){
 <div class="planner-calendar">
     <div class="drag-sample-wrapper droppable">
         <div class="col-lg-9 col-md-9 col-sm-9" style="padding: 0px">
@@ -103,7 +104,23 @@
         </div>
     </div>
 </div>
-
+}
+else{
+    <div class="planner-dashboard-skeleton">
+        <div class="appointments-skeleton">
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="780px" Width="90%"></SfSkeleton><br/>
+        </div>
+        <div class="activities-skeleton">
+            @for(int i=0; i < 10; i++)
+            {
+                <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="3%" Width="80%"></SfSkeleton>
+                <br />
+                <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="3%" Width="60%"></SfSkeleton>
+                <br /><br />
+            }
+        </div>
+    </div>
+}
 
 @code {
 
@@ -142,6 +159,7 @@
 
     private Query queryData { get; set; }
     private List<Doctor> activeDoctorData { get; set; }
+    private bool isDataLoaded;
 
     protected override void OnInitialized()
     {
@@ -155,9 +173,6 @@
         this.specialistCategory = Service.Specializations;
         this.startHour = Service.CalendarSettings.Calendar.Start;
         this.endHour = Service.CalendarSettings.Calendar.End;
-        this.scheduleEventData = Service.Hospitals;
-        this.workHours = Service.CalendarSettings.Calendar;
-        this.queryData = new Query();
     }
 
     private string getEventTime(WaitingList data)
@@ -380,5 +395,23 @@
     {
         scheduleObj = null;
         ddlObj = null;
+    }
+
+    private async void LoadData()
+    {   
+        this.scheduleEventData = Service.Hospitals;
+        this.workHours = Service.CalendarSettings.Calendar;
+        this.queryData = new Query();
+        await Task.Delay(500);
+        isDataLoaded = true;
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+    if (firstRender)
+        {
+        LoadData();
+        }
     }
 }
