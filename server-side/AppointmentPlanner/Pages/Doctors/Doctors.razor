@@ -5,7 +5,7 @@
 
 @inject NavigationManager UriHelper
 
-
+@if(isDataLoaded){
 <div id="doctors" class="doctors-wrapper">
     <header>
         <div class="module-title">
@@ -137,6 +137,57 @@
     </ChildContent>
 </SfDialog>
 }
+}
+else{
+    <div class="planner-doctor-skeleton">
+        <div class="doctor-title-skeleton">
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="20%" Width="80%"></SfSkeleton>
+            <br />
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="20%" Width="60%"></SfSkeleton>
+            <br /><br />
+        </div>
+    @for(int i=0; i<3; i++){
+        <div class="container">
+            <div class="sub-container1">
+                <div class="doctor-list-skeleton">
+                    <div class="doct-img">
+                        <SfSkeleton CssClass="listProfile" Shape=Syncfusion.Blazor.Notifications.SkeletonType.Circle Width="76%" Height="73%"></SfSkeleton>
+                    </div>
+                    <div class="doct-details">
+                        <SfSkeleton CssClass="listCtn" Shape=Syncfusion.Blazor.Notifications.SkeletonType.Rectangle Height="12%" Width="115%"></SfSkeleton><br/>
+                        <SfSkeleton CssClass="listCtn" Shape=Syncfusion.Blazor.Notifications.SkeletonType.Rectangle Height="12%" Width="115%"></SfSkeleton><br/>
+                        <SfSkeleton CssClass="distCtn" Shape=Syncfusion.Blazor.Notifications.SkeletonType.Rectangle Height="12%" Width="86%"></SfSkeleton>
+                    </div>
+                </div>
+            </div>
+            <div class="sub-container2">
+                <div class="doctor-list-skeleton">
+                    <div class="doct-img">
+                        <SfSkeleton CssClass="listProfile" Shape=Syncfusion.Blazor.Notifications.SkeletonType.Circle Width="77%" Height="84%"></SfSkeleton>
+                    </div>
+                    <div class="doct-details">
+                        <SfSkeleton CssClass="listCtn" Shape=Syncfusion.Blazor.Notifications.SkeletonType.Rectangle Height="12%" Width="115%"></SfSkeleton><br/>
+                        <SfSkeleton CssClass="listCtn" Shape=Syncfusion.Blazor.Notifications.SkeletonType.Rectangle Height="12%" Width="115%"></SfSkeleton><br/>
+                        <SfSkeleton CssClass="distCtn" Shape=Syncfusion.Blazor.Notifications.SkeletonType.Rectangle Height="12%" Width="86%"></SfSkeleton>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+    <div class="planner-dashboard-skeleton doctor-device-skeleton">
+        <div class="activities-skeleton">
+            @for(int i=0; i < 10; i++)
+            {
+                <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="3%" Width="80%"></SfSkeleton>
+                <br />
+                <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="3%" Width="60%"></SfSkeleton>
+                <br /><br />
+            }
+        </div>
+    </div>
+}
+
 @code{
 
     [Inject]
@@ -158,12 +209,12 @@
 
     private List<TextIdData> dutyTimings { get; set; }
 
+    private bool isDataLoaded;
+
     protected override void OnInitialized()
     {
         this.specializationData = Service.Specializations;
         this.experienceData = Service.Experience;
-        this.dutyTimings = Service.DutyTimings;
-        this.filteredDoctors = Service.Doctors;
     }
 
     private void onAddDoctor(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
@@ -246,5 +297,22 @@
     {
         await this.DialogObj.Hide();
         this.isShowNewDialog = false;
+    }
+
+    private async void LoadData()
+    {   
+        this.dutyTimings = Service.DutyTimings;
+        this.filteredDoctors = Service.Doctors;
+        await Task.Delay(500);
+        isDataLoaded = true;
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+    if (firstRender)
+        {
+        LoadData();
+        }
     }
 }
