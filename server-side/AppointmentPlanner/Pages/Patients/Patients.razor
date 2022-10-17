@@ -15,7 +15,7 @@
             <div class="add-patient-label">Add New</div>
         </div>
     </header>
-    <div class="patients-detail-wrapper" style="height: 650px">
+    <div class="patients-detail-wrapper">
         <div class="patient-operations">
             <div id="searchTemplate" class="search-wrapper planner-patient-search">
                 <div class="e-input-group patient-search" role="search">
@@ -26,9 +26,10 @@
                           title="Search" aria-label="search"></span>
                 </div>
             </div>
-            <div id="add-new-person" style="position:relative; width:136px;">
-                    <SfFab CssClass="e-normal" @onclick="@onAddPatient" IsPrimary="true" Content="Add New Patient"></SfFab>
-            </div>
+           <SfButton CssClass="e-normal add-details" @onclick="@onAddPatient" IsPrimary="true">
+                Add
+                New Patient
+            </SfButton>
         </div>
         <div class="patient-display">
             <SfGrid ID="Grid" @ref="gridObj" DataSource="@filteredPatients">

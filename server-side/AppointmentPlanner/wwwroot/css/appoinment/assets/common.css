@@ -6,15 +6,3 @@
 .e-btn.e-primary:hover {
     background-color: #4242ff !important;
 }
-
-#add-new-person .e-fab.e-btn {
-    right: 50px !important;
-    bottom: 615px;
-    border-radius: 4px;
-}
-
-@media (max-width: 850px) {
-    #add-new-person {
-        display: none;
-    }
-}
