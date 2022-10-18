@@ -7,6 +7,9 @@
 
 @if (isDataLoaded)
 {
+<div class="deleted-msg">
+    <SfMessage Severity="MessageSeverity.Success" Visible=@showDeleteMsg>The Patient's details have been deleted successfully.</SfMessage>
+</div>
 <div id="patients" class="planner-patient-wrapper">
     <header>
         <div class="module-title">
@@ -223,6 +226,7 @@ else
     public Patient EditData { get; set; }
 
     private bool isDataLoaded;
+    private bool showDeleteMsg { get; set; }
 
     protected override void OnInitialized()
     {
@@ -296,6 +300,7 @@ else
         if (isConfirm)
         {
             await this.DeleteBtnClick();
+            this.showDeleteMsg = true;
             StateHasChanged();
         }
     }
@@ -369,10 +374,15 @@ else
 
     protected override void OnAfterRender(bool firstRender)
     {
-    if (firstRender)
+        if (firstRender)
         {
-        LoadData();
+            LoadData();
+        }
+        if (this.showDeleteMsg == true && isDataLoaded==true)
+        {
+            Task.Delay(1000).Wait();
+            this.showDeleteMsg = false;
+            StateHasChanged();
         }
     }
-
 }
