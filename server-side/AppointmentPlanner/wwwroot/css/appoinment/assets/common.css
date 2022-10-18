@@ -56,3 +56,15 @@
         display: flex;
     }
 }
+
+/*Message component's style*/
+.deleted-msg {
+    width: 100%;
+    letter-spacing: 0.5px;
+}
+
+.e-message .e-msg-content {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
