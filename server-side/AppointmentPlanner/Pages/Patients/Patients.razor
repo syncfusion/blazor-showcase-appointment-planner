@@ -4,6 +4,9 @@
 @using AppointmentPlanner.Models;
 @inject SfDialogService DialogService;
 @implements IDisposable;
+
+@if (isDataLoaded)
+{
 <div id="patients" class="planner-patient-wrapper">
     <header>
         <div class="module-title">
@@ -162,6 +165,32 @@
 }
 
 <Syncfusion.Blazor.Popups.SfDialogProvider/>
+}
+else
+{
+    <div class="planner-patient-skeleton">
+        <div class="patients-container1">
+             <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="97%"></SfSkeleton>
+            <br/>
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="74%"></SfSkeleton>
+        </div>
+        <div class="patients-container2">
+            <br/><br/>
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="256px" Width="97%"></SfSkeleton>
+        </div>
+    </div>
+    <div class="planner-dashboard-skeleton device-skeleton">
+        <div class="activities-skeleton">
+            @for(int i=0; i < 10; i++)
+            {
+                <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="3%" Width="80%"></SfSkeleton>
+                <br />
+                <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="3%" Width="60%"></SfSkeleton>
+                <br /><br />
+            }
+        </div>
+    </div>
+}
 
 @code{
     [Inject]
@@ -192,13 +221,14 @@
     private DateTime? dobValue { get; set; } = DateTime.Now;
     private List<Doctor> doctorsData { get; set; }
     public Patient EditData { get; set; }
+
+    private bool isDataLoaded;
+
     protected override void OnInitialized()
     {
         filteredPatients = Service.Patients;
         this.bloodGroupData = Service.BloodGroups;
         this.doctorsData = Service.Doctors;
-        this.EditData = Service.Patients[0];
-        this.patientEditModel = new Patient();
     }
 
     private void onAddPatient(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
@@ -326,6 +356,23 @@
         gridEditDialogObj = null;
         dialogObj = null;
         maskObj = null;
+    }
+
+    private async void LoadData()
+    {   
+        this.EditData = Service.Patients[0];
+        this.patientEditModel = new Patient();
+        await Task.Delay(500);
+        isDataLoaded = true;
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+    if (firstRender)
+        {
+        LoadData();
+        }
     }
 
 }

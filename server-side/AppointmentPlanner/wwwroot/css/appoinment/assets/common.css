@@ -46,3 +46,13 @@
         margin-left: 31px;
     }
 }
+
+.device-skeleton {
+    display: none;
+}
+
+@media (max-width: 575px) {
+    .device-skeleton {
+        display: flex;
+    }
+}

@@ -374,15 +374,8 @@
     width: 60%;
 }
 
-.doctor-device-skeleton {
-    display: none;
-}
-
-@media (max-width: 575px) {
+@media (max-width: 600px) {
     .planner-doctor-skeleton {
         display: none;
-    }
-    .doctor-device-skeleton {
-        display: flex;
     }
 }
