@@ -8,7 +8,7 @@
 
 @if(isDataLoaded){
 <div class="deleted-msg">
-    <SfMessage Severity="MessageSeverity.Success" Visible=@DoctorsDetails.showDeleteMsg>The Doctor's details have been deleted successfully.</SfMessage>
+    <SfMessage Severity="MessageSeverity.Success" Visible=@showDeleteMsg>The Doctor's details have been deleted successfully.</SfMessage>
 </div>
 <div id="doctors" class="doctors-wrapper">
     <header>
@@ -318,10 +318,10 @@ else{
         {
             LoadData();
         }
-        if (DoctorsDetails.showDeleteMsg == true && isDataLoaded==true)
+        if (showDeleteMsg == true && isDataLoaded==true)
         {
             Task.Delay(1000).Wait();
-            DoctorsDetails.showDeleteMsg = false;
+            showDeleteMsg = false;
             StateHasChanged();
         }
     }
