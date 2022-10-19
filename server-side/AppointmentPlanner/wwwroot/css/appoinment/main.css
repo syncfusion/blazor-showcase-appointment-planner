@@ -207,6 +207,22 @@ header .module-title .underline {
     height: 4px;
 }
 
+.planner-header {
+    position: sticky;
+    top: 0;
+}
+
+.e-sidebar.e-left {
+    top: auto;
+}
+
+.main-content {
+    height: 95%;
+    width: 100%;
+    position: fixed;
+    overflow: scroll;
+}
+
 @media (max-width: 850px) {
     header .module-title .title {
         padding-bottom: 10px;
