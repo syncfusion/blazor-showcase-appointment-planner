@@ -3,6 +3,7 @@
 @using AppointmentPlanner.Data;
 @using AppointmentPlanner.Models;
 @using Microsoft.AspNetCore.Components.Forms;
+@inject SfDialogService DialogService
 @inject NavigationManager UriHelper
 @implements IDisposable;
 
@@ -65,23 +66,7 @@
     }
 </div>
 
-@if (isConfirmDelete)
-{
-<SfDialog @bind-Visible="@this.isConfirmDelete" CssClass="confirm-dialog" Width="auto" IsModal="true" ShowCloseIcon="true">
-    <DialogTemplates>
-        <Header>
-            <span>Doctor Details</span>
-        </Header>
-        <Content>
-            Are you sure you want to delete this doctor?
-        </Content>
-    </DialogTemplates>
-    <DialogButtons>
-        <DialogButton IsPrimary="true" Content="Ok" OnClick="@deleteBtnClick"></DialogButton>
-        <DialogButton Content="Cancel" OnClick="@cancelBtnClick"></DialogButton>
-    </DialogButtons>
-</SfDialog>
-}
+<Syncfusion.Blazor.Popups.SfDialogProvider/>
 
 @if (editVisible)
 {
@@ -157,14 +142,13 @@
     SfDialog EdiDialogObj;
     private SfMaskedTextBox maskObj { get; set; }
 
-    private bool isConfirmDelete { get; set; }
-
     private bool editVisible { get; set; } = false;
 
 
     private Doctor activeData { get; set; }
     private string getSpecializationText { get; set; }
     private string getAvailability { get; set; }
+    public static bool showDeleteMsg { get; set; }
 
     protected override void OnInitialized()
     {
@@ -199,10 +183,19 @@
         }
     }
 
-    private void onDoctorDelete(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
+    private async void onDoctorDelete(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {
-        this.isConfirmDelete = true;
+        bool isConfirm = await DialogService.ConfirmAsync("Are you sure you want to delete this doctor?", "Doctor Details", new DialogOptions()
+        {
+            ShowCloseIcon =true,
+        });
+        if (isConfirm)
+        {
+            this.deleteBtnClick(args);
+            showDeleteMsg = true;
+        }
     }
+
     private void deleteBtnClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {
         Service.Doctors = Service.Doctors.Where(item => item.Id != activeData.Id).ToList();
@@ -212,13 +205,9 @@
         {
             this.getSpecializationText = Service.Doctors[0].Specialization;
         }
-        this.isConfirmDelete = false;
         onBackIconClick(args);
     }
-    private void cancelBtnClick()
-    {
-        this.isConfirmDelete = false;
-    }
+    
     private void onDoctorEdit(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {
         editVisible = true;
