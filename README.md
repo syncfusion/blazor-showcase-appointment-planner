@@ -8,8 +8,8 @@ This Appointment planner demo application showcases the usage of several Syncfus
 
 The samples requires the below requirements to run.
 
-* [Visual Studio 2019](https://visualstudio.microsoft.com/vs/)
-* [.NET Core SDK 3.1.2](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+* [Visual Studio 2022](https://visualstudio.microsoft.com/vs/)
+* [.NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 
 ### Run
 
