@@ -2,13 +2,12 @@
 
 @using AppointmentPlanner.Data;
 @using AppointmentPlanner.Models;
-@using static AppointmentPlanner.Pages.Doctors.DoctorsDetails;
 
 @inject NavigationManager UriHelper
 
 @if(isDataLoaded){
 <div class="deleted-msg">
-    <SfMessage Severity="MessageSeverity.Success" Visible=@showDeleteMsg>The Doctor's details have been deleted successfully.</SfMessage>
+    <SfMessage Severity="MessageSeverity.Success" Visible=@Service.ShowDeleteMsg>The Doctor's details have been deleted successfully.</SfMessage>
 </div>
 <div id="doctors" class="doctors-wrapper">
     <header>
@@ -318,10 +317,10 @@ else{
         {
             LoadData();
         }
-        if (showDeleteMsg == true && isDataLoaded==true)
+        if (Service.ShowDeleteMsg && isDataLoaded)
         {
             Task.Delay(1000).Wait();
-            showDeleteMsg = false;
+            Service.ShowDeleteMsg = false;
             StateHasChanged();
         }
     }
