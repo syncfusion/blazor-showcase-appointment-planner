@@ -378,7 +378,7 @@ else
         {
             LoadData();
         }
-        if (this.showDeleteMsg == true && isDataLoaded==true)
+        if (this.showDeleteMsg && isDataLoaded)
         {
             await Task.Delay(2000);
             this.showDeleteMsg = false;
