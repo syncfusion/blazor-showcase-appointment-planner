@@ -148,7 +148,6 @@
     private Doctor activeData { get; set; }
     private string getSpecializationText { get; set; }
     private string getAvailability { get; set; }
-    public static bool showDeleteMsg { get; set; }
 
     protected override void OnInitialized()
     {
@@ -192,7 +191,7 @@
         if (isConfirm)
         {
             this.deleteBtnClick(args);
-            showDeleteMsg = true;
+            Service.ShowDeleteMsg = true;
         }
     }
 
