@@ -1,5 +1,7 @@
 ﻿@page "/about"
 
+@if (isDataLoaded)
+{
 <div id="@aboutId" class="about-container">
     <header>
         <div class="module-title">
@@ -70,10 +72,67 @@
             <span class="sfimage-checkbox e-sb-icon control-icon"></span>
             <a class='control-name' href="https://blazor.syncfusion.com/documentation/check-box/getting-started" target="_blank">CheckBox</a>
         </div>
+        <div class='control-item'>
+            <span class="sf-icon-skeleton e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/skeleton/getting-started" target="_blank">Skeleton</a>
+        </div>
+        <div class='control-item'>
+            <span class="sf-icon-appbar e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/appbar/getting-started" target="_blank">AppBar</a>
+        </div>
+        <div class='control-item'>
+            <span class="sf-icon-predefineddialogs e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/dialog/predefined-dialogs" target="_blank">Predefined Dialogs</a>
+        </div>
+        <div class='control-item'>
+            <span class="sf-icon-message e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/message/getting-started" target="_blank">Message</a>
+        </div>
     </div>
 </div>
+}
+else
+{
+    <div class="about-container">
+        <div class="module-title">
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="20%"></SfSkeleton>
+            <br/>
+        </div>
+        <div class="about-descrip-skeleton">
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="97%"></SfSkeleton>
+            <br/>
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="74%"></SfSkeleton>
+        </div>
+        <br/>
+        <div class="about-component">
+            @for(int i=0; i<14; i++){
+            <div class="control-item">
+                <span>
+                    <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="75%"></SfSkeleton>
+                </span>
+            </div>
+            }
+        </div>
+    </div>
+}
 
 @code {
+    private bool isDataLoaded;
+    private string aboutId;
 
-    private string aboutId = "about";
+    private async void LoadData()
+    {
+        this.aboutId = "about";
+        await Task.Delay(100);
+        isDataLoaded = true;
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            LoadData();
+        }
+    }
 }

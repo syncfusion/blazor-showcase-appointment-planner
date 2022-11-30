@@ -1,4 +1,6 @@
 server-side/AppointmentPlanner/bin
 server-side/AppointmentPlanner/obj
+web-assembly/AppointmentPlanner/bin
+web-assembly/AppointmentPlanner/obj
 .vs/
 .git/

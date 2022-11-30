@@ -172,6 +172,26 @@
     color: #7575ff;
 }
 
+.sf-icon-skeleton::before {
+    content: '\e904';
+    color: #7575ff;
+}
+
+.sf-icon-appbar::before {
+    content: "\e900";
+    color: #7575ff;
+}
+
+.sf-icon-predefineddialogs::before {
+    content: "\e901";
+    color: #7575ff;
+}
+
+.sf-icon-message::before {
+    content: "\e903";
+    color: #7575ff;
+}
+
 .control-icon {
     font-size: 18px;
     margin-right: 15px;
@@ -184,4 +204,10 @@
 
 .about-component {
     margin-left: 20px;
+}
+
+/*skeleton*/
+.about-descrip-skeleton {
+    line-height: 20px;
+    margin-top: 30px;
 }

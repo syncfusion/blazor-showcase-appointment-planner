@@ -2,6 +2,7 @@
     margin-top: 60px;
     padding-bottom: 10px;
 }
+
     #plannerSiderBar .info .image {
         border: 2px solid #fff;
         box-shadow: 0 3px 7px 0 rgba(117, 117, 255, 0.30);
@@ -16,43 +17,43 @@
 }
 
 
-        #plannerSiderBar .info .image img {
-            height: 80px;
-            width: 80px;
-            border-radius: 50%;
-        }
+#plannerSiderBar .info .image img {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+}
 
-    #plannerSiderBar .info .name, #plannerSiderBar .info .user-type {
-        text-align: center;
-    }
+#plannerSiderBar .info .name, #plannerSiderBar .info .user-type {
+    text-align: center;
+}
 
-    #plannerSiderBar .info .name {
-        font-weight: bold;
-        font-size: 16px;
-        color: #333;
-        letter-spacing: 0.48px;
-        margin-bottom: 0;
-    }
+#plannerSiderBar .info .name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    letter-spacing: 0.48px;
+    margin-bottom: 0;
+}
 
-    #plannerSiderBar .info p {
-        margin-block-start: 1em;
-        margin-block-end: 1em;
-    }
+#plannerSiderBar .info p {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
 
-    #plannerSiderBar .info .user-type {
-        font-size: 11px;
-        color: #808080;
-        letter-spacing: 0.33px;
-        margin-top: 5px;
-    }
+#plannerSiderBar .info .user-type {
+    font-size: 11px;
+    color: #808080;
+    letter-spacing: 0.33px;
+    margin-top: 5px;
+}
 
-    #plannerSiderBar .info::after {
-        content: '';
-        background-image: linear-gradient(-90deg, #fff 3%, #b8cbcc 51%, #fff 95%);
-        height: 1px;
-        width: 100%;
-        position: absolute;
-    }
+#plannerSiderBar .info::after {
+    content: '';
+    background-image: linear-gradient(-90deg, #fff 3%, #b8cbcc 51%, #fff 95%);
+    height: 1px;
+    width: 100%;
+    position: absolute;
+}
 
 #plannerSiderBar .sidebar-item {
     height: 50px;
@@ -70,116 +71,119 @@
         margin: 0 15px;
         text-align: left;
     }
+
     #plannerSiderBar .sidebar-item.active, #plannerSiderBar .sidebar-item.active:hover {
         background-color: #7575ff;
         color: #fff;
     }
 
-#plannerSiderBar .sidebar-item .dashboard-image, #plannerSiderBar .sidebar-item .scheduler-image, #plannerSiderBar .sidebar-item .doctors-image, #plannerSiderBar .sidebar-item .patients-image, #plannerSiderBar .sidebar-item .preference-image, #plannerSiderBar .sidebar-item .about-image {
-  width: 30%;
-  text-align: right;
-  margin-top: 9px;
-}
+    #plannerSiderBar .sidebar-item .dashboard-image, #plannerSiderBar .sidebar-item .scheduler-image, #plannerSiderBar .sidebar-item .doctors-image, #plannerSiderBar .sidebar-item .patients-image, #plannerSiderBar .sidebar-item .preference-image, #plannerSiderBar .sidebar-item .about-image {
+        width: 30%;
+        text-align: right;
+        margin-top: 9px;
+    }
 
-.planner-header {
+.planner-header .e-appbar.custom-appbar {
     background: #7575ff !important;
     height: 50px;
     display: flex;
 }
 
-    .planner-header .name-cantainer {
+.planner-header .name-cantainer {
+    flex: auto;
+    display: inline-flex;
+}
+
+    .planner-header .name-cantainer .clinic-image {
+        font-size: 50px;
+        color: #fff;
+    }
+
+.planner-header .clinic-name, .planner-header .logout-name {
+    margin: auto 0;
+    color: white;
+    cursor: default;
+}
+
+.planner-header div.side-bar-opener {
+    display: block;
+    flex: auto;
+    position: relative;
+}
+
+.planner-header .clinic-name.appointment-title {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.planner-header div.side-bar-opener .open-icon {
+    margin: 15px;
+    position: absolute;
+    font-size: 20px;
+    color: #fff;
+    height: 24px;
+    width: 24px;
+}
+
+    .planner-header div.side-bar-opener .open-icon::before {
+        content: '\e941';
+    }
+
+.e-appbar > div:first-child {
+    display: none !important;
+}
+
+.planner-header .logout-container {
+    padding: 5px;
+    flex: initial;
+    display: flex;
+}
+
+    .planner-header .logout-container .logout-icon-container {
+        opacity: 1;
         flex: auto;
-        display: inline-flex;
+        padding: 0 7px;
+        align-self: center;
     }
 
-        .planner-header .name-cantainer .clinic-image {
-            font-size: 50px;
-            color: #fff;
-        }
-
-    .planner-header .clinic-name, .planner-header .logout-name {
-        margin: auto 0;
-        color: white;
-        cursor: default;
+    .planner-header .logout-container .logout-name {
+        display: none;
     }
 
-    .planner-header div.side-bar-opener {
-        display: block;
-        flex: auto;
-        position: relative;
+    .planner-header .logout-container .logout-image {
+        color: #fff;
+        font-size: 25px;
+        cursor: pointer;
     }
-	.planner-header .clinic-name.appointment-title {
-        font-size: 16px;
-        font-weight: 400;
-     }
 
-        .planner-header div.side-bar-opener .open-icon {
-            margin: 15px;
-            position: absolute;
-            font-size: 20px;
-            color: #fff;
-            height: 24px;
-            width: 24px;
-        }
+.planner-header:not(.device-header) {
+    display: flex;
+}
 
-            .planner-header div.side-bar-opener .open-icon::before {
-                content: '\e941';
-            }
+    .planner-header:not(.device-header) div .side-bar-opener {
+        display: none;
+    }
 
-        .planner-header div.side-bar-opener {
-            display: none;
-        }
-        .planner-header .logout-container {
-            padding: 5px;
+    .planner-header:not(.device-header) .logout-container {
+        padding: 7px 10px;
+    }
+
+        .planner-header:not(.device-header) .logout-container .logout-name {
             flex: initial;
-            display: flex;
-        }
-
-        .planner-header .logout-container .logout-icon-container {
-            opacity: 1;
-            flex: auto;
-            padding: 0 7px;
-            align-self: center;
-        }
-
-        .planner-header .logout-container .logout-name {
-            display: none;
-        }
-
-        .planner-header .logout-container .logout-image {
-            color: #fff;
-            font-size: 25px;
+            display: block;
             cursor: pointer;
         }
 
-    .planner-header:not(.device-header) {
-        display: flex;
-    }
-
-        .planner-header:not(.device-header) div .side-bar-opener {
-            display: none;
+        .planner-header:not(.device-header) .logout-container .logout-icon-container {
+            opacity: 0.5;
         }
 
-        .planner-header:not(.device-header) .logout-container {
-            padding: 7px 10px;
+        .planner-header:not(.device-header) .logout-container::before {
+            content: '';
+            height: 33px;
+            border: 1px solid #fff;
+            opacity: 0.5;
         }
-
-            .planner-header:not(.device-header) .logout-container .logout-name {
-                flex: initial;
-                display: block;
-                cursor: pointer;
-            }
-
-            .planner-header:not(.device-header) .logout-container .logout-icon-container {
-                opacity: 0.5;
-            }
-
-            .planner-header:not(.device-header) .logout-container::before {
-                content: '';
-                height: 33px;
-                border: 1px solid #fff;
-                opacity: 0.5;
-            }
 
 .planner-wrapper .e-content-animation {
     margin-left: 0 !important;
@@ -207,11 +211,28 @@ header .module-title .underline {
     height: 4px;
 }
 
+.planner-header {
+    position: sticky;
+    top: 0;
+}
+
+.e-sidebar.e-left {
+    top: auto;
+}
+
+.main-content {
+    height: 95%;
+    width: 100%;
+    position: fixed;
+    overflow: scroll;
+}
+
 @media (max-width: 850px) {
     header .module-title .title {
         padding-bottom: 10px;
     }
 }
+
 @media (max-width: 700px) {
 
     .planner-dashboard .list-display {
@@ -228,19 +249,21 @@ header .module-title .underline {
         padding-right: 0px;
     }
 
-    
 
-        .col-lg-3.col-md-3.col-sm-3.treeview-container-wrapper .title-container {
-            margin-top: 20px;
-        }
+
+    .col-lg-3.col-md-3.col-sm-3.treeview-container-wrapper .title-container {
+        margin-top: 20px;
+    }
 }
+
 @media (max-width: 700px) {
     .planner-calendar .col-lg-3.col-md-3.col-sm-3.treeview-container-wrapper {
         padding-top: 20px;
         max-width: 100%;
     }
-    .planner-header div.side-bar-opener {
-        display: flex;
+
+    .e-appbar > div:first-child {
+        display: flex !important;
         flex-basis: 12%;
         order: 0;
         align-items: center;
@@ -250,20 +273,23 @@ header .module-title .underline {
         flex-grow: 0;
         flex-shrink: 0;
     }
-        .planner-header div.side-bar-opener .open-icon {
-            display: flex;
-            text-align: center;
-            vertical-align: middle;
-            align-items: center;
-            flex-basis: 100%;
-            flex-grow: 0;
-            flex-shrink: 0;
-            padding: 0px;
-            margin: 0px;
-        }
-        .planner-wrapper .e-content-animation {
-            padding-left: 0px;
-        }
+
+    .planner-header div.side-bar-opener .open-icon {
+        display: flex;
+        text-align: center;
+        vertical-align: middle;
+        align-items: center;
+        flex-basis: 100%;
+        flex-grow: 0;
+        flex-shrink: 0;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .planner-wrapper .e-content-animation {
+        padding-left: 0px;
+    }
+
     .planner-header:not(.device-header) {
         display: flex;
         flex-direction: row;
@@ -271,6 +297,7 @@ header .module-title .underline {
         width: 100%;
         position: relative;
     }
+
     .planner-header .name-cantainer {
         flex: auto;
         display: flex;
@@ -279,6 +306,7 @@ header .module-title .underline {
         flex-grow: 0;
         flex-shrink: 0;
     }
+
     .sb-header-item.sb-table-cell {
         display: flex;
         flex-basis: 14%;
@@ -290,6 +318,7 @@ header .module-title .underline {
         flex-grow: 0;
         flex-shrink: 0;
     }
+
     .planner-header .logout-container {
         display: flex;
         flex-grow: 0;
@@ -299,18 +328,21 @@ header .module-title .underline {
         text-align: center;
         justify-content: center;
     }
+
     .e-content-animation .doctor-details-container .active-doctor {
         display: block;
     }
+
     .planner-dashboard .view-detail-display .e-card .e-card-content .count-container {
         margin: 0 0px 6.3px 0px;
     }
+
     .planner-dashboard .view-detail-display .e-card .e-card-content .week-event-count,
     .planner-dashboard .view-detail-display .e-card .e-card-content .day-event-count {
         padding-left: 25.6px;
     }
 }
- 
+
 
 /*font family*/
 
@@ -366,6 +398,7 @@ header .module-title .underline {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
 .icon-about:before {
     content: "\e900";
 }
@@ -418,6 +451,7 @@ header .module-title .underline {
     width: auto;
     margin: auto;
 }
+
 .menulist.e-listview:not(.e-list-template) .e-list-item {
     height: 50px;
     line-height: 50px;
@@ -428,12 +462,15 @@ header .module-title .underline {
     color: #666;
     cursor: pointer;
 }
+
 .menulist.e-listview .e-text-content {
     text-align: center;
 }
+
 .menulist.e-listview .e-list-icon + .e-list-text {
     width: calc(100% - 120px);
 }
+
 .menulist.e-listview .e-list-parent.e-ul {
     margin: 0 16px;
     width: 210px;
@@ -444,6 +481,7 @@ header .module-title .underline {
     font-size: 12px;
     font-weight: 400;
 }
+
     .menulist.e-listview .e-list-item.e-active {
         background-color: transparent;
         color: transparent;
@@ -452,8 +490,9 @@ header .module-title .underline {
 .validation-message {
     color: red;
 }
+
 .e-app-mainpage {
-   background: linear-gradient(-141deg, #FBFAFF 14%, #FBFAFF 100%);
+    background: linear-gradient(-141deg, #FBFAFF 14%, #FBFAFF 100%);
 }
 
 
@@ -472,9 +511,9 @@ header .module-title .underline {
     left: 0px;
 }
 
-.sb-content-overlay.sb-hide {
-    display: none;
-}
+    .sb-content-overlay.sb-hide {
+        display: none;
+    }
 
 .sb-loading {
     width: 56px;
@@ -513,15 +552,14 @@ header .module-title .underline {
         stroke-dasharray: 1, 200;
         stroke-dashoffset: 0;
     }
+
     50% {
         stroke-dasharray: 89, 200;
         stroke-dashoffset: -35;
     }
+
     100% {
         stroke-dasharray: 89, 200;
         stroke-dashoffset: -124;
     }
 }
-
-
-

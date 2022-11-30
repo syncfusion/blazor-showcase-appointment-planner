@@ -5,6 +5,7 @@
 @using AppointmentPlanner.Models;
 @using System;
 
+@if(isDataLoaded){
 <div id="dashboard" class="planner-dashboard">
     <div class="row content view-detail-display" style="margin: 0px;">
         <div class="col-lg-8 col-md-8 col-sm-8">
@@ -136,7 +137,23 @@
         </div>
     </div>
 </div>
-
+}
+else{
+    <div class="planner-dashboard-skeleton">
+        <div class="appointments-skeleton">
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="780px" Width="90%"></SfSkeleton><br/>
+        </div>
+        <div class="activities-skeleton">
+            @for(int i=0; i < 10; i++)
+            {
+                <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="3%" Width="80%"></SfSkeleton>
+                <br />
+                <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="3%" Width="60%"></SfSkeleton>
+                <br /><br />
+            }
+        </div>
+    </div>
+}
 
 @code {
 
@@ -162,6 +179,7 @@
     private List<ChartData> chartData { get; set; }
     private List<ChartData> chartData1 { get; set; }
     private List<ChartData> chartData2 { get; set; }
+    private bool isDataLoaded;
 
 
     protected override void OnInitialized()
@@ -173,18 +191,7 @@
         patients = Service.Patients;
         firstDayOfWeek = Service.GetWeekFirstDate(Service.StartDate);
         max = Service.GetWeekFirstDate(Service.StartDate).AddDays(6);
-        endDate = Service.StartDate.AddDays(1);
-        List<Hospital> currentDayEvents = Service.GetFilteredData(startDate, endDate);
-        this.appointments = this.GetAppoinment(currentDayEvents);
-        List<Hospital> currentViewEvents = Service.GetFilteredData(firstDayOfWeek, this.AddDate(startDate, 6));
-        this.dayEventCount = currentDayEvents.Count().ToString();
-        this.weekEventCount = currentViewEvents.Count().ToString();
-        List<Hospital> diabetologyData = currentViewEvents.Where(item => item.DepartmentId == 5).ToList();
-        List<Hospital> orthopaedicsData = currentViewEvents.Where(item => item.DepartmentId == 4).ToList();
-        List<Hospital> cardiologyData = currentViewEvents.Where(item => item.DepartmentId == 6).ToList();
-        chartData = Service.GetAllChartPoints(diabetologyData, firstDayOfWeek);
-        chartData1 = Service.GetAllChartPoints(orthopaedicsData, firstDayOfWeek);
-        chartData2 = Service.GetAllChartPoints(cardiologyData, firstDayOfWeek);
+        endDate = Service.StartDate.AddDays(1);       
     }
 
     private List<Appointment> GetAppoinment(List<Hospital> currentDayEvents)
@@ -210,5 +217,31 @@
     private string getSpecializationText(string text)
     {
         return Service.Specializations.Where(item => item.Id.Equals(text)).FirstOrDefault().Text.ToUpper();
+    }
+
+    private async void LoadData()
+    {
+        List<Hospital> currentDayEvents = Service.GetFilteredData(startDate, endDate);
+        this.appointments = this.GetAppoinment(currentDayEvents);
+        List<Hospital> currentViewEvents = Service.GetFilteredData(firstDayOfWeek, this.AddDate(startDate, 6));
+        this.dayEventCount = currentDayEvents.Count().ToString();
+        this.weekEventCount = currentViewEvents.Count().ToString();
+        List<Hospital> diabetologyData = currentViewEvents.Where(item => item.DepartmentId == 5).ToList();
+        List<Hospital> orthopaedicsData = currentViewEvents.Where(item => item.DepartmentId == 4).ToList();
+        List<Hospital> cardiologyData = currentViewEvents.Where(item => item.DepartmentId == 6).ToList();
+        chartData = Service.GetAllChartPoints(diabetologyData, firstDayOfWeek);
+        chartData1 = Service.GetAllChartPoints(orthopaedicsData, firstDayOfWeek);
+        chartData2 = Service.GetAllChartPoints(cardiologyData, firstDayOfWeek);
+        await Task.Delay(500);
+        isDataLoaded = true;
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            LoadData();
+        }
     }
 }

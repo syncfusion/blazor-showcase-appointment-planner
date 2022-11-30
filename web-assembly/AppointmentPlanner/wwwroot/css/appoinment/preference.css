@@ -44,3 +44,20 @@
                 padding-top: 30px;
             }
 }
+
+/*skeleton*/
+
+.planner-preference-skeleton {
+    margin: 50px;
+}
+
+.preference-container1 {
+    height: 20%;
+    width: 100%;
+    margin: 0% 0% 4% 0%;
+}
+
+.preference-container2 {
+    height: 80%;
+    width: 100%;
+}

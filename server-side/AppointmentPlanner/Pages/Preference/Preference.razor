@@ -3,6 +3,8 @@
 @using AppointmentPlanner.Data;
 @using AppointmentPlanner.Models;
 
+@if (isDataLoaded)
+{
 <div id="preference" class='preference-container'>
     <header>
         <div class="module-title">
@@ -53,7 +55,25 @@
         </SfDropDownList>
     </div>
 </div>
-
+}
+else
+{
+    <div class="planner-preference-skeleton">
+        <div class="preference-container1">
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="97%"></SfSkeleton>
+            <br/>
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="74%"></SfSkeleton>
+        </div>
+        <div class="preference-container2">
+            @for(int i=0; i<6; i++){
+                <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="12%"></SfSkeleton>
+                <br/>
+                <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="35%"></SfSkeleton>
+                <br/><br/>
+            }
+        </div>
+    </div>    
+}
 
 @code{
     [Inject]
@@ -70,6 +90,7 @@
     private string selectedCategory { get; set; }
     private int? timeInterval { get; set; }
     private int? selectedDayOfWeek { get; set; }
+    private bool isDataLoaded;
 
     protected override void OnInitialized()
     {
@@ -78,13 +99,6 @@
         this.endHours = Service.EndHours;
         this.timeSlots = Service.TimeSlot;
         this.colorCategory = Service.ColorCategory;
-        this.dayOfWeeks = Service.DayOfWeekList;
-        this.selectedView = Service.CalendarSettings.CurrentView;
-        this.selectedStartHour = Service.CalendarSettings.Calendar.Start;
-        this.selectedEndHour = Service.CalendarSettings.Calendar.End;
-        this.selectedCategory = Service.CalendarSettings.BookingColor;
-        this.timeInterval = Service.CalendarSettings.Interval;
-        this.selectedDayOfWeek = Service.CalendarSettings.FirstDayOfWeek;
     }
 
     private void onViewChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, TextValueData> args)
@@ -110,5 +124,27 @@
     private void onFirstDayChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, TextValueNumericData> args)
     {
         Service.CalendarSettings.FirstDayOfWeek = (int)args.Value;
+    }
+
+    private async void LoadData()
+    {   
+        this.dayOfWeeks = Service.DayOfWeekList;
+        this.selectedView = Service.CalendarSettings.CurrentView;
+        this.selectedStartHour = Service.CalendarSettings.Calendar.Start;
+        this.selectedEndHour = Service.CalendarSettings.Calendar.End;
+        this.selectedCategory = Service.CalendarSettings.BookingColor;
+        this.timeInterval = Service.CalendarSettings.Interval;
+        this.selectedDayOfWeek = Service.CalendarSettings.FirstDayOfWeek;
+        await Task.Delay(500);
+        isDataLoaded = true;
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            LoadData();
+        }
     }
 }

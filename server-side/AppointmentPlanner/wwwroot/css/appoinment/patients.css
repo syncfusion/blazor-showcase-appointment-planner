@@ -210,3 +210,23 @@
 .e-btn-group .e-radio-wrapper {
     padding: 4px;
 }
+
+/*skeleton*/
+.planner-patient-skeleton {
+    margin: 50px;
+}
+
+.patients-container1 {
+    height: 20%;
+    width: 100%;
+}
+
+.patients-container1 {
+    height: 70%;
+    width: 100%;
+}
+@media (max-width: 600px) {
+    .planner-patient-skeleton {
+        display: none;
+    }
+}

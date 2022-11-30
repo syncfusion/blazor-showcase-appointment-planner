@@ -52,6 +52,7 @@ namespace AppointmentPlanner.Data
         public List<Activity> Activities { get; set; }
         public List<NavigationMenu> NavigationMenu { get; set; }
         public CalendarSetting CalendarSettings { get; set; }
+        public bool ShowDeleteMsg { get; set; }
 
         public DateTime GetWeekFirstDate(DateTime date)
         { 
