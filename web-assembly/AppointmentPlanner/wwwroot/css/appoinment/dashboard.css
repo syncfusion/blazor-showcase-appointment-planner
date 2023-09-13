@@ -145,7 +145,7 @@
     padding: 10px 16px;
 }
 
-.activity-template .e-content .e-list-item {
+.activity-template .e-list-container .e-list-item {
     border: none;
     height: 100%;
     padding: 0px 16px;
@@ -153,21 +153,21 @@
     line-height: 18px;
 }
 
-    .activity-template .e-content .e-list-item .activity-container {
+    .activity-template .e-list-container .e-list-item .activity-container {
         padding: 5px 0;
     }
 
-        .activity-template .e-content .e-list-item .activity-container.doctor {
+        .activity-template .e-list-container .e-list-item .activity-container.doctor {
             border-left: 2px solid #e16651;
         }
-        .activity-template .e-content .e-list-item .activity-container.appointment {
+        .activity-template .e-list-container .e-list-item .activity-container.appointment {
             border-left: 2px solid #5851e1;
         }
-        .activity-template .e-content .e-list-item .activity-container.patient {
+        .activity-template .e-list-container .e-list-item .activity-container.patient {
             border-left: 2px solid #51e1b7;
         }
 
-        .activity-template .e-content .e-list-item .activity-container .activity-message {
+        .activity-template .e-list-container .e-list-item .activity-container .activity-message {
             font-weight: 400;
             font-size: 13px;
             color: #333;
@@ -178,11 +178,11 @@
             padding-bottom: 5px;
         }
 
-            .activity-template .e-content .e-list-item .activity-container .activity-message .type-name {
+            .activity-template .e-list-container .e-list-item .activity-container .activity-message .type-name {
                 font-weight: bold;
             }
 
-        .activity-template .e-content .e-list-item .activity-container .activity-time {
+        .activity-template .e-list-container .e-list-item .activity-container .activity-time {
             font-size: 13px;
             color: #999;
             letter-spacing: 0.39px;
@@ -233,37 +233,37 @@
                 white-space: nowrap;
             }
 
-.e-list-template .e-content, .activity-template .e-content {
+.e-list-template .e-list-container, .activity-template .e-list-container {
     padding-top: 10px;
 }
 
-    .e-list-template .e-content li.e-list-item {
+    .e-list-template .e-list-container li.e-list-item {
         border: none;
         display: flex;
         padding: 5px 16px;
     }
 
-        .e-list-template .e-content li.e-list-item .availabilty-container {
+        .e-list-template .e-list-container li.e-list-item .availabilty-container {
             display: flex;
         }
 
-            .e-list-template .e-content li.e-list-item .availabilty-container .image-container {
+            .e-list-template .e-list-container li.e-list-item .availabilty-container .image-container {
                 display: flex;
                 padding-left: 1px;
             }
 
-                .e-list-template .e-content li.e-list-item .availabilty-container .image-container .doctor-image {
+                .e-list-template .e-list-container li.e-list-item .availabilty-container .image-container .doctor-image {
                     padding: 5px 0;
                     position: relative;
                 }
 
-                    .e-list-template .e-content li.e-list-item .availabilty-container .image-container .doctor-image img {
+                    .e-list-template .e-list-container li.e-list-item .availabilty-container .image-container .doctor-image img {
                         height: 32px;
                         width: 32px;
                         border-radius: 16px;
                     }
 
-                    .e-list-template .e-content li.e-list-item .availabilty-container .image-container .doctor-image .availability.busy, .e-list-template .e-content li.e-list-item .availabilty-container .image-container .doctor-image .availability.available, .e-list-template .e-content li.e-list-item .availabilty-container .image-container .doctor-image .availability.away {
+                    .e-list-template .e-list-container li.e-list-item .availabilty-container .image-container .doctor-image .availability.busy, .e-list-template .e-list-container li.e-list-item .availabilty-container .image-container .doctor-image .availability.available, .e-list-template .e-list-container li.e-list-item .availabilty-container .image-container .doctor-image .availability.away {
                         display: inline-block;
                         border: 2px solid #fff;
                         border-radius: 16px;
@@ -274,24 +274,24 @@
                         left: 65%;
                     }
 
-                    .e-list-template .e-content li.e-list-item .availabilty-container .image-container .doctor-image .availability.busy {
+                    .e-list-template .e-list-container li.e-list-item .availabilty-container .image-container .doctor-image .availability.busy {
                         background: #d40000;
                     }
 
-                    .e-list-template .e-content li.e-list-item .availabilty-container .image-container .doctor-image .availability.away {
+                    .e-list-template .e-list-container li.e-list-item .availabilty-container .image-container .doctor-image .availability.away {
                         background: #ff8c2e;
                     }
 
-                    .e-list-template .e-content li.e-list-item .availabilty-container .image-container .doctor-image .availability.available {
+                    .e-list-template .e-list-container li.e-list-item .availabilty-container .image-container .doctor-image .availability.available {
                         background: #00d406;
                     }
 
-            .e-list-template .e-content li.e-list-item .availabilty-container .detail-container {
+            .e-list-template .e-list-container li.e-list-item .availabilty-container .detail-container {
                 display: grid;
                 padding-left: 16px;
             }
 
-                .e-list-template .e-content li.e-list-item .availabilty-container .detail-container .doctor-name {
+                .e-list-template .e-list-container li.e-list-item .availabilty-container .detail-container .doctor-name {
                     font-weight: 500;
                     font-size: 13px;
                     color: #666;
@@ -299,7 +299,7 @@
                     padding: 3px 0;
                 }
 
-                .e-list-template .e-content li.e-list-item .availabilty-container .detail-container .doctor-speciality {
+                .e-list-template .e-list-container li.e-list-item .availabilty-container .detail-container .doctor-speciality {
                     font-size: 10px;
                     color: #666;
                     letter-spacing: 0.3px;
