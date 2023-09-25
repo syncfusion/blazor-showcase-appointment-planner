@@ -247,7 +247,7 @@ else{
         }
         string message = $"Dr.{newDoctor.Name}, {newDoctor.Specialization.Substring(0, 1).ToUpper()}{newDoctor.Specialization.Substring(1)}";
         Service.Activities.Insert(0, new Activity { Name = "Added New Doctor", Message = message, Time = "4 mins ago", Type = "doctor", ActivityTime = DateTime.Now });
-        await DialogObj.Hide();
+        await DialogObj.HideAsync();
     }
 
     private Doctor updateWorkHours(Doctor data)
@@ -298,7 +298,7 @@ else{
     }
     private async Task onCancelClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {
-        await this.DialogObj.Hide();
+        await this.DialogObj.HideAsync();
         this.isShowNewDialog = false;
     }
 

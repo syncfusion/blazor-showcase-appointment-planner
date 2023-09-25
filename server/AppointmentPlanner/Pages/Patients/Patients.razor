@@ -244,7 +244,7 @@ else
     }
     private async Task onCancelClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {
-        await this.dialogObj.Hide();
+        await this.dialogObj.HideAsync();
     }
     public async Task HandleValidSubmit()
     {
@@ -268,7 +268,7 @@ else
             name = "Updated Patient";
         }
         Service.Activities.Insert(0, new Activity { Name = name, Message = message, Time = "10 mins ago", Type = "patient", ActivityTime = DateTime.Now });
-        await this.dialogObj.Hide();
+        await this.dialogObj.HideAsync();
     }
 
     public void onRowSelected(RowSelectEventArgs<Patient> args)
@@ -367,12 +367,12 @@ else
     {   
         this.EditData = Service.Patients[0];
         this.patientEditModel = new Patient();
-        await Task.Delay(100);
+        await Task.Delay(500);
         isDataLoaded = true;
         StateHasChanged();
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override void OnAfterRender(bool firstRender)
     {
         if (firstRender)
         {
@@ -380,7 +380,7 @@ else
         }
         if (this.showDeleteMsg && isDataLoaded)
         {
-            await Task.Delay(2000);
+            Task.Delay(1000).Wait();
             this.showDeleteMsg = false;
             StateHasChanged();
         }
