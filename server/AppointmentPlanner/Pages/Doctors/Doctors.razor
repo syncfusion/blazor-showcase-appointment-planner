@@ -76,12 +76,9 @@
     </div>
 </div>
 
-@if (isShowNewDialog)
-{
-<SfDialog Target="body" @ref="DialogObj" Width="390px" CssClass="new-doctor-dialog" IsModal="true" @bind-Visible="@isShowNewDialog" ShowCloseIcon="true" Header="@editHeader">
+<SfDialog Target="body" Width="390px" CssClass="new-doctor-dialog" IsModal="true" @bind-Visible="@isShowNewDialog" ShowCloseIcon="true" Header="@editHeader">
     <ChildContent>
         <DialogAnimationSettings Effect="DialogEffect.Zoom"></DialogAnimationSettings>
-        <DialogEvents Closed="dialogClosed"></DialogEvents>
         <EditForm Model="@doctorEditModel" class="new-doctor-form" OnValidSubmit="@HandleValidSubmit">
             <DataAnnotationsValidator></DataAnnotationsValidator>
             <div class="name-container">
@@ -140,7 +137,6 @@
     </ChildContent>
 </SfDialog>
 }
-}
 else{
     <div class="planner-doctor-skeleton">
         <div class="doctor-title-skeleton">
@@ -196,7 +192,6 @@ else{
     [Inject]
     protected AppointmentService Service { get; set; }
 
-    SfDialog DialogObj;
     SfDropDownList<string, Specialization> specObj { get; set; }
     private List<Doctor> filteredDoctors { get; set; }
     private SfMaskedTextBox maskObj { get; set; }
@@ -226,12 +221,7 @@ else{
         this.isShowNewDialog = true;
     }
 
-    private void dialogClosed(object args)
-    {
-        this.isShowNewDialog = false;
-    }
-
-    public async Task HandleValidSubmit(EditContext context)
+    public void HandleValidSubmit(EditContext context)
     {
         Doctor initialData = Service.Doctors.FirstOrDefault();
         initialData = initialData != null ? initialData : new Doctor();
@@ -247,7 +237,7 @@ else{
         }
         string message = $"Dr.{newDoctor.Name}, {newDoctor.Specialization.Substring(0, 1).ToUpper()}{newDoctor.Specialization.Substring(1)}";
         Service.Activities.Insert(0, new Activity { Name = "Added New Doctor", Message = message, Time = "4 mins ago", Type = "doctor", ActivityTime = DateTime.Now });
-        await DialogObj.HideAsync();
+        this.isShowNewDialog = false;
     }
 
     private Doctor updateWorkHours(Doctor data)
@@ -296,9 +286,8 @@ else{
         }
         filteredDoctors = filteredData;
     }
-    private async Task onCancelClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
+    private void onCancelClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {
-        await this.DialogObj.HideAsync();
         this.isShowNewDialog = false;
     }
 

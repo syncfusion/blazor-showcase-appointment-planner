@@ -313,11 +313,9 @@ else
         this.IsShowPatientEditDialog = true;
     }
 
-    private async Task onPatientClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args, int Id)
+    private void onPatientClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args, int Id)
     {
-        await this.gridObj.SelectRow(Id - 1);
         this.isPatientClicked = true;
-        this.showGridEditDialog = true;
     }
 
     private void patientSearch(Microsoft.AspNetCore.Components.ChangeEventArgs args)

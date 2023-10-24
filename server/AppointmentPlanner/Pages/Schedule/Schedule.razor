@@ -11,7 +11,7 @@
         <div class="col-lg-9 col-md-9 col-sm-9" style="padding: 0px">
             <div class="schedule-container e-droppable">
                 <SfSchedule ID="schedule" TValue="Hospital" @ref="scheduleObj" Width="100%" Height="800px" EnableAutoRowHeight="true" CssClass="doctor-appointment-planner" ShowWeekend="false" StartHour="@startHour" EndHour="@endHour" @bind-SelectedDate="@currentDate" WorkDays="@workDay" FirstDayOfWeek="@calendarDayOfWeek" @bind-CurrentView="@sceduleView">
-                    <ScheduleEvents TValue="Hospital" OnCellClick="OnCellClick" OnActionBegin="OnActionBegin"></ScheduleEvents>
+                    <ScheduleEvents TValue="Hospital" OnPopupOpen="OnPopupOpen" OnActionBegin="OnActionBegin"></ScheduleEvents>
                     <ScheduleWorkHours Start="08:00" End="21:00"></ScheduleWorkHours>
                     <ScheduleEventSettings DataSource="@scheduleEventData" ResourceColorField="@resourceColorField" AllowEditFollowingEvents="@editUpcoming">
                         <ScheduleField>
@@ -204,10 +204,11 @@ else{
     }
 
 
-    public void OnCellClick(CellClickEventArgs args)
+    public void OnPopupOpen(PopupOpenEventArgs<Hospital> args)
     {
-        args.Cancel = true;
+        args.Cancel = args.Type == PopupType.QuickInfo && args.Data.Id < 1;
     }
+
     public void OnActionBegin(Syncfusion.Blazor.Schedule.ActionEventArgs<Hospital> args)
     {
         if (args.ActionType == ActionType.EventCreate && args.AddedRecords.Count > 0)
