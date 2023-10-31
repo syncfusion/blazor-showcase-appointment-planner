@@ -70,7 +70,7 @@
 }
 
 .e-popup.e-popup-open.e-dialog {
-    max-height: none !important;
+    max-height: 98% !important;
 }
 
 .e-input-group.e-input-focus:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
