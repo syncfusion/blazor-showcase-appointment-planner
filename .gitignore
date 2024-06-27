@@ -1,12 +1,4 @@
-server/AppointmentPlanner/bin
-server/AppointmentPlanner/obj
-wasm/AppointmentPlanner/bin
-wasm/AppointmentPlanner/obj
-webapp/server/AppointmentPlanner/bin
-webapp/server/AppointmentPlanner/obj
-webapp/wasm/AppointmentPlanner/AppointmentPlanner/bin
-webapp/wasm/AppointmentPlanner/AppointmentPlanner/obj
-webapp/wasm/AppointmentPlanner/AppointmentPlanner.Client/bin
-webapp/wasm/AppointmentPlanner/AppointmentPlanner.Client/obj
 .vs/
 .git/
+**/bin/
+**/obj
