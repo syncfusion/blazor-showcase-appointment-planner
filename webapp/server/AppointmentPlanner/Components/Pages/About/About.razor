@@ -1,0 +1,138 @@
+﻿@page "/about"
+
+@if (isDataLoaded)
+{
+<div id="@aboutId" class="about-container">
+    <header>
+        <div class="module-title">
+            <div class='title'>ABOUT</div>
+            <div class='underline'></div>
+        </div>
+    </header>
+    <p>
+        This Example Clinic demo application showcases several Syncfusion Blazor UI components together in a real-world application scenario. 
+        You can explore the <a href="https://github.com/syncfusion/blazor-showcase-appointment-planner" target="_blank">source code</a> of this application and use it as a
+        reference for integrating Syncfusion Blazor UI components in your applications.
+    </p>
+    <div class='list-heading'>List of Syncfusion Blazor UI components used in this sample</div>
+    <div class='about-component'>
+        <div class='control-item'>
+            <span class="sfimage-schedule e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/schedule/getting-started" target="_blank">Schedule</a>
+        </div>
+        <div class='control-item'>
+            <span class="sfimage-grid e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/grid/getting-started" target="_blank">Grid</a>
+        </div>
+        <div class='control-item'>
+            <span class="sfimage-chart e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/chart/getting-started" target="_blank">Chart</a>
+        </div>
+        <div class='control-item'>
+            <span class="sfimage-treeview e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/treeview/getting-started" target="_blank">TreeView</a>
+        </div>
+        <div class='control-item'>
+            <span class="sfimage-listview e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/listview/getting-started" target="_blank">ListView</a>
+        </div>
+        <div class='control-item'>
+            <span class="sfimage-dropdownlist e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/dropdownlist/getting-started" target="_blank">DropDownList</a>
+        </div>
+        <div class='control-item'>
+            <span class="sfimage-datepicker e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/datepicker/getting-started" target="_blank">DatePicker</a>
+        </div>
+        <div class='control-item'>
+            <span class="sfimage-timepicker e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/timepicker/getting-started" target="_blank">TimePicker</a>
+        </div>
+        <div class='control-item'>
+            <span class="sfimage-dialog e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/dialog/getting-started" target="_blank">Dialog</a>
+        </div>
+        <div class='control-item'>
+            <span class="sfimage-sidebar e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/sidebar/getting-started" target="_blank">Sidebar</a>
+        </div>
+        <div class='control-item'>
+            <span class="sfimage-textboxes e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/textbox/getting-started" target="_blank">TextBox</a>
+        </div>
+        <div class='control-item'>
+            <span class="sfimage-button e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/button/getting-started" target="_blank">Button</a>
+        </div>
+        <div class='control-item'>
+            <span class="sfimage-toast e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/toast/getting-started" target="_blank">Toast</a>
+        </div>
+        <div class='control-item'>
+            <span class="sfimage-checkbox e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/check-box/getting-started" target="_blank">CheckBox</a>
+        </div>
+        <div class='control-item'>
+            <span class="sf-icon-skeleton e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/skeleton/getting-started" target="_blank">Skeleton</a>
+        </div>
+        <div class='control-item'>
+            <span class="sf-icon-appbar e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/appbar/getting-started" target="_blank">AppBar</a>
+        </div>
+        <div class='control-item'>
+            <span class="sf-icon-predefineddialogs e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/dialog/predefined-dialogs" target="_blank">Predefined Dialogs</a>
+        </div>
+        <div class='control-item'>
+            <span class="sf-icon-message e-sb-icon control-icon"></span>
+            <a class='control-name' href="https://blazor.syncfusion.com/documentation/message/getting-started" target="_blank">Message</a>
+        </div>
+    </div>
+</div>
+}
+else
+{
+    <div class="about-container">
+        <div class="module-title">
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="20%"></SfSkeleton>
+            <br/>
+        </div>
+        <div class="about-descrip-skeleton">
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="97%"></SfSkeleton>
+            <br/>
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="74%"></SfSkeleton>
+        </div>
+        <br/>
+        <div class="about-component">
+            @for(int i=0; i<14; i++){
+            <div class="control-item">
+                <span>
+                    <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="75%"></SfSkeleton>
+                </span>
+            </div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private bool isDataLoaded;
+    private string aboutId;
+
+    private async void LoadData()
+    {
+        this.aboutId = "about";
+        await Task.Delay(100);
+        isDataLoaded = true;
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            LoadData();
+        }
+    }
+}

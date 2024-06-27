@@ -1,0 +1,638 @@
+﻿.planner-calendar {
+    font-size: 14px;
+    margin: 30px 50px;
+    color: #9aa5bb;
+    letter-spacing: 0.05px;
+}
+
+    .planner-calendar .e-all-day-appointment-wrapper, .planner-calendar .e-timeline-wrapper {
+        font-size: 0;
+    }
+
+    .planner-calendar .drag-sample-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .planner-calendar .drag-sample-wrapper .schedule-container {
+            padding-right: 25px;
+            width: 100%;
+        }
+
+            .planner-calendar .drag-sample-wrapper .schedule-container .e-schedule-toolbar-container .e-toolbar-items .e-toolbar-center .planner-dropdown {
+                margin-top: 5px;
+                margin-left: 20px;
+            }
+
+            .planner-calendar .drag-sample-wrapper .schedule-container .e-table-container .e-month-view .e-content-wrap .e-work-cells .e-block-indicator {
+                visibility: hidden;
+            }
+
+            .planner-calendar .drag-sample-wrapper .schedule-container .e-table-container .e-month-view .e-content-wrap .e-work-cells .e-appointment .e-time, .planner-calendar .drag-sample-wrapper .schedule-container .e-table-container .e-month-view .e-content-wrap .e-work-cells .e-appointment .e-subject {
+                padding: 2px;
+            }
+
+            .planner-calendar .drag-sample-wrapper .schedule-container .e-quick-popup-wrapper.e-popup-open .e-event-popup .quick-info-header {
+                background-color: white;
+                padding: 8px 18px;
+            }
+
+                .planner-calendar .drag-sample-wrapper .schedule-container .e-quick-popup-wrapper.e-popup-open .e-event-popup .quick-info-header .quick-info-header-content {
+                    height: 50px;
+                    justify-content: flex-end;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 0 10px 5px;
+                }
+
+                    .planner-calendar .drag-sample-wrapper .schedule-container .e-quick-popup-wrapper.e-popup-open .e-event-popup .quick-info-header .quick-info-header-content .quick-info-title {
+                        font-weight: 500;
+                        font-size: 16px;
+                        letter-spacing: 0.48px;
+                        height: 22px;
+                    }
+
+                    .planner-calendar .drag-sample-wrapper .schedule-container .e-quick-popup-wrapper.e-popup-open .e-event-popup .quick-info-header .quick-info-header-content .duration-text {
+                        font-size: 11px;
+                        letter-spacing: 0.33px;
+                        height: 14px;
+                    }
+
+            .planner-calendar .drag-sample-wrapper .schedule-container .e-quick-popup-wrapper.e-popup-open .e-event-popup .event-content {
+                height: 90px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 0 15px;
+            }
+
+                .planner-calendar .drag-sample-wrapper .schedule-container .e-quick-popup-wrapper.e-popup-open .e-event-popup .event-content div {
+                    font-size: 11px;
+                    color: #666;
+                    letter-spacing: 0.33px;
+                    height: 24px;
+                    padding: 5px;
+                }
+
+                    .planner-calendar .drag-sample-wrapper .schedule-container .e-quick-popup-wrapper.e-popup-open .e-event-popup .event-content div label {
+                        display: inline-block;
+                        min-width: 70px;
+                        color: #666;
+                    }
+
+                    .planner-calendar .drag-sample-wrapper .schedule-container .e-quick-popup-wrapper.e-popup-open .e-event-popup .event-content div span {
+                        font-size: 11px;
+                        color: #151515;
+                        letter-spacing: 0.33px;
+                        line-height: 14px;
+                        padding-left: 8px;
+                    }
+
+        .planner-calendar .drag-sample-wrapper .treeview-container {
+            /* add event button customization */
+        }
+
+            .planner-calendar .drag-sample-wrapper .treeview-container .add-event-container, .planner-calendar .drag-sample-wrapper .treeview-container .specialization-types {
+                margin: 5px;
+                width: 216px;
+            }
+
+            .planner-calendar .drag-sample-wrapper .treeview-container .title-container {
+                margin-top: 45px;
+                margin-left: 10px;
+            }
+
+                .planner-calendar .drag-sample-wrapper .treeview-container .title-container .title-text {
+                    font-weight: 400;
+                    font-size: 16px;
+                    color: #333;
+                    letter-spacing: 0.48px;
+                    font-weight: bold;
+                    padding: 0 5px;
+                }
+
+            .planner-calendar .drag-sample-wrapper .treeview-container {
+                padding: 0 !important;
+            }
+
+                .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent {
+                    height: 100%;
+                    padding: 0 2px;
+                }
+
+                    .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent.e-ul {
+                        overflow: hidden;
+                    }
+
+                    .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item {
+                        height: 65px;
+                        border-radius: 4px;
+                        margin: 5px 0;
+                    }
+
+                        .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item.e-hover .e-fullrow, .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item.e-active .e-fullrow, .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item.e-active.e-hover .e-fullrow {
+                            background-color: transparent;
+                            border-color: transparent;
+                            box-shadow: none !important;
+                        }
+
+                        .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item.e-hover .e-text-content .e-list-text, .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item.e-active .e-text-content .e-list-text, .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item.e-active.e-hover .e-text-content .e-list-text {
+                            color: #333;
+                        }
+
+                        .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-fullrow {
+                            height: 60px;
+                        }
+
+                        .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-text-content {
+                            padding: 0;
+                            height: 65px;
+                        }
+
+                            .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-text-content .e-list-text {
+                                background: #fff5f5;
+                                border-radius: 4px;
+                                height: 100%;
+                                padding: 6px 10px;
+                            }
+
+                        .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-list-text {
+                            background: white;
+                            border: 0.5px solid #e1e7ec;
+                            height: 50px;
+                            line-height: 15px;
+                            padding: 0 5px;
+                            width: 220px;
+                        }
+
+                            .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-list-text #waiting {
+                                height: 100%;
+                                padding: 0;
+                                display: flex;
+                            }
+
+                                .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-list-text #waiting #waitdetails {
+                                    width: 90%;
+                                    float: left;
+                                    height: 100%;
+                                    padding: 0;
+                                }
+
+                                    .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-list-text #waiting #waitdetails #waitlist {
+                                        height: 18px;
+                                        font-weight: 500;
+                                        font-size: 13px;
+                                        color: #333;
+                                        letter-spacing: 0.39px;
+                                    }
+
+                                    .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-list-text #waiting #waitdetails #event-time {
+                                        font-size: 10px;
+                                        color: #333;
+                                        letter-spacing: 0.3px;
+                                        height: 17px;
+                                        padding: 2px 0;
+                                    }
+
+                                    .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-list-text #waiting #waitdetails #waitcategory {
+                                        height: 17px;
+                                        font-size: 10px;
+                                        color: #999;
+                                        letter-spacing: 0.3px;
+                                    }
+
+                            .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-list-text #item-icon-container {
+                                position: relative;
+                                padding: 10px 0;
+                            }
+
+                                .planner-calendar .drag-sample-wrapper .treeview-container .e-list-parent .e-list-item .e-list-text #item-icon-container .item-icon {
+                                    position: absolute;
+                                    font-size: 20px;
+                                    color: #c0c0c0;
+                                }
+
+.e-drag-item.treeview-external-drag {
+    height: 60px;
+    border-radius: 4px;
+    margin: 5px 0;
+    background: #fff5f5;
+    box-shadow: 1px 2px 4px 0 rgba(255, 0, 0, 0.25);
+}
+
+    .e-drag-item.treeview-external-drag.e-hover .e-fullrow, .e-drag-item.treeview-external-drag.e-active .e-fullrow, .e-drag-item.treeview-external-drag.e-active.e-hover .e-fullrow {
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: none !important;
+    }
+
+    .e-drag-item.treeview-external-drag.e-hover .e-text-content .e-list-text, .e-drag-item.treeview-external-drag.e-active .e-text-content .e-list-text, .e-drag-item.treeview-external-drag.e-active.e-hover .e-text-content .e-list-text {
+        color: #333;
+    }
+
+    .e-drag-item.treeview-external-drag .e-fullrow {
+        height: 55px;
+    }
+
+    .e-drag-item.treeview-external-drag .e-text-content {
+        padding: 0;
+        height: 60px;
+    }
+
+        .e-drag-item.treeview-external-drag .e-text-content .e-list-text {
+            background: #fff5f5;
+            border-radius: 4px;
+            height: 100%;
+            padding: 6px 10px;
+            border: none;
+        }
+
+    .e-drag-item.treeview-external-drag .e-list-text {
+        background: white;
+        border: 0.5px solid #e1e7ec;
+        height: 50px;
+        line-height: 15px;
+        padding: 0 5px;
+        width: 220px;
+    }
+
+        .e-drag-item.treeview-external-drag .e-list-text #waiting {
+            height: 100%;
+            padding: 0;
+            display: flex;
+        }
+
+            .e-drag-item.treeview-external-drag .e-list-text #waiting #waitdetails {
+                width: 90%;
+                float: left;
+                height: 100%;
+                padding: 0;
+            }
+
+                .e-drag-item.treeview-external-drag .e-list-text #waiting #waitdetails #waitlist {
+                    height: 16px;
+                    font-weight: 500;
+                    font-size: 13px;
+                    color: #333;
+                    letter-spacing: 0.39px;
+                }
+
+                .e-drag-item.treeview-external-drag .e-list-text #waiting #waitdetails #event-time {
+                    font-size: 10px;
+                    color: #333;
+                    letter-spacing: 0.3px;
+                    height: 13px;
+                    padding: 2px 0;
+                }
+
+                .e-drag-item.treeview-external-drag .e-list-text #waiting #waitdetails #waitcategory {
+                    height: 13px;
+                    font-size: 10px;
+                    color: #999;
+                    letter-spacing: 0.3px;
+                }
+
+        .e-drag-item.treeview-external-drag .e-list-text #item-icon-container {
+            position: relative;
+            padding: 10px 0;
+        }
+
+            .e-drag-item.treeview-external-drag .e-list-text #item-icon-container .item-icon {
+                position: absolute;
+                font-size: 20px;
+                color: #c0c0c0;
+            }
+
+.e-schedule-dialog .e-dlg-content .custom-field-row {
+    padding-bottom: 12px;
+}
+
+    .e-schedule-dialog .e-dlg-content .custom-field-row .custom-field-container {
+        display: grid;
+        grid-template-columns: 12fr 1fr;
+    }
+
+        .e-schedule-dialog .e-dlg-content .custom-field-row .custom-field-container .e-btn {
+            margin-top: 27px;
+            margin-left: 9px;
+        }
+
+.e-schedule-dialog .e-dlg-content .e-add-icon::before {
+    content: '\e95c';
+}
+
+.e-schedule-dialog.e-device .e-dlg-content .custom-field-row {
+    padding-bottom: 0;
+}
+
+.add-doctor {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+    .add-doctor .e-icon-add {
+        padding: 10px 0 10px 5px;
+        font-size: 10px;
+        color: #7575ff;
+    }
+
+        .add-doctor .e-icon-add::before {
+            content: '\e95c';
+        }
+
+    .add-doctor .add-doctor-text {
+        font-weight: 500;
+        font-size: 10px;
+        color: #7575ff;
+        letter-spacing: 0.3px;
+        padding: 10px 5px;
+    }
+
+.e-dropdownbase .e-list-item {
+    padding: 0 10px;
+}
+
+    .e-dropdownbase .e-list-item .specialist-item {
+        height: 40px;
+        width: 100%;
+        display: flex;
+    }
+
+        .e-dropdownbase .e-list-item .specialist-item img {
+            height: 38px;
+            width: 38px;
+            border-radius: 16px;
+            padding: 3px;
+        }
+
+        .e-dropdownbase .e-list-item .specialist-item .doctor-details {
+            height: 100%;
+            width: 80%;
+            text-indent: 0;
+            padding-left: 10px;
+        }
+
+            .e-dropdownbase .e-list-item .specialist-item .doctor-details .name {
+                font-size: 13px;
+                letter-spacing: 0.39px;
+                height: 16px;
+            }
+
+            .e-dropdownbase .e-list-item .specialist-item .doctor-details .designation {
+                font-size: 10px;
+                letter-spacing: 0.3px;
+                height: 13px;
+            }
+
+@media (max-width: 850px) {
+    /* Dialog Customization */
+    .planner-calendar {
+        margin: 20px 10px;
+    }
+
+        .planner-calendar .drag-sample-wrapper {
+            display: block;
+        }
+
+            .planner-calendar .drag-sample-wrapper .schedule-container {
+                padding-right: 0;
+            }
+
+                .planner-calendar .drag-sample-wrapper .schedule-container .e-schedule .e-schedule-toolbar-container .e-schedule-toolbar .e-toolbar-items .e-toolbar-center {
+                    padding: 7px 0;
+                }
+
+                    .planner-calendar .drag-sample-wrapper .schedule-container .e-schedule .e-schedule-toolbar-container .e-schedule-toolbar .e-toolbar-items .e-toolbar-center .e-tbar-btn {
+                        border-radius: 16px;
+                    }
+
+                    .planner-calendar .drag-sample-wrapper .schedule-container .e-schedule .e-schedule-toolbar-container .e-schedule-toolbar .e-toolbar-items .e-toolbar-center .active-doctor {
+                        height: 32px;
+                        width: 32px;
+                        border-radius: 16px;
+                    }
+
+                .planner-calendar .drag-sample-wrapper .schedule-container .e-schedule .e-schedule-toolbar-container .e-schedule-toolbar .e-toolbar-items .e-toolbar-right .e-add .e-btn-icon {
+                    padding: 0;
+                }
+
+            .planner-calendar .drag-sample-wrapper .treeview-container.e-treeview {
+                width: 225px;
+            }
+
+                .planner-calendar .drag-sample-wrapper .treeview-container.e-treeview.e-drag-item {
+                    position: relative !important;
+                }
+
+    .add-doctor {
+        justify-content: center;
+    }
+
+        .add-doctor .e-icon-add {
+            padding: 12px 0 10px 5px;
+        }
+
+        .add-doctor .add-doctor-text {
+            font-size: 13px;
+        }
+
+    .specialist-selection {
+        max-height: 98% !important;
+    }
+
+        .specialist-selection .e-dlg-header-content .e-dlg-header {
+            width: 100% !important;
+        }
+
+            .specialist-selection .e-dlg-header-content .e-dlg-header .specialist-header {
+                display: flex !important;
+                width: 100% !important;
+            }
+
+                .specialist-selection .e-dlg-header-content .e-dlg-header .specialist-header div:nth-child(1) {
+                    width: 70%;
+                    display: flex;
+                    margin: auto;
+                }
+
+                    .specialist-selection .e-dlg-header-content .e-dlg-header .specialist-header div:nth-child(1) .back-icon {
+                        width: 12%;
+                        font-size: 25px;
+                    }
+
+                    .specialist-selection .e-dlg-header-content .e-dlg-header .specialist-header div:nth-child(1) .title-text {
+                        font-weight: 600;
+                        font-size: 16px;
+                        color: #333;
+                        letter-spacing: 0.48px;
+                        padding: 2px;
+                    }
+
+                .specialist-selection .e-dlg-header-content .e-dlg-header .specialist-header div:nth-child(2) {
+                    width: 30%;
+                }
+
+                    .specialist-selection .e-dlg-header-content .e-dlg-header .specialist-header div:nth-child(2) .e-btn {
+                        width: 100%;
+                    }
+
+        .specialist-selection .e-dlg-content .specialist-item {
+            height: 60px;
+            width: 100%;
+            display: flex;
+        }
+
+            .specialist-selection .e-dlg-content .specialist-item:hover {
+                background: #ebebff;
+            }
+
+            .specialist-selection .e-dlg-content .specialist-item img {
+                height: 46px;
+                width: 46px;
+                border-radius: 28px;
+                padding: 5px;
+            }
+
+            .specialist-selection .e-dlg-content .specialist-item .doctor-details {
+                padding: 5px;
+                width: 80%;
+                text-indent: 0;
+            }
+
+                .specialist-selection .e-dlg-content .specialist-item .doctor-details .name {
+                    font-size: 15px;
+                    font-weight: bold;
+                    color: #333;
+                    letter-spacing: 0.39px;
+                    padding: 5px;
+                }
+
+                .specialist-selection .e-dlg-content .specialist-item .doctor-details .designation {
+                    font-size: 12px;
+                    color: #666;
+                    letter-spacing: 0.3px;
+                    padding: 5px;
+                }
+
+        .specialist-selection .e-footer-content {
+            border-top: none;
+        }
+
+    .waiting-list-dialog {
+        max-height: 98% !important;
+    }
+
+        .waiting-list-dialog .e-dlg-header {
+            width: 100% !important;
+        }
+
+            .waiting-list-dialog .e-dlg-header .waitlist-header {
+                display: flex;
+                width: 100% !important;
+            }
+
+                .waiting-list-dialog .e-dlg-header .waitlist-header .text-container {
+                    display: flex;
+                    flex: 1;
+                }
+
+                    .waiting-list-dialog .e-dlg-header .waitlist-header .text-container span.back-icon {
+                        padding: 5px 0;
+                        font-size: 33px;
+                        width: 35px;
+                    }
+
+                    .waiting-list-dialog .e-dlg-header .waitlist-header .text-container span.title-text {
+                        padding: 11px 0;
+                    }
+
+                .waiting-list-dialog .e-dlg-header .waitlist-header .button-container {
+                    display: flex;
+                    flex: 1;
+                }
+
+                    .waiting-list-dialog .e-dlg-header .waitlist-header .button-container span:nth-child(1) {
+                        padding-right: 15px;
+                    }
+
+                    .waiting-list-dialog .e-dlg-header .waitlist-header .button-container .delete-button .e-btn, .waiting-list-dialog .e-dlg-header .waitlist-header .button-container .add-button .e-btn {
+                        width: 100%;
+                    }
+
+        .waiting-list-dialog .external-drag-items {
+            display: flex;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+            .waiting-list-dialog .external-drag-items #waiting-item-check {
+                padding: 20px 10px;
+                flex: initial;
+            }
+
+            .waiting-list-dialog .external-drag-items #waiting {
+                flex: auto;
+                height: 100%;
+                background: #fff5f5;
+                border: 1px solid #c0c0c0;
+                border-radius: 4px;
+                display: flex;
+            }
+
+                .waiting-list-dialog .external-drag-items #waiting #waitdetails {
+                    width: 90%;
+                    float: left;
+                    height: 100%;
+                }
+
+                    .waiting-list-dialog .external-drag-items #waiting #waitdetails #waitlist {
+                        height: 16px;
+                        font-weight: 500;
+                        font-size: 13px;
+                        color: #333;
+                        letter-spacing: 0.39px;
+                        padding: 3px 5px;
+                    }
+
+                    .waiting-list-dialog .external-drag-items #waiting #waitdetails #event-time {
+                        font-size: 10px;
+                        color: #333;
+                        letter-spacing: 0.3px;
+                        height: 13px;
+                        padding: 3px 5px;
+                    }
+
+                    .waiting-list-dialog .external-drag-items #waiting #waitdetails #waitcategory {
+                        height: 13px;
+                        font-size: 10px;
+                        color: #999;
+                        letter-spacing: 0.3px;
+                        padding: 3px 5px;
+                    }
+
+                .waiting-list-dialog .external-drag-items #waiting #item-icon-container {
+                    position: relative;
+                    padding: 15px 0;
+                }
+
+                    .waiting-list-dialog .external-drag-items #waiting #item-icon-container .item-icon {
+                        position: absolute;
+                        font-size: 20px;
+                        color: #c0c0c0;
+                    }
+}
+.col-lg-3.col-md-3.col-sm-3.treeview-container-wrapper {
+    padding: 0px;
+}
+
+.e-schedule .e-date-header-wrap table tbody td .e-custom-date-header.date-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.e-schedule .e-schedule-toolbar.e-toolbar .e-toolbar-pop .e-toolbar-item .e-tbar-btn.e-btn {
+    padding: 8px 4px;
+}

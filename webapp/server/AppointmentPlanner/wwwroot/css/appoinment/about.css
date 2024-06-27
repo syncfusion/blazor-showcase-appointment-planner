@@ -1,0 +1,213 @@
+﻿.about-container {
+    margin: 50px 65.5px;
+}
+
+    .about-container p {
+        font-size: 13px;
+        color: 666666;
+        letter-spacing: 0.48px;
+        line-height: 20px;
+        margin-top: 30px;
+    }
+
+@media (max-width: 850px) {
+    .about-container {
+        margin: 20px 24px;
+    }
+
+        .about-container .module-title {
+            padding-left: 1.5px !important;
+        }
+}
+
+.e-sb-icon {
+    font-family: 'sb-icons';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.about {
+    font-size: 14px;
+    color: #9aa5bb;
+    letter-spacing: 0.05px;
+    height: 100%;
+}
+
+.about-heading {
+    font-weight: bold;
+    color: #485058;
+    font-size: 16px;
+    padding: 0 0 12px 0;
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
+}
+
+.about-description {
+    text-align: justify;
+    color: #485058;
+    font-size: 13px;
+    line-height: 24px;
+    padding-bottom: 24px;
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
+}
+
+.list-heading {
+    font-weight: bold;
+    color: #485058;
+    font-size: 16px;
+    padding-bottom: 12px;
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
+}
+
+.about-component {
+    color: #485058;
+    font-size: 14px;
+    padding-bottom: 24px;
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
+    margin-left: 20px;
+}
+
+    .about-component li {
+        line-height: 24px;
+    }
+
+.control-item {
+    color: #4a90e2;
+    display: flex;
+    line-height: 30px;
+    display: inline-block;
+    width: 168px;
+}
+
+.sfimage-button::before {
+    content: '\e702';
+    color: #7575ff;
+}
+
+.sfimage-schedule::before {
+    content: '\e709';
+    color: #7575ff;
+}
+
+.sfimage-chart::before {
+    content: '\e906';
+    color: #7575ff;
+}
+
+.sfimage-card::before {
+    content: '\e713';
+    color: #7575ff;
+}
+
+.sfimage-sidebar::before {
+    content: '\e705';
+    color: #7575ff;
+}
+
+.sfimage-autocomplete::before {
+    content: '\e70b';
+    color: #7575ff;
+}
+
+.sfimage-datepicker::before {
+    content: '\e90d';
+    color: #7575ff;
+}
+
+.sfimage-timepicker::before {
+    content: '\e927';
+    color: #7575ff;
+}
+
+.sfimage-dialog::before {
+    content: '\e90e';
+    color: #7575ff;
+}
+
+.sfimage-dropdownlist::before {
+    content: '\e70a';
+    color: #7575ff;
+}
+
+.sfimage-grid::before {
+    content: '\e913';
+    color: #7575ff;
+}
+
+.sfimage-checkbox::before {
+    content: '\e707';
+    color: #7575ff;
+}
+
+.sfimage-numerictextbox::before {
+    content: '\e72a';
+    color: #7575ff;
+}
+
+.sfimage-radiobutton::before {
+    content: '\e727';
+    color: #7575ff;
+}
+
+.sfimage-listview::before {
+    content: '\e917';
+    color: #7575ff;
+}
+
+.sfimage-treeview::before {
+    content: '\e92b';
+    color: #7575ff;
+}
+
+.sfimage-textboxes::before {
+    content: '\e919';
+    color: #7575ff;
+}
+
+.sfimage-toast::before {
+    content: '\e716';
+    color: #7575ff;
+}
+
+.sf-icon-skeleton::before {
+    content: '\e904';
+    color: #7575ff;
+}
+
+.sf-icon-appbar::before {
+    content: "\e900";
+    color: #7575ff;
+}
+
+.sf-icon-predefineddialogs::before {
+    content: "\e901";
+    color: #7575ff;
+}
+
+.sf-icon-message::before {
+    content: "\e903";
+    color: #7575ff;
+}
+
+.control-icon {
+    font-size: 18px;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+.control-name {
+    font-size: 14px;
+}
+
+.about-component {
+    margin-left: 20px;
+}
+
+/*skeleton*/
+.about-descrip-skeleton {
+    line-height: 20px;
+    margin-top: 30px;
+}

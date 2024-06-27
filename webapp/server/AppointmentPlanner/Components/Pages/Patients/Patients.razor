@@ -1,0 +1,386 @@
+﻿@page "/patients"
+
+@using AppointmentPlanner.Data;
+@using AppointmentPlanner.Models;
+@inject SfDialogService DialogService;
+@implements IDisposable;
+
+@if (isDataLoaded)
+{
+<div class="deleted-msg">
+    <SfMessage Severity="MessageSeverity.Success" Visible=@showDeleteMsg>The Patient's details have been deleted successfully.</SfMessage>
+</div>
+<div id="patients" class="planner-patient-wrapper">
+    <header>
+        <div class="module-title">
+            <div class="title">PATIENT LIST</div>
+            <div class="underline"></div>
+        </div>
+        <div class="add-patient" @onclick="@onAddPatient">
+            <div class="e-icon-add e-icons"></div>
+            <div class="add-patient-label">Add New</div>
+        </div>
+    </header>
+    <div class="patients-detail-wrapper">
+        <div class="patient-operations">
+            <div id="searchTemplate" class="search-wrapper planner-patient-search">
+                <div class="e-input-group patient-search" role="search">
+                    <input id="schedule_searchbar" class="e-input" name="input" type="text" @bind-value="@searchValue"
+                           placeholder="Search Patient" @oninput="@patientSearch" />
+                    <span class="e-clear-icon" aria-label="close" role="button" @onclick="clearText"></span>
+                    <span id="schedule_searchbutton" class="e-input-group-icon search-icon e-icons" tabindex="-1"
+                          title="Search" aria-label="search"></span>
+                </div>
+            </div>
+           <SfButton CssClass="e-normal add-details" @onclick="@onAddPatient" IsPrimary="true">
+                Add
+                New Patient
+            </SfButton>
+        </div>
+        <div class="patient-display">
+            <SfGrid ID="Grid" @ref="gridObj" DataSource="@filteredPatients">
+                <GridEvents TValue="Patient" RowSelected="onRowSelected" OnRecordDoubleClick="onDoubleClick"></GridEvents>
+                <GridEditSettings AllowAdding="true" AllowEditing="true" AllowEditOnDblClick="false" Mode="EditMode.Dialog">
+                </GridEditSettings>
+                <GridColumns>
+                    <GridColumn IsPrimaryKey="true" Field=@nameof(Patient.Id) Width="50" HeaderText="ID" TextAlign="@TextAlign.Left"></GridColumn>
+                    <GridColumn HeaderText="Name" TextAlign="@TextAlign.Left" Width="100">
+                        <Template>
+                            <span class="patient-name" @onclick="@(e => onPatientClick(e, (context as Patient).Id))">@((context as Patient).Name)</span>
+                        </Template>
+                    </GridColumn>
+                    <GridColumn Field=@nameof(Patient.Gender) HeaderText="Gender" TextAlign="@TextAlign.Left" Width="80"></GridColumn>
+                    <GridColumn Field=@nameof(Patient.BloodGroup) HeaderText="Blood Group" TextAlign="@TextAlign.Left" Width="100"></GridColumn>
+                    <GridColumn Field=@nameof(Patient.Symptoms) HeaderText="Symptoms" TextAlign="@TextAlign.Left" Width="150"></GridColumn>
+                    <GridColumn Field=@nameof(Patient.Mobile) HeaderText="Mobile Number" TextAlign="@TextAlign.Left" Width="100"></GridColumn>
+                    <GridColumn Field=@nameof(Patient.Email) HeaderText="Email" TextAlign="@TextAlign.Left" Width="120"></GridColumn>
+                </GridColumns>
+            </SfGrid>
+        </div>
+    </div>
+</div>
+
+@if (activePatientData != null && showGridEditDialog)
+{
+<SfDialog @ref="gridEditDialogObj" Target="body" Width="390px" @bind-Visible="@showGridEditDialog" CssClass="e-edit-dialog" IsModal="true" ShowCloseIcon="true" Header="@gridEditHeader">
+    <DialogAnimationSettings Effect="DialogEffect.Zoom"></DialogAnimationSettings>
+    <DialogTemplates>
+        <Content>
+            <div class="grid-edit-dialog">
+                <div class="field-row">
+                    <label> Patient Id </label><span id="Id">@((activePatientData as Patient).Id)</span>
+                </div>
+                <div class="field-row">
+                    <label> Patient Name </label><span id="Name">@((activePatientData as Patient).Name)</span>
+                </div>
+                <div class="field-row">
+                    <label> Gender </label><span id="Gender">@((activePatientData as Patient).Gender)</span>
+                </div>
+                <div class="field-row">
+                    <label> DOB </label><span id="DOB">@((activePatientData as Patient).DOB)</span>
+                </div>
+                <div class="field-row">
+                    <label> Blood Group </label><span id="BloodGroup">@((activePatientData as Patient).BloodGroup)</span>
+                </div>
+                <div class="field-row">
+                    <label> Mobile Number </label><span id="Mobile">@((activePatientData as Patient).Mobile)</span>
+                </div>
+                <div class="field-row">
+                    <label> Email </label><span id="Email">@((activePatientData as Patient).Email)</span>
+                </div>
+                <div class="field-row">
+                    <label> Symptoms </label><span id="Symptoms">@((activePatientData as Patient).Symptoms)</span>
+                </div>
+                <div class="field-row history-row">
+                    <label>Appointment History</label>
+                    <div ID="history-wrapper">
+
+                        @foreach (var item in historyData)
+                        {
+                            <div class="history-content">@(getHistoryFormatDate(item))</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </Content>
+        <FooterTemplate>
+            <div class="button-container" style="display: flex; float: right">
+                <SfButton CssClass="e-normal" @onclick="@onDeleteClick">Delete</SfButton>
+                <SfButton CssClass="e-normal" IsPrimary="true" @onclick="@hideGridEditDialog">Edit</SfButton>
+            </div>
+        </FooterTemplate>
+    </DialogTemplates>
+</SfDialog>
+}
+
+@if(IsShowPatientEditDialog) { 
+<SfDialog @ref="dialogObj" Target="body" Width="390px" CssClass="new-patient-dialog" IsModal="true" @bind-Visible="@IsShowPatientEditDialog" ShowCloseIcon="true" Header="@patientHeader">
+    <ChildContent>
+        <DialogAnimationSettings Effect="DialogEffect.Zoom"></DialogAnimationSettings>
+        <EditForm Model="@patientEditModel" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+            <div class="field-container name-container">
+                <SfTextBox CssClass="patient-name e-field" Placeholder="Patient Name" FloatLabelType="@FloatLabelType.Always" @bind-Value="@patientEditModel.Name"></SfTextBox>
+                <ValidationMessage For="@(() => patientEditModel.Name)" />
+            </div>
+            <div class="field-container gender-container">
+                <div class="gender">
+                    <div><label>Gender</label></div>
+                    <div class="e-btn-group e-round-corner e-field">
+                        <SfRadioButton Label="Male" Name="Gender" Value="Male" @bind-Checked="@patientEditModel.Gender"></SfRadioButton>
+                        <SfRadioButton Label="Female" Name="Gender" Value="Female" @bind-Checked="@patientEditModel.Gender"></SfRadioButton>
+                    </div>
+                </div>
+                <div class="dob">
+                    <SfDatePicker ID="DOB" CssClass="e-field" Placeholder="DOB" @bind-Value="@patientEditModel.DOB" Max="DateTime.Now" FloatLabelType="@FloatLabelType.Always" ShowClearButton="false"></SfDatePicker>
+                    <ValidationMessage For="@(() => patientEditModel.DOB)" />
+                </div>
+            </div>
+            <div class="field-container contact-container">
+                <div class="mobile" style="width:345px">
+                    <SfMaskedTextBox CssClass="e-field" @ref="maskObj" Placeholder="Mobile Number" FloatLabelType="@FloatLabelType.Always" @bind-Value="@patientEditModel.Mobile" Mask="(999) 999-9999"></SfMaskedTextBox>
+                    <ValidationMessage For="@(() => patientEditModel.Mobile)" />
+                </div>
+                <div class="blood-group">
+                    <SfDropDownList FloatLabelType="@FloatLabelType.Always" CssClass="e-field" Placeholder="Blood Group" @bind-Value="@patientEditModel.BloodGroup" DataSource="@bloodGroupData">
+                        <DropDownListFieldSettings Text="Text" Value="Value"></DropDownListFieldSettings>
+                    </SfDropDownList>
+                    <ValidationMessage For="@(() => patientEditModel.BloodGroup)" />
+                </div>
+            </div>
+            <div class="field-container email-container">
+                <SfTextBox CssClass="e-field" Placeholder="Email" FloatLabelType="@FloatLabelType.Always" @bind-Value="@patientEditModel.Email"></SfTextBox>
+                <ValidationMessage For="@(() => patientEditModel.Email)" />
+            </div>
+            <div class="field-container symptom-container">
+                <SfTextBox CssClass="e-field" Placeholder="Symptoms" FloatLabelType="@FloatLabelType.Always" @bind-Value="@patientEditModel.Symptoms"></SfTextBox>
+                <ValidationMessage For="@(() => patientEditModel.Symptoms)" />
+            </div>
+            <div class="e-footer-content">
+                <div class="button-container">
+                    <button type="button" class="e-btn e-normal" @onclick="@onCancelClick">Cancel</button>
+                    <button type="submit" class="e-btn e-normal e-primary">@saveButton</button>
+                </div>
+            </div>
+        </EditForm>
+    </ChildContent>
+</SfDialog>
+}
+
+<Syncfusion.Blazor.Popups.SfDialogProvider/>
+}
+else
+{
+    <div class="planner-patient-skeleton">
+        <div class="patients-container1">
+             <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="97%"></SfSkeleton>
+            <br/>
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="15px" Width="74%"></SfSkeleton>
+        </div>
+        <div class="patients-container2">
+            <br/><br/>
+            <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="256px" Width="97%"></SfSkeleton>
+        </div>
+    </div>
+    <div class="planner-dashboard-skeleton device-skeleton">
+        <div class="activities-skeleton">
+            @for(int i=0; i < 10; i++)
+            {
+                <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="3%" Width="80%"></SfSkeleton>
+                <br />
+                <SfSkeleton Shape="Syncfusion.Blazor.Notifications.SkeletonType.Rectangle" Height="3%" Width="60%"></SfSkeleton>
+                <br /><br />
+            }
+        </div>
+    </div>
+}
+
+@code{
+    [Inject]
+    protected AppointmentService Service { get; set; }
+    SfGrid<Patient> gridObj;
+    SfDialog dialogObj, gridEditDialogObj;
+
+    private string searchValue { get; set; }
+    private SfMaskedTextBox maskObj { get; set; }
+
+    private Patient patientEditModel { get; set; }
+    private List<Patient> filteredPatients { get; set; }
+
+    private string saveButton { get; set; } = "Save";
+
+    private List<Hospital> historyData { get; set; }
+    private bool isPatientClicked { get; set; } = false;
+
+    private Patient activePatientData { get; set; }
+
+    private bool IsShowPatientEditDialog { get; set; } = false;
+    private bool showGridEditDialog { get; set; } = false;
+    private string patientHeader { get; set; }
+    private string gridEditHeader { get; set; } = "Patient Details";
+
+    private List<TextValueData> bloodGroupData { get; set; }
+
+    private DateTime? dobValue { get; set; } = DateTime.Now;
+    private List<Doctor> doctorsData { get; set; }
+    public Patient EditData { get; set; }
+
+    private bool isDataLoaded;
+    private bool showDeleteMsg { get; set; }
+
+    protected override void OnInitialized()
+    {
+        filteredPatients = Service.Patients;
+        this.bloodGroupData = Service.BloodGroups;
+        this.doctorsData = Service.Doctors;
+    }
+
+    private void onAddPatient(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
+    {
+        saveButton = "Save";
+        patientEditModel = new Patient { Name = null, Gender = "Male", DOB= new DateTime(1996, 1, 31), BloodGroup = "B +ve", Mobile = null, Email = null, Symptoms = null };
+        this.patientHeader = "New Patient";
+        this.IsShowPatientEditDialog = true;
+    }
+    private async Task onCancelClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
+    {
+        await this.dialogObj.HideAsync();
+    }
+    public async Task HandleValidSubmit()
+    {
+        Patient getRecord = null;
+        string message = "";
+        string name = "";
+        string mobileNo = this.maskObj.GetMaskedValue();
+        if (saveButton == "Save")
+        {
+            getRecord = new Patient(Service.Patients.LastOrDefault().Id + 1, patientEditModel.Name, patientEditModel.Name, patientEditModel.DOB, mobileNo, patientEditModel.Email, Service.Patients[0].Address, Service.Patients[0].Disease, Service.Patients[0].DepartmentName, patientEditModel.BloodGroup, patientEditModel.Gender, patientEditModel.Symptoms);
+            await gridObj.AddRecord(getRecord, Service.Patients.Count());
+            filteredPatients = Service.Patients;
+            message = " " + getRecord.Name + " for " + getRecord.Symptoms;
+            name = "Added New Patient";
+        }
+        else
+        {
+            getRecord = new Patient(activePatientData.Id, patientEditModel.Name, patientEditModel.Name, patientEditModel.DOB, mobileNo, patientEditModel.Email, activePatientData.Address, activePatientData.Disease, activePatientData.DepartmentName, patientEditModel.BloodGroup, patientEditModel.Gender, patientEditModel.Symptoms);
+            await gridObj.UpdateRow((activePatientData.Id - 1), getRecord);
+            message = " " + getRecord.Name + " for " + getRecord.Symptoms;
+            name = "Updated Patient";
+        }
+        Service.Activities.Insert(0, new Activity { Name = name, Message = message, Time = "10 mins ago", Type = "patient", ActivityTime = DateTime.Now });
+        await this.dialogObj.HideAsync();
+    }
+
+    public void onRowSelected(RowSelectEventArgs<Patient> args)
+    {
+        if (isPatientClicked)
+        {
+            this.showDialog(args.Data);
+            this.isPatientClicked = false;
+        }
+    }
+    public void onDoubleClick(RecordDoubleClickEventArgs<Patient> args)
+    {
+        this.showDialog(args.RowData);
+    }
+    private void showDialog(Patient data)
+    {
+        saveButton = "Update";
+        showGridEditDialog = true;
+        Service.ActivePatients = activePatientData = data;
+        historyData = Service.Hospitals.Where(item => item.PatientId.Equals(data.Id)).ToList();
+    }
+
+    private async void onDeleteClick()
+    {
+        bool isConfirm = await DialogService.ConfirmAsync("Are you sure you want to delete this patient?", "Patient Details", new DialogOptions()
+        {
+            ShowCloseIcon =true,
+        });
+        if (isConfirm)
+        {
+            await this.DeleteBtnClick();
+            this.showDeleteMsg = true;
+            StateHasChanged();
+        }
+    }
+
+    private void hideGridEditDialog()
+    {
+        showGridEditDialog = false;
+        patientEditModel = new Patient { Name = activePatientData.Name, Gender = activePatientData.Gender, Mobile = activePatientData.Mobile, Email = activePatientData.Email, Symptoms = activePatientData.Symptoms, BloodGroup = activePatientData.BloodGroup, DOB = activePatientData.DOB };
+        this.patientHeader = "Edit Patient";
+        this.IsShowPatientEditDialog = true;
+    }
+
+    private void onPatientClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs args, int Id)
+    {
+        this.isPatientClicked = true;
+    }
+
+    private void patientSearch(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        var patientData = Service.Patients;
+        this.filteredPatients = (from cust in patientData
+                                 where (cust.Name.Contains(args.Value.ToString(), StringComparison.OrdinalIgnoreCase)) || (cust.Gender.Contains(args.Value.ToString(), StringComparison.OrdinalIgnoreCase)) || (cust.Email.Contains(args.Value.ToString(), StringComparison.OrdinalIgnoreCase)) || (cust.Id.ToString().Contains(args.Value.ToString(), StringComparison.OrdinalIgnoreCase)) || (cust.Mobile.Contains(args.Value.ToString(), StringComparison.OrdinalIgnoreCase)) || ((cust.BloodGroup as string).Contains(args.Value.ToString(), StringComparison.OrdinalIgnoreCase))
+                                 select cust).ToList();
+    }
+
+    private string getHistoryFormatDate(Hospital data)
+    {
+        return Service.GetFormatDate(data.StartTime, "MMMM dd") + "-" + Service.GetFormatDate(data.StartTime, "hh:mm tt") + "-" + Service.GetFormatDate(data.EndTime, "hh:mm tt") + " Appointment with Dr." + getDoctorName(data.DoctorId);
+    }
+
+    private string getDoctorName(int Id)
+    {
+        return doctorsData.Where(item => item.Id.Equals(Id)).FirstOrDefault().Name;
+    }
+
+    private void clearText()
+    {
+        this.searchValue = "";
+        this.filteredPatients = Service.Patients;
+    }
+
+    private async Task DeleteBtnClick()
+    {
+        Service.Patients = filteredPatients = ((List<Patient>)filteredPatients).Where(item => item.Id != activePatientData.Id).ToList();
+        Service.WaitingLists = Service.WaitingLists.Where(item => item.PatientId != activePatientData.Id).ToList();
+        var deleteData = ((List<Patient>)filteredPatients).Where(item => item.Id == activePatientData.Id).FirstOrDefault();
+        await this.gridObj.DeleteRecord(null, deleteData);
+
+        this.showGridEditDialog = false;
+        this.IsShowPatientEditDialog = false;
+    }
+
+    public void Dispose()
+    {
+        gridObj = null;
+        gridEditDialogObj = null;
+        dialogObj = null;
+        maskObj = null;
+    }
+
+    private async void LoadData()
+    {   
+        this.EditData = Service.Patients[0];
+        this.patientEditModel = new Patient();
+        await Task.Delay(500);
+        isDataLoaded = true;
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            LoadData();
+        }
+        if (this.showDeleteMsg && isDataLoaded)
+        {
+            Task.Delay(1000).Wait();
+            this.showDeleteMsg = false;
+            StateHasChanged();
+        }
+    }
+}

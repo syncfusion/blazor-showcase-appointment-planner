@@ -1,0 +1,370 @@
+﻿.doctor-details-container {
+    margin: 50px 57px;
+}
+
+    .doctor-details-container header {
+        display: flex;
+        margin-bottom: 34.2px;
+        flex-direction: column;
+    }
+
+        .doctor-details-container header .detail-header-title {
+            display: flex;
+        }
+
+            .doctor-details-container header .detail-header-title span {
+                padding-right: 10px;
+                font-size: 25px;
+                cursor: pointer;
+            }
+
+            .doctor-details-container header .detail-header-title .e-add-icon {
+                padding: 0 6px;
+            }
+
+        .doctor-details-container header .doctor-detail {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+            .doctor-details-container header .doctor-detail .edit-details, .doctor-details-container header .doctor-detail .delete-details {
+                width: 100px;
+                height: 32px;
+                color: white;
+            }
+
+            .doctor-details-container header .doctor-detail .edit-details {
+                background-color: #7575ff;
+            }
+
+            .doctor-details-container header .doctor-detail .delete-details {
+                margin-right: 16px;
+                background-color: #ff4f4f;
+            }
+
+    .doctor-details-container .active-doctor {
+        display: grid;
+        grid-template-columns: 0.3fr 1fr 1fr;
+    }
+
+        .doctor-details-container .active-doctor .active-doctor-info .designation, .doctor-details-container .active-doctor .active-doctor-info .label-text, .doctor-details-container .active-doctor .active-doctor-info .specialization, .doctor-details-container .active-doctor .active-doctor-info .experience, .doctor-details-container .active-doctor .active-doctor-info .available-days, .doctor-details-container .active-doctor .active-doctor-info .mobile, .doctor-details-container .active-doctor .work-days-container header .title-text, .doctor-details-container .active-doctor .work-days-content .day-name, .doctor-details-container .active-doctor .work-days-content .day-break-hours {
+            font-size: 13px;
+            letter-spacing: 0.39px;
+        }
+
+        .doctor-details-container .active-doctor .active-doctor-info .designation, .doctor-details-container .active-doctor .active-doctor-info .specialization, .doctor-details-container .active-doctor .active-doctor-info .experience, .doctor-details-container .active-doctor .active-doctor-info .available-days, .doctor-details-container .active-doctor .active-doctor-info .mobile, .doctor-details-container .active-doctor .work-days-content .day-name, .doctor-details-container .active-doctor .work-days-content .day-break-hours {
+            color: #333;
+        }
+
+        .doctor-details-container .active-doctor .active-doctor-image {
+            position: relative;
+            display: flex;
+            margin: 0 auto;
+        }
+
+            .doctor-details-container .active-doctor .active-doctor-image img {
+                height: 100px;
+                width: 100px;
+                border-radius: 50px;
+            }
+
+            .doctor-details-container .active-doctor .active-doctor-image .availability {
+                height: 20px;
+                width: 20px;
+                top: 70px;
+                left: 77px;
+                position: absolute;
+                border: 2px solid #fff;
+                border-radius: 16px;
+            }
+
+                .doctor-details-container .active-doctor .active-doctor-image .availability.busy {
+                    background: #d40000;
+                }
+
+                .doctor-details-container .active-doctor .active-doctor-image .availability.away {
+                    background: #ff8c2e;
+                }
+
+                .doctor-details-container .active-doctor .active-doctor-image .availability.available {
+                    background: #00d406;
+                }
+
+            .doctor-details-container .active-doctor .active-doctor-image .upload {
+                position: absolute;
+                top: 35px;
+                left: 35px;
+                display: none;
+                font-size: 30px;
+                color: white;
+            }
+
+            .doctor-details-container .active-doctor .active-doctor-image:hover .upload.icon-upload_photo.new-doctor {
+                display: block;
+            }
+
+        .doctor-details-container .active-doctor .active-doctor-info {
+            flex: 1;
+        }
+
+            .doctor-details-container .active-doctor .active-doctor-info .label-text {
+                color: #666;
+            }
+
+            .doctor-details-container .active-doctor .active-doctor-info .info-field-container {
+                margin-bottom: 20px;
+            }
+
+                .doctor-details-container .active-doctor .active-doctor-info .info-field-container div.name {
+                    padding-bottom: 3px;
+                }
+
+                .doctor-details-container .active-doctor .active-doctor-info .info-field-container div.education {
+                    padding-bottom: 7px;
+                }
+
+                .doctor-details-container .active-doctor .active-doctor-info .info-field-container div.label-text {
+                    padding-bottom: 4px;
+                }
+
+            .doctor-details-container .active-doctor .active-doctor-info .basic-detail .name {
+                font-weight: 600;
+                font-size: 18px;
+                color: #333;
+                letter-spacing: 0.54px;
+                height: 22px;
+                font-weight: bold;
+                max-width: 250px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .doctor-details-container .active-doctor .active-doctor-info .basic-detail .education {
+                font-size: 10px;
+                color: #333;
+                letter-spacing: 0.3px;
+                height: 13px;
+            }
+
+        .doctor-details-container .active-doctor .work-days-container {
+            flex: 2;
+        }
+
+            .doctor-details-container .active-doctor .work-days-container header {
+                display: flex;
+                margin-bottom: 17.9px;
+                flex-direction: row;
+            }
+
+                .doctor-details-container .active-doctor .work-days-container header .title-text {
+                    margin: 5px 0;
+                    color: #666;
+                }
+
+                .doctor-details-container .active-doctor .work-days-container header .add-container {
+                    padding-left: 18.3px;
+                    display: flex;
+                }
+
+                    .doctor-details-container .active-doctor .work-days-container header .add-container .e-btn {
+                        width: 23.3px;
+                        height: 22.8px;
+                        margin: 2px 0;
+                    }
+
+                        .doctor-details-container .active-doctor .work-days-container header .add-container .e-btn .e-btn-icon {
+                            font-size: 11px;
+                        }
+
+                    .doctor-details-container .active-doctor .work-days-container header .add-container .button-label {
+                        margin: auto 0;
+                        font-weight: 500;
+                        font-size: 13px;
+                        color: #7575ff;
+                        letter-spacing: 0.39px;
+                        padding: 0 10px;
+                        cursor: pointer;
+                    }
+
+                .doctor-details-container .active-doctor .work-days-container header .e-add-icon::before {
+                    content: '\e95c';
+                }
+
+            .doctor-details-container .active-doctor .work-days-container .work-days-content .work-day-item {
+                display: grid;
+                grid-template-columns: 100px auto;
+                padding-bottom: 10px;
+            }
+
+                .doctor-details-container .active-doctor .work-days-container .work-days-content .work-day-item .day-break-hours.TimeOff {
+                    font-size: 13px;
+                    color: #f00;
+                    letter-spacing: 0.39px;
+                }
+
+.break-hour-dialog {
+    width: 445px;
+    max-height: 98% !important;
+}
+
+    .break-hour-dialog .e-dlg-content .break-hour-operations {
+        font-weight: 600;
+        font-size: 11px;
+        color: #666;
+        letter-spacing: 0.33px;
+        line-height: 18px;
+        padding-bottom: 20px;
+    }
+
+    .break-hour-dialog .e-dlg-content .break-hour-header {
+        display: flex;
+    }
+
+        .break-hour-dialog .e-dlg-content .break-hour-header div:nth-child(1) {
+            flex: 0.25;
+        }
+
+        .break-hour-dialog .e-dlg-content .break-hour-header div:nth-child(2), .break-hour-dialog .e-dlg-content .break-hour-header div:nth-child(3) {
+            flex: 1;
+            margin: 0 30px;
+            font-weight: 600;
+            font-size: 11px;
+            color: #666;
+            letter-spacing: 0.33px;
+        }
+
+    .break-hour-dialog .e-dlg-content :nth-child(3).break-hour-days {
+        padding-top: 7px !important;
+    }
+
+    .break-hour-dialog .e-dlg-content .break-hour-days {
+        display: flex;
+        padding-top: 21px;
+    }
+
+        .break-hour-dialog .e-dlg-content .break-hour-days .day-button {
+            height: 32px;
+            width: 32px;
+        }
+
+            .break-hour-dialog .e-dlg-content .break-hour-days .day-button .e-btn {
+                background: #7575ff;
+                border-color: #7575ff;
+                height: 32px;
+                width: 32px;
+            }
+
+            .break-hour-dialog .e-dlg-content .break-hour-days .day-button.TimeOff {
+                margin: 5px 0;
+            }
+
+                .break-hour-dialog .e-dlg-content .break-hour-days .day-button.TimeOff .e-btn {
+                    background: #f00;
+                    border-color: #f00;
+                }
+
+            .break-hour-dialog .e-dlg-content .break-hour-days .day-button.RemoveBreak .e-btn {
+                background: #fff;
+                border: 1px solid #c0c0c0;
+                color: #333;
+            }
+
+        .break-hour-dialog .e-dlg-content .break-hour-days .start-container {
+            margin: 0 14.4px 0 16px;
+        }
+
+            .break-hour-dialog .e-dlg-content .break-hour-days .start-container.TimeOff, .break-hour-dialog .e-dlg-content .break-hour-days .end-container.TimeOff {
+                display: none;
+            }
+
+        .break-hour-dialog .e-dlg-content .break-hour-days .state-container:not(.TimeOff) {
+            display: none;
+        }
+
+        .break-hour-dialog .e-dlg-content .break-hour-days .state-container.TimeOff {
+            display: block;
+            margin: auto 27.9px;
+            font-size: 13px;
+            color: #333;
+            letter-spacing: 0.39px;
+        }
+
+.confirm-dialog.e-dialog.e-popup {
+    width: auto;
+}
+
+@media (max-width: 850px) {
+    .doctor-details-container {
+        margin: 20px 29px;
+    }
+
+        .doctor-details-container header {
+            flex-direction: row;
+            margin: 10px 0;
+        }
+
+            .doctor-details-container header .detail-header-title {
+                flex: auto;
+            }
+
+            .doctor-details-container header .doctor-detail {
+                justify-content: normal;
+            }
+
+                .doctor-details-container header .doctor-detail .delete-details, .doctor-details-container header .doctor-detail .edit-details {
+                    width: 70px;
+                }
+
+                .doctor-details-container header .doctor-detail .delete-details {
+                    margin-right: 10px;
+                }
+
+        .doctor-details-container .active-doctor {
+            grid-template-rows: 0fr 1fr 1fr;
+            grid-template-columns: none;
+        }
+
+            .doctor-details-container .active-doctor .active-doctor-image {
+                margin-bottom: 35px;
+                margin-top: 21px;
+            }
+
+                .doctor-details-container .active-doctor .active-doctor-image .availability {
+                    left: 80px;
+                    top: 65px;
+                }
+
+                .doctor-details-container .active-doctor .active-doctor-image .upload {
+                    top: 30%;
+                    left: 35%;
+                }
+
+            .doctor-details-container .active-doctor .active-doctor-info .info-field-container.basic-detail .name {
+                height: 29px;
+                padding-bottom: 3px;
+            }
+
+            .doctor-details-container .active-doctor .work-days-container header {
+                margin: 0;
+            }
+
+                .doctor-details-container .active-doctor .work-days-container header .title-text {
+                    margin-top: 5px;
+                    margin-right: 18.7px;
+                }
+
+                .doctor-details-container .active-doctor .work-days-container header div:nth-child(2) {
+                    display: flex;
+                }
+
+                    .doctor-details-container .active-doctor .work-days-container header div:nth-child(2) .button-label {
+                        padding-right: 6.6px;
+                        margin: auto 0;
+                    }
+
+            .doctor-details-container .active-doctor .work-days-container .work-days-content .work-day-item {
+                padding: 0;
+                padding-top: 14.4px;
+            }
+}

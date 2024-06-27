@@ -1,0 +1,232 @@
+﻿.planner-patient-wrapper {
+    margin: 50px;
+}
+
+    .planner-patient-wrapper header {
+        display: flex;
+    }
+
+        .planner-patient-wrapper header .module-title {
+            margin-left: 16.5px;
+        }
+
+        .planner-patient-wrapper header .add-patient {
+            flex: initial;
+            display: none;
+        }
+
+            .planner-patient-wrapper header .add-patient .e-icon-add {
+                padding: 9px 0 10px 20px;
+                font-size: 10px;
+                color: #7575ff;
+            }
+
+                .planner-patient-wrapper header .add-patient .e-icon-add::before {
+                    content: '\e95c';
+                }
+
+            .planner-patient-wrapper header .add-patient .add-patient-label {
+                font-weight: 600;
+                font-size: 13px;
+                color: #7575ff;
+                letter-spacing: 0.39px;
+                padding: 7px;
+            }
+
+    .planner-patient-wrapper .patients-detail-wrapper .patient-operations {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+        .planner-patient-wrapper .patients-detail-wrapper .patient-operations .planner-patient-search.search-wrapper {
+            width: 190px;
+            margin-right: 16px;
+        }
+
+            .planner-patient-wrapper .patients-detail-wrapper .patient-operations .planner-patient-search.search-wrapper .e-input-group span.search-icon {
+                cursor: default;
+            }
+
+                .planner-patient-wrapper .patients-detail-wrapper .patient-operations .planner-patient-search.search-wrapper .e-input-group span.search-icon::before {
+                    content: '\e993';
+                }
+
+    .planner-patient-wrapper .patients-detail-wrapper .patient-display {
+        margin-top: 17px;
+    }
+
+        .planner-patient-wrapper .patients-detail-wrapper .patient-display .e-grid .e-gridcontent tr.e-row td.e-rowcell .patient-name {
+            color: #7575ff;
+            cursor: pointer;
+        }
+
+.e-dialog.e-edit-dialog {
+    max-height: 495px !important;
+}
+.e-dialog.new-patient-dialog {
+    max-height: 505px !important;
+}
+
+.e-dialog.e-edit-dialog .e-dlg-content .grid-edit-dialog {
+    width: 325px;
+    height: 360px;
+}
+
+        .e-dialog.e-edit-dialog .e-dlg-content .grid-edit-dialog .field-row {
+            display: flex;
+            padding: 5px 0;
+        }
+
+            .e-dialog.e-edit-dialog .e-dlg-content .grid-edit-dialog .field-row label {
+                font-weight: 600;
+                font-size: 12px;
+                letter-spacing: 0.3px;
+                padding: 5px 0;
+            }
+
+            .e-dialog.e-edit-dialog .e-dlg-content .grid-edit-dialog .field-row label, .e-dialog.e-edit-dialog .e-dlg-content .grid-edit-dialog .field-row span {
+                flex: 1;
+            }
+
+            .e-dialog.e-edit-dialog .e-dlg-content .grid-edit-dialog .field-row span {
+                font-size: 14px;
+                color: #333;
+                letter-spacing: 0.39px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+
+            .e-dialog.e-edit-dialog .e-dlg-content .grid-edit-dialog .field-row.history-row {
+                flex-direction: column;
+            }
+
+                .e-dialog.e-edit-dialog .e-dlg-content .grid-edit-dialog .field-row.history-row label {
+                    color: #7575ff !important;
+                }
+
+                .e-dialog.e-edit-dialog .e-dlg-content .grid-edit-dialog .field-row.history-row .history-content {
+                    padding: 5px;
+                    font-size: 13px;
+                    color: #333;
+                    letter-spacing: 0.39px;
+                    line-height: 18px;
+                    margin: 10px 0;
+                    border-left: 2px solid blue;
+                }
+
+                .e-dialog.e-edit-dialog .e-dlg-content .grid-edit-dialog .field-row.history-row .empty-container {
+                    font-weight: 600;
+                    font-size: 15px;
+                    letter-spacing: 0.3px;
+                    padding: 5px 10px;
+                }
+    
+@media (max-width: 850px) {
+    .planner-patient-wrapper {
+        margin: 20px 10px;
+    }
+
+        .planner-patient-wrapper header .module-title {
+            margin-left: 10px;
+            flex: 1;
+        }
+
+        .planner-patient-wrapper header .add-patient {
+            margin-right: 6px;
+            display: flex;
+            cursor: pointer;
+        }
+
+            .planner-patient-wrapper header .add-patient .add-patient-label {
+                font-weight: 500;
+            }
+
+        .planner-patient-wrapper .patients-detail-wrapper {
+            margin: 0;
+        }
+
+            .planner-patient-wrapper .patients-detail-wrapper .patient-operations {
+                margin-top: 3.3%;
+            }
+
+                .planner-patient-wrapper .patients-detail-wrapper .patient-operations .e-btn {
+                    display: none;
+                }
+
+                .planner-patient-wrapper .patients-detail-wrapper .patient-operations .planner-patient-search.search-wrapper {
+                    flex: 1;
+                    margin: 0;
+                }
+
+            .planner-patient-wrapper .patients-detail-wrapper .patient-display {
+                margin-top: 3.3%;
+            }
+} 
+    .new-patient-dialog .e-dlg-content .field-container {
+        padding-bottom: 16px;
+    }
+
+    .new-patient-dialog .e-dlg-content .gender-container, .new-patient-dialog .e-dlg-content .contact-container {
+        display: flex;
+    }
+
+        .new-patient-dialog .e-dlg-content .gender-container .gender, .new-patient-dialog .e-dlg-content .contact-container .gender, .new-patient-dialog .e-dlg-content .gender-container .mobile, .new-patient-dialog .e-dlg-content .contact-container .mobile {
+            padding-right: 8px;
+            flex: 1;
+        }
+
+        .new-patient-dialog .e-dlg-content .contact-container .blood-group, .new-patient-dialog .e-dlg-content .gender-container .dob {
+            padding-left: 8px;
+            flex: 1;
+        }
+
+        .new-patient-dialog .e-dlg-content .gender-container .gender {
+            display: flex;
+            flex-direction: column;
+        }
+
+            .new-patient-dialog .e-dlg-content .gender-container .gender label:not(.e-btn) {
+                font-weight: bold;
+                color: #333;
+                font-size: 12px;
+                font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
+            }
+
+            .new-patient-dialog .e-dlg-content .gender-container .gender .e-btn-group {
+                height: 32px;
+            }
+
+                .new-patient-dialog .e-dlg-content .gender-container .gender .e-btn-group label {
+                    width: 50%;
+                }
+.e-dialog.new-patient-dialog .e-footer-content {
+    padding: 15px 15px 0 15px;
+}
+
+.patient-search.e-input-group .e-clear-icon::before {
+    font-size: 10px;
+}
+
+.e-btn-group .e-radio-wrapper {
+    padding: 4px;
+}
+
+/*skeleton*/
+.planner-patient-skeleton {
+    margin: 50px;
+}
+
+.patients-container1 {
+    height: 20%;
+    width: 100%;
+}
+
+.patients-container1 {
+    height: 70%;
+    width: 100%;
+}
+@media (max-width: 600px) {
+    .planner-patient-skeleton {
+        display: none;
+    }
+}
