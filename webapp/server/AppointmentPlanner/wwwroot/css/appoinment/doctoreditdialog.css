@@ -1,0 +1,89 @@
+﻿
+    .new-doctor-dialog .e-dlg-content .new-doctor-form .e-float-input input {
+        color: #333 1 !important;
+    }
+
+    .new-doctor-dialog .e-dlg-content .new-doctor-form .name-container, .new-doctor-dialog .e-dlg-content .new-doctor-form .gender-container, .new-doctor-dialog .e-dlg-content .new-doctor-form .email-container, .new-doctor-dialog .e-dlg-content .new-doctor-form .education-container, .new-doctor-dialog .e-dlg-content .new-doctor-form .experience-container {
+        padding-bottom: 16px;
+    }
+
+    .new-doctor-dialog .e-dlg-content .new-doctor-form .gender-container, .new-doctor-dialog .e-dlg-content .new-doctor-form .education-container, .new-doctor-dialog .e-dlg-content .new-doctor-form .experience-container {
+        display: flex;
+    }
+
+        .new-doctor-dialog .e-dlg-content .new-doctor-form .gender-container .gender, .new-doctor-dialog .e-dlg-content .new-doctor-form .education-container .department, .new-doctor-dialog .e-dlg-content .new-doctor-form .experience-container .experience {
+            padding-right: 8px;
+        }
+
+        .new-doctor-dialog .e-dlg-content .new-doctor-form .gender-container .mobile, .new-doctor-dialog .e-dlg-content .new-doctor-form .education-container .education, .new-doctor-dialog .e-dlg-content .new-doctor-form .experience-container .designation {
+            padding-left: 8px;
+        }
+
+        .new-doctor-dialog .e-dlg-content .new-doctor-form .gender-container .gender {
+            display: flex;
+            flex-direction: column;
+            flex: 0.9;
+        }
+
+            .new-doctor-dialog .e-dlg-content .new-doctor-form .gender-container .gender label:not(.e-btn) {
+                font-weight: bold;
+                color: #333;
+                font-size: 12px;
+                font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
+            }
+
+            .new-doctor-dialog .e-dlg-content .new-doctor-form .gender-container .gender .e-btn-group {
+                height: 32px;
+            }
+
+                .new-doctor-dialog .e-dlg-content .new-doctor-form .gender-container .gender .e-btn-group label {
+                    width: 50%;
+                }
+
+        .new-doctor-dialog .e-dlg-content .new-doctor-form .gender-container .mobile {
+            flex: 1;
+        }
+
+        .new-doctor-dialog .e-dlg-content .new-doctor-form .education-container .department #Specialization .department-value span:nth-child(1) {
+            border-radius: 6px;
+            height: 10px;
+            width: 10px;
+        }
+
+    .new-doctor-dialog .e-dlg-content .new-doctor-form .specialist-value {
+        display: flex;
+        margin: 6px 0;
+    }
+
+        .new-doctor-dialog .e-dlg-content .new-doctor-form .specialist-value span:nth-child(1) {
+            border-radius: 6px;
+            height: 12px;
+            width: 12px;
+            margin: 5px 3px 0;
+        }
+
+    .new-doctor-dialog .e-dlg-content .new-doctor-form #Specialization_popup .e-list-item {
+        padding-right: 0;
+        text-indent: 5px;
+    }
+
+.department-value span:nth-child(1) {
+    margin: 4px 3px;
+}
+
+@media (max-width: 850px) {
+    .department-value span.name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 110px;
+    }
+
+    .new-doctor-dialog .e-dlg-content .new-doctor-form .gender-container .gender {
+        flex: 1;
+    }
+}
+
+.e-btn-group .e-radio-wrapper {
+    padding: 4px;
+}

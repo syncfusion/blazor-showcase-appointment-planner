@@ -1,0 +1,543 @@
+﻿#plannerSiderBar .info {
+    margin-top: 60px;
+    padding-bottom: 10px;
+}
+    #plannerSiderBar .info .image {
+        border: 2px solid #fff;
+        box-shadow: 0 3px 7px 0 rgba(117, 117, 255, 0.30);
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin: auto;
+    }
+
+.sf-license-warning {
+    display: none;
+}
+
+
+        #plannerSiderBar .info .image img {
+            height: 80px;
+            width: 80px;
+            border-radius: 50%;
+        }
+
+    #plannerSiderBar .info .name, #plannerSiderBar .info .user-type {
+        text-align: center;
+    }
+
+    #plannerSiderBar .info .name {
+        font-weight: bold;
+        font-size: 16px;
+        color: #333;
+        letter-spacing: 0.48px;
+        margin-bottom: 0;
+    }
+
+    #plannerSiderBar .info p {
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+    }
+
+    #plannerSiderBar .info .user-type {
+        font-size: 11px;
+        color: #808080;
+        letter-spacing: 0.33px;
+        margin-top: 5px;
+    }
+
+    #plannerSiderBar .info::after {
+        content: '';
+        background-image: linear-gradient(-90deg, #fff 3%, #b8cbcc 51%, #fff 95%);
+        height: 1px;
+        width: 100%;
+        position: absolute;
+    }
+
+#plannerSiderBar .sidebar-item {
+    height: 50px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    color: #666;
+    cursor: pointer;
+}
+
+    #plannerSiderBar .sidebar-item .text {
+        font-weight: 500;
+        font-size: 13px;
+        letter-spacing: 0.39px;
+        margin: 0 15px;
+        text-align: left;
+    }
+    #plannerSiderBar .sidebar-item.active, #plannerSiderBar .sidebar-item.active:hover {
+        background-color: #7575ff;
+        color: #fff;
+    }
+
+#plannerSiderBar .sidebar-item .dashboard-image, #plannerSiderBar .sidebar-item .scheduler-image, #plannerSiderBar .sidebar-item .doctors-image, #plannerSiderBar .sidebar-item .patients-image, #plannerSiderBar .sidebar-item .preference-image, #plannerSiderBar .sidebar-item .about-image {
+  width: 30%;
+  text-align: right;
+  margin-top: 9px;
+}
+
+.planner-header .e-appbar.custom-appbar {
+    background: #7575ff !important;
+    height: 50px;
+    display: flex;
+}
+
+    .planner-header .name-cantainer {
+        flex: auto;
+        display: inline-flex;
+    }
+
+        .planner-header .name-cantainer .clinic-image {
+            font-size: 50px;
+            color: #fff;
+        }
+
+    .planner-header .clinic-name, .planner-header .logout-name {
+        margin: auto 0;
+        color: white;
+        cursor: default;
+    }
+
+    .planner-header div.side-bar-opener {
+        display: block;
+        flex: auto;
+        position: relative;
+    }
+	.planner-header .clinic-name.appointment-title {
+        font-size: 16px;
+        font-weight: 400;
+     }
+
+        .planner-header div.side-bar-opener .open-icon {
+            margin: 15px;
+            position: absolute;
+            font-size: 20px;
+            color: #fff;
+            height: 24px;
+            width: 24px;
+        }
+
+            .planner-header div.side-bar-opener .open-icon::before {
+                content: '\e941';
+            }
+
+        .e-appbar > div:first-child {
+            display: none !important;
+        }
+        .planner-header .logout-container {
+            padding: 5px;
+            flex: initial;
+            display: flex;
+        }
+
+        .planner-header .logout-container .logout-icon-container {
+            opacity: 1;
+            flex: auto;
+            padding: 0 7px;
+            align-self: center;
+        }
+
+        .planner-header .logout-container .logout-name {
+            display: none;
+        }
+
+        .planner-header .logout-container .logout-image {
+            color: #fff;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+    .planner-header:not(.device-header) {
+        display: flex;
+    }
+
+        .planner-header:not(.device-header) div .side-bar-opener {
+            display: none;
+        }
+
+        .planner-header:not(.device-header) .logout-container {
+            padding: 7px 10px;
+        }
+
+            .planner-header:not(.device-header) .logout-container .logout-name {
+                flex: initial;
+                display: block;
+                cursor: pointer;
+            }
+
+            .planner-header:not(.device-header) .logout-container .logout-icon-container {
+                opacity: 0.5;
+            }
+
+            .planner-header:not(.device-header) .logout-container::before {
+                content: '';
+                height: 33px;
+                border: 1px solid #fff;
+                opacity: 0.5;
+            }
+
+.planner-wrapper .e-content-animation {
+    margin-left: 0 !important;
+    padding-left: 243px;
+}
+
+.planner-wrapper.device-wrapper .e-content-animation {
+    margin-left: 243px;
+    padding-left: 0;
+}
+
+
+header .module-title .title {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    letter-spacing: 0.54px;
+    padding-bottom: 10px;
+}
+
+header .module-title .underline {
+    background: #7575ff;
+    border-radius: 5px;
+    width: 52px;
+    height: 4px;
+}
+
+.planner-header {
+    position: sticky;
+    top: 0;
+}
+
+.e-sidebar.e-left {
+    top: auto;
+}
+
+.main-content {
+    height: 95%;
+    width: 100%;
+    position: fixed;
+    overflow: scroll;
+}
+
+@media (max-width: 850px) {
+    header .module-title .title {
+        padding-bottom: 10px;
+    }
+}
+@media (max-width: 700px) {
+
+    .planner-dashboard .list-display {
+        padding: 20px 0px 0px 0px;
+    }
+
+    .planner-dashboard .text-display {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-right: 0px;
+    }
+
+    .col-lg-12.col-md-12.col-sm-12.dashboard-control {
+        padding-right: 0px;
+    }
+
+    
+
+        .col-lg-3.col-md-3.col-sm-3.treeview-container-wrapper .title-container {
+            margin-top: 20px;
+        }
+}
+@media (max-width: 700px) {
+    .planner-calendar .col-lg-3.col-md-3.col-sm-3.treeview-container-wrapper {
+        padding-top: 20px;
+        max-width: 100%;
+    }
+    .e-appbar > div:first-child {
+        display: flex !important;
+        flex-basis: 12%;
+        order: 0;
+        align-items: center;
+        justify-content: center;
+        overflow: auto;
+        margin: 0 auto;
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+        .planner-header div.side-bar-opener .open-icon {
+            display: flex;
+            text-align: center;
+            vertical-align: middle;
+            align-items: center;
+            flex-basis: 100%;
+            flex-grow: 0;
+            flex-shrink: 0;
+            padding: 0px;
+            margin: 0px;
+        }
+        .planner-wrapper .e-content-animation {
+            padding-left: 0px;
+        }
+    .planner-header:not(.device-header) {
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+        width: 100%;
+        position: relative;
+    }
+    .planner-header .name-cantainer {
+        flex: auto;
+        display: flex;
+        flex-basis: 46%;
+        order: 1;
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+    .sb-header-item.sb-table-cell {
+        display: flex;
+        flex-basis: 14%;
+        order: 3;
+        align-items: center;
+        justify-content: center;
+        overflow: auto;
+        margin: 0 auto;
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+    .planner-header .logout-container {
+        display: flex;
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: 30%;
+        order: 2;
+        text-align: center;
+        justify-content: center;
+    }
+    .e-content-animation .doctor-details-container .active-doctor {
+        display: block;
+    }
+    .planner-dashboard .view-detail-display .e-card .e-card-content .count-container {
+        margin: 0 0px 6.3px 0px;
+    }
+    .planner-dashboard .view-detail-display .e-card .e-card-content .week-event-count,
+    .planner-dashboard .view-detail-display .e-card .e-card-content .day-event-count {
+        padding-left: 25.6px;
+    }
+}
+ 
+
+/*font family*/
+
+@font-face {
+    font-family: 'icons';
+    src: url(assets/fonts/icomoon.ttf?gcjn6a) format('truetype'), url(assets/fonts/icomoon.woff?gcjn6a) format('woff'), url(assets/fonts/icomoon.svg?gcjn6a#sbicons) format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'sb-icons';
+    src: url(assets/fonts/icons.ttf?gcjn6a) format('truetype'), url(assets/fonts/icons.woff?gcjn6a) format('woff'), url(assets/fonts/icons.svg?gcjn6a#sbicons) format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.field-error {
+    margin-top: 2px;
+}
+
+    .field-error .error-content .e-error {
+        font-size: 11px;
+        color: #ff2f2f;
+        letter-spacing: 0.33px;
+        padding-left: 10px;
+    }
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icons' !important;
+    font-style: normal;
+    font-size: 20px;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="sfimage-"], [class*=" sfimage-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'sb-icons' !important;
+    font-style: normal;
+    font-size: 20px;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.icon-about:before {
+    content: "\e900";
+}
+
+.icon-dashboard:before {
+    content: "\e901";
+}
+
+.icon-doctors:before {
+    content: "\e903";
+}
+
+.icon-logo:before {
+    content: "\e905";
+}
+
+.icon-logout:before {
+    content: "\e906";
+}
+
+.icon-patients:before {
+    content: "\e908";
+}
+
+.icon-preference:before {
+    content: "\e909";
+}
+
+.icon-schedule:before {
+    content: "\e90c";
+}
+
+.icon-upload_photo:before {
+    content: "\e91a";
+}
+
+.icon-previous:before {
+    content: "\e90a";
+}
+
+.icon-reorder:before {
+    content: "\e90b";
+}
+
+
+/*listview customization*/
+
+.menulist.e-listview .e-list-icon {
+    height: auto;
+    width: auto;
+    margin: auto;
+}
+.menulist.e-listview:not(.e-list-template) .e-list-item {
+    height: 50px;
+    line-height: 50px;
+    padding: 0px;
+    border-radius: 3px;
+    border-bottom: 0px;
+    align-items: center;
+    color: #666;
+    cursor: pointer;
+}
+.menulist.e-listview .e-text-content {
+    text-align: center;
+}
+.menulist.e-listview .e-list-icon + .e-list-text {
+    width: calc(100% - 120px);
+}
+.menulist.e-listview .e-list-parent.e-ul {
+    margin: 0 16px;
+    width: 210px;
+}
+
+.menulist.e-listview {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif,"-apple-system",BlinkMacSystemFont;
+    font-size: 12px;
+    font-weight: 400;
+}
+    .menulist.e-listview .e-list-item.e-active {
+        background-color: transparent;
+        color: transparent;
+    }
+
+.validation-message {
+    color: red;
+}
+.e-app-mainpage {
+   background: linear-gradient(-141deg, #FBFAFF 14%, #FBFAFF 100%);
+}
+
+
+.sb-content-overlay {
+    z-index: 10000022;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    overflow: hidden;
+    pointer-events: none;
+    left: 0px;
+}
+
+.sb-content-overlay.sb-hide {
+    display: none;
+}
+
+.sb-loading {
+    width: 56px;
+    height: 56px;
+    z-index: 10000;
+    border-radius: 50%;
+    padding: 3px;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    background: white;
+}
+
+.circular {
+    animation: rotate 2s linear infinite;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.path {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+    stroke-linecap: round;
+    stroke: #5851e1;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124;
+    }
+}
+
+
+
