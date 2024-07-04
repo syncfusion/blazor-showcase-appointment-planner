@@ -13,12 +13,16 @@ The samples requires the below requirements to run.
 
 ### Run
 
-* Clone this repository.
-* Open the command prompt from Application root directory.
-* Run the demo using `dotnet run` command.
+1. Clone this repository.
+2. Open the project in VS 2022:
+	- For the .NET 8 Server app, open server/AppointmentPlanner.csproj.
+	- For the .NET 8 WASM app, open wasm/AppointmentPlanner.sln.
+3. Run the demo.
 
 ## Demo
 
-### <a href="https://blazor.syncfusion.com/showcase/appointmentplanner/" target="_blank">https://blazor.syncfusion.com/showcase/appointmentplanner/</a>
+### Server app: <a href="https://blazor.syncfusion.com/showcase/appointmentplanner/" target="_blank">https://blazor.syncfusion.com/showcase/appointmentplanner/</a>
+
+### WASM app: <a href="https://blazor.syncfusion.com/showcase/wasm/appointment-planner" target="_blank">https://blazor.syncfusion.com/showcase/wasm/appointment-planner</a>
 
 Check all the showcase samples from <a href="https://blazor.syncfusion.com" target="_blank">here</a>.
