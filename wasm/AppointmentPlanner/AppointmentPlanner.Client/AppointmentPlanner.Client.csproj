@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+    <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
+		<PackageReference Include="Syncfusion.Blazor.Buttons" Version="*" />
+		<PackageReference Include="Syncfusion.Blazor.Charts" Version="*" />
+		<PackageReference Include="Syncfusion.Blazor.Grid" Version="*" />
+		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="*" />
+		<PackageReference Include="Syncfusion.Blazor.Notifications" Version="*" />
+		<PackageReference Include="Syncfusion.Blazor.Schedule" Version="*" />
+		<PackageReference Include="Syncfusion.Blazor.Themes" Version="*" />
+  </ItemGroup>
+
+</Project>
