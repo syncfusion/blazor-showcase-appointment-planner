@@ -388,6 +388,10 @@ else{
                     DoctorId = Int32.Parse(args.DraggedNodeData.Id)
                 };
             }
+            if (TreeData != null)
+            {
+                waitingList.Remove(TreeData);
+            }
             await this.scheduleObj.OpenEditorAsync(eventData, CurrentAction.Add);
         }
     }
