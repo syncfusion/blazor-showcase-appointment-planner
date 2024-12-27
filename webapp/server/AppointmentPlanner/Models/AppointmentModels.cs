@@ -22,6 +22,8 @@ namespace AppointmentPlanner.Models
         public bool IsBlock { get; set; }
         public Nullable<int> RecurrenceID { get; set; }
         public string RecurrenceException { get; set; }
+        public string StartTimezone { get; set; }
+        public string EndTimezone { get; set; }
 
         public Hospital() { }
 
