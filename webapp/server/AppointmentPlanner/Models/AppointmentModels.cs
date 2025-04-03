@@ -24,6 +24,7 @@ namespace AppointmentPlanner.Models
         public string RecurrenceException { get; set; }
         public string StartTimezone { get; set; }
         public string EndTimezone { get; set; }
+        public string Location { get; set; }
 
         public Hospital() { }
 
