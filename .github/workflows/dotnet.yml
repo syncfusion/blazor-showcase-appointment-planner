@@ -24,10 +24,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
-    - name: Build Server
-      run: dotnet build ./server/AppointmentPlanner/AppointmentPlanner.csproj
-    - name: Build Wasm
-      run: dotnet build ./wasm/AppointmentPlanner/AppointmentPlanner.csproj
     - name: Build Webapp Server
       run: dotnet build ./webapp/server/AppointmentPlanner/AppointmentPlanner.csproj
     - name: Build Webapp Wasm
