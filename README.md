@@ -1,3 +1,5 @@
+[![.NET](https://github.com/ArunKumar-SF3979/blazor-showcase-appointment-planner/actions/workflows/dotnet.yml/badge.svg)](https://github.com/ArunKumar-SF3979/blazor-showcase-appointment-planner/actions/workflows/dotnet.yml)
+
 # Essential Studio for Blazor - Appointment Planner
 
 This Appointment planner demo application showcases the usage of several Syncfusion Blazor components in a real world application scenario. This demo explores an appointment scheduling application for doctors in a clinic to manage their appointments with patients.
