@@ -1,4 +1,4 @@
-[![.NET](https://github.com/ArunKumar-SF3979/blazor-showcase-appointment-planner/actions/workflows/dotnet.yml/badge.svg)](https://github.com/ArunKumar-SF3979/blazor-showcase-appointment-planner/actions/workflows/dotnet.yml)
+[![.NET](https://github.com/syncfusion/blazor-showcase-appointment-planner/actions/workflows/dotnet.yml/badge.svg)](https://github.com/syncfusion/blazor-showcase-appointment-planner/actions/workflows/dotnet.yml)
 
 # Essential Studio for Blazor - Appointment Planner
 
