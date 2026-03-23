@@ -8,7 +8,7 @@ This Appointment planner showcase application showcases the usage of several Syn
 
 * [System requirements](https://blazor.syncfusion.com/documentation/system-requirements/)
 
-* [NET 8 WebAssembly Workload](https://learn.microsoft.com/en-us/aspnet/core/blazor/webassembly-build-tools-and-aot?view=aspnetcore-8.0#net-webassembly-build-tools)
+* [NET 10 WebAssembly Workload](https://learn.microsoft.com/en-us/aspnet/core/blazor/webassembly-build-tools-and-aot?view=aspnetcore-10.0#net-webassembly-build-tools)
 
 ## How to run the demo
 
@@ -21,10 +21,10 @@ Clone the repository.This repository contains Blazor Appointment Planner Server 
 * Open the command prompt from the demo's directory.
 * Run the demo using the following command.
    
-   To run .NET 8 Appointment Planner Server project
+   To run .NET 10 Appointment Planner Server project
    > `dotnet run --project webapp/server/AppointmentPlanner.sln`
 
-   To run .NET 8 Appointment Planner WASM project
+   To run .NET 10 Appointment Planner WASM project
    > `dotnet run --project webapp/wasm/AppointmentPlanner.sln`
 
 ### Run the demo using Visual Studio

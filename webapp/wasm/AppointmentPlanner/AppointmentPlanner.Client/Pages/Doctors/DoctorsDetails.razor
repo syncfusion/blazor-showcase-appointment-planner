@@ -246,7 +246,11 @@
         var specialize = Service.Doctors.Where(i => i.DepartmentId == doctorEditModel.DepartmentId).FirstOrDefault().Specialization;
         activeData = new Doctor(doctorEditModel.Name, doctorEditModel.Gender, activeData.Text, activeData.Id, doctorEditModel.DepartmentId, activeData.Color, doctorEditModel.Education, specialize, doctorEditModel.Experience, doctorEditModel.Designation, doctorEditModel.DutyTiming, doctorEditModel.Email, mobileNo, activeData.Availability, getHours.StartHour, getHours.EndHour, activeData.AvailableDays, getHours.WorkDays);
         getSpecializationText = activeData.Specialization;
-        Service.Doctors[activeData.Id - 1] = activeData;
+        int doctorIndex = Service.Doctors.FindIndex(item => item.Id == activeData.Id);
+        if (doctorIndex  > -1)
+        {
+            Service.Doctors[doctorIndex] = activeData;
+        }
         string message = "Dr." + activeData.Name + "," + activeData.Specialization.Substring(0, 1).ToUpper() + activeData.Specialization.Substring(1);
         Service.Activities.Insert(0, new Activity { Name = "Updated Doctor", Message = message, Time = "10 mins ago", Type = "doctor", ActivityTime = DateTime.Now });
         editVisible = false;
