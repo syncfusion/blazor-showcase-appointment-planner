@@ -1,19 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+   	<DefineConstants>Release</DefineConstants>
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Syncfusion.Blazor.Buttons" Version="32.1.19" />
-		<PackageReference Include="Syncfusion.Blazor.Charts" Version="32.1.19" />
-		<PackageReference Include="Syncfusion.Blazor.Grid" Version="32.1.19" />
-		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="32.1.19" />
-		<PackageReference Include="Syncfusion.Blazor.Notifications" Version="32.1.19" />
-		<PackageReference Include="Syncfusion.Blazor.Schedule" Version="32.1.19" />
-		<PackageReference Include="Syncfusion.Blazor.Themes" Version="32.1.19" />
+		<PackageReference Include="Syncfusion.Blazor.Buttons" Version="33.1.44" />
+		<PackageReference Include="Syncfusion.Blazor.Charts" Version="33.1.44" />
+		<PackageReference Include="Syncfusion.Blazor.Grid" Version="33.1.44" />
+		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="33.1.44" />
+		<PackageReference Include="Syncfusion.Blazor.Notifications" Version="33.1.44" />
+		<PackageReference Include="Syncfusion.Blazor.Schedule" Version="33.1.44" />
+		<PackageReference Include="Syncfusion.Blazor.Themes" Version="33.1.44" />
 	</ItemGroup>
-
 </Project>

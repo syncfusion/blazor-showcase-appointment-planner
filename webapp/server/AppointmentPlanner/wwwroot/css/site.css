@@ -193,3 +193,125 @@ ul.nav.flex-column {
     font-size: 12px;
     font-weight: 400;
 }
+.footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90.4deg, #154db9 0.03%, #081b3f 11.56%, #081b3f 85.56%, #154db9 99.97%);
+    border: 1px solid #D8DEE9;
+    z-index: 10000;
+    padding: 12px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.footer-logo {
+    width: 38px;
+    height: 38px;
+}
+.footer-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+}
+
+.footer-content .title span {
+    font-weight: 400;
+    font-size: 16px;
+    color: #e1e3e7;
+}
+
+@media screen and (max-width: 1140px), screen and (max-device-width: 1140px) {
+    .footer-content .title {
+        display: flex;
+        flex-direction: column;
+        color: white;
+    }
+}
+
+@media screen and (max-width: 1140px), screen and (max-device-width: 1140px) {
+    .footer-content .title span, .footer-content .title span .main-title {
+        font-size: 12px;
+    }
+}
+
+.footer-content .buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-content .e-trial-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #FFF30F;
+    color: #0F172A;
+    border: transparent;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-weight: 700;
+    font-family: sans-serif;
+}
+
+.footer-content .e-demo-btn {
+    background-color: transparent;
+    border: transparent;
+    color: white;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-weight: 500;
+}
+
+.footer-content .e-trial-btn::before {
+    content: 'Start Free Trial';
+    font-family: sans-serif;
+}
+
+.footer-content .e-trial-btn::after {
+    content: '\e7f9';
+    font-family: 'e-icons';
+}
+
+.footer-content .e-demo-btn:hover {
+    background-color: #173D87;
+}
+
+@media screen and (max-device-width: 730px) {
+
+    .footer-content .buttons .e-demo-btn {
+        display: none;
+    }
+
+    .footer-content .buttons .e-trial-btn::before {
+        content: 'Free Trial';
+    }
+
+    .footer-content .buttons .e-trial-btn::after {
+        display:none;
+    }
+}
+
+@media screen and (max-width: 900px), screen and (max-device-width: 900px) {
+    .footer-content .title span:last-child {
+        display: none;
+    }
+}

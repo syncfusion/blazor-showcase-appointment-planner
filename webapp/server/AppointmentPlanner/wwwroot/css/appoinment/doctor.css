@@ -203,13 +203,13 @@
 .specialist-value {
     display: flex;
     margin: 6px 0;
+    align-items: center;
 }
 
     .specialist-value span:nth-child(1) {
         border-radius: 6px;
         height: 12px;
         width: 12px;
-        margin: 5px 3px 0;
     }
 
 #Specialization_popup .e-list-item {
