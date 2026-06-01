@@ -334,12 +334,13 @@
 
     .add-doctor .e-icon-add {
         padding: 10px 0 10px 5px;
-        font-size: 10px;
+        font-size: 15px;
         color: #7575ff;
+        font-weight: bold;
     }
 
         .add-doctor .e-icon-add::before {
-            content: '\e95c';
+            content: '\e805';
         }
 
     .add-doctor .add-doctor-text {
