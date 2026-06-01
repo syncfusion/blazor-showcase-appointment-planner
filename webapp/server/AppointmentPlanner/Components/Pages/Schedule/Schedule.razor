@@ -237,18 +237,18 @@ else{
             }
         }
     }
-    private void onValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, Doctor> args)
+    private async Task onValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, Doctor> args)
     {
         if (args.Value != null)
         {
-            refreshDataSource((int)args.ItemData.DepartmentId, args.ItemData.Id.ToString());
+            await refreshDataSource((int)args.ItemData.DepartmentId, args.ItemData.Id.ToString());
         }
         else
         {
             setDefaultData();
         }
     }
-    private void refreshDataSource(int deptId, string doctorId)
+    private async Task refreshDataSource(int deptId, string doctorId)
     {
         List<Doctor> filterItem = Service.Doctors.Where(item => item.Id.Equals(Int32.Parse(doctorId))).ToList();
         activeDoctorData = filterItem;
@@ -265,6 +265,11 @@ else{
             scheduleEventData = Service.Hospitals;
         }
         this.updateWaitingList((int)deptId);
+        if (scheduleObj != null)
+        {
+            await Task.Delay(50);
+            await scheduleObj.RefreshAsync();
+        }
     }
 
     private void updateWaitingList(int? deptId)
