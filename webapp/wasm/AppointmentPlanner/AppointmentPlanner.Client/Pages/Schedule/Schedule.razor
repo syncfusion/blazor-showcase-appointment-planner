@@ -1,4 +1,4 @@
-﻿@page "/schedule"
+﻿﻿@page "/schedule"
 
 @using AppointmentPlanner.Data;
 @using AppointmentPlanner.Models;
@@ -237,7 +237,7 @@ else{
             }
         }
     }
-    private async Task onValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, Doctor> args)
+    private void onValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, Doctor> args)
     {
         if (args.Value != null)
         {
@@ -246,15 +246,6 @@ else{
         else
         {
             setDefaultData();
-        }
-        
-        // Force UI refresh explicitly
-        await InvokeAsync(StateHasChanged);
-    
-        // Refresh scheduler if method exists
-        if (scheduleObj != null)
-        {
-            await scheduleObj.RefreshAsync();
         }
     }
     private void refreshDataSource(int deptId, string doctorId)
