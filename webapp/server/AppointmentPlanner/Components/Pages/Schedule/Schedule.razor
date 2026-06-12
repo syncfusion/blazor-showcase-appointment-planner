@@ -267,8 +267,7 @@ else{
         this.updateWaitingList((int)deptId);
         if (scheduleObj != null)
         {
-            await Task.Delay(50);
-            await scheduleObj.RefreshAsync();
+            await scheduleObj.RefreshAsync(false);
         }
     }
 
