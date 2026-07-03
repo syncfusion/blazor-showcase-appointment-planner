@@ -12,12 +12,12 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Syncfusion.Blazor.Buttons" Version="33.1.44" />
-		<PackageReference Include="Syncfusion.Blazor.Charts" Version="33.1.44" />
-		<PackageReference Include="Syncfusion.Blazor.Grid" Version="33.1.44" />
-		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="33.1.44" />
-		<PackageReference Include="Syncfusion.Blazor.Notifications" Version="33.1.44" />
-		<PackageReference Include="Syncfusion.Blazor.Schedule" Version="33.1.44" />
-		<PackageReference Include="Syncfusion.Blazor.Themes" Version="33.1.44" />
+		<PackageReference Include="Syncfusion.Blazor.Buttons" Version="34.1.29" />
+		<PackageReference Include="Syncfusion.Blazor.Charts" Version="34.1.29" />
+		<PackageReference Include="Syncfusion.Blazor.Grid" Version="34.1.29" />
+		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="34.1.29" />
+		<PackageReference Include="Syncfusion.Blazor.Notifications" Version="34.1.29" />
+		<PackageReference Include="Syncfusion.Blazor.Schedule" Version="34.1.29" />
+		<PackageReference Include="Syncfusion.Blazor.Themes" Version="34.1.29" />
 	</ItemGroup>
 </Project>
