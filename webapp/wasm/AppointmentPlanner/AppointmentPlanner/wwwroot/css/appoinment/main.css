@@ -221,7 +221,7 @@ header .module-title .underline {
 }
 
 .main-content {
-    height: 95%;
+    height: calc(100vh - 20%);
     width: 100%;
     position: fixed;
     overflow: scroll;
