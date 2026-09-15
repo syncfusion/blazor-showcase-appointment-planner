@@ -267,7 +267,7 @@ else{
         this.updateWaitingList((int)deptId);
         if (scheduleObj != null)
         {
-            await scheduleObj.RefreshAsync(false);
+            await InvokeAsync(StateHasChanged);
         }
     }
 
