@@ -255,6 +255,7 @@ else{
         workDay = filterItem[0].AvailableDays;
         workHours = new Calendar { Start = filterItem[0].StartHour, End = filterItem[0].EndHour };
         queryData = new Query().Where(new WhereFilter() { Field = "Id", Operator = "equal", value = Int32.Parse(doctorId) });
+        await Task.Yield();
         if (filterItem.Any())
         {
             updateBreakHours(scheduleObj.SelectedDate);
