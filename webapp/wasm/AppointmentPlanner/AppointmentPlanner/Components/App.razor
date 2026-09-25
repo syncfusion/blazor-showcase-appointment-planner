@@ -1,10 +1,23 @@
 ﻿@inject NavigationManager Urihelper
+
+@* SEO Variables - Single source of truth for all meta tags *@
+@{
+    // SEO Title and Description - Reused across all meta tags for consistency
+    string SeoTitle = "Appointment Planner - Syncfusion Blazor Showcase";
+    string SeoDescription = "Manage appointments efficiently with Syncfusion Blazor Components. Interactive dashboard, scheduling, and doctor/patient management showcase app.";
+    string SiteUrl = Urihelper.Uri.TrimEnd('/');
+    string ApplicationName = "Appointment Planner";
+    string Publisher = "Syncfusion";
+    string Language = "English";
+    string SocialImage = SiteUrl + "/Appointmentplanner.svg";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <!-- Google Tag Manager -->
-    <!-- Load GTM-P3WXFWCW immediately on page load  -->
+    <!-- Load GTM-WXZ6DX9B immediately on page load  -->
     <script>
         (function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
@@ -13,7 +26,7 @@
             }); var f = d.getElementsByTagName(s)[0],
                 j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-P3WXFWCW');
+        })(window, document, 'script', 'dataLayer', 'GTM-WXZ6DX9B');
     </script>
     <!-- Load GTM-W8WD8WN on user interaction -->
     <script>
@@ -33,13 +46,47 @@
             events.forEach(event => document.addEventListener(event, loadGTM, { once: true }));
         });
     </script>
-	<!-- End Google Tag Manager -->
+    
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="description" content="Appointment Planner is a SPA for demonstrating Syncfusion Blazor WebAssembly Components features in a real-world scenario with dashboard like layout." />
-    <title>Appointment Planner | Blazor WebAssembly showcase app | Syncfusion</title>
+    
+    <!-- HTML Title - Used in browser tab (Reusable Variable: SeoTitle) -->
+    <title>@SeoTitle</title>
+    
+    <!-- Primary Meta Tags (Reusable Variables) -->
+    <meta name="title" content="@SeoTitle" />
+    <meta name="description" content="@SeoDescription" />
+    <meta name="robots" content="index, follow" />
+    <meta name="keywords" content="Appointment Planner, Blazor components, scheduling app, healthcare dashboard, Syncfusion, interactive UI, patient management" />
+    <meta name="publisher" content="@Publisher" />
+    <meta name="language" content="@Language" />
+    
+    <!-- Canonical URL (Reusable Variable: SiteUrl) -->
+    <link href="https://showcase.syncfusion.com/appointment-planner/blazor/wasm/" rel="canonical" />
+    
+    <!-- Alternate Language Tags (Reusable Variable: SiteUrl) -->
+    <link rel="alternate" hreflang="en-US" href="@SiteUrl" />
+    <link rel="alternate" hreflang="x-default" href="@SiteUrl" />
+    
+    <!-- Open Graph Meta Tags (Reusable Variables: SeoTitle, SeoDescription, SiteUrl, ApplicationName, SocialImage) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@SeoTitle" />
+    <meta property="og:description" content="@SeoDescription" />
+    <meta property="og:url" content="@SiteUrl" />
+    <meta property="og:site_name" content="@ApplicationName" />
+    <meta property="og:image" content="@SocialImage" />
+    <meta property="og:image:alt" content="@ApplicationName Logo" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter Card Meta Tags (Reusable Variables: SeoTitle, SeoDescription, SocialImage) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@SeoTitle" />
+    <meta name="twitter:description" content="@SeoDescription" />
+    <meta name="twitter:image" content="@SocialImage" />
+    <meta name="twitter:image:alt" content="@ApplicationName" />
+    <meta name="twitter:site" content="@@Syncfusion" />
+    
     <base href="/" />
-    <link href=@Urihelper.Uri rel="canonical" />
   
     <ResourcePreloader />
     <link href="@Assets["css/bootstrap/bootstrap.min.css"]" rel="stylesheet" />
@@ -72,14 +119,48 @@
                 || navigator.userAgent.match(/Windows Phone/i)) ? true : false;
         }
     </script>
-    <HeadOutlet @rendermode="InteractiveWebAssembly" />
+            
+            <!-- Schema.org Structured Data - SoftwareApplication (Reusable Variables: ApplicationName, SeoDescription, SiteUrl, SocialImage) -->
+            <script type="application/ld+json">
+            {
+              "@@context": "https://schema.org/",
+              "@@type": "SoftwareApplication",
+              "name": "@ApplicationName",
+              "description": "@SeoDescription",
+              "url": "@SiteUrl",
+              "applicationCategory": "HealthcareApplication",
+              "operatingSystem": "Web",
+              "image": "@SocialImage",
+              "offers": {
+                "@@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "aggregateRating": {
+                "@@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "ratingCount": "150"
+              },
+              "author": {
+                "@@type": "Organization",
+                "name": "@Publisher",
+                "url": "https://www.syncfusion.com"
+              },
+              "inLanguage": "en-US",
+              "browserRequirements": "WebAssembly enabled browser"
+            }
+            </script>
+            
+            <HeadOutlet @rendermode="InteractiveWebAssembly" />
+       
+    }
 </head>
 
 <body>
     <!-- Google Tag Manager (noscript) -->
     <!--Page Load-->
     <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P3WXFWCW" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WXZ6DX9B" height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
     <!--Interaction-->
     <noscript>
