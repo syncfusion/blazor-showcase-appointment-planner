@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AppointmentPlanner.Client\AppointmentPlanner.Client.csproj" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.13" />
   </ItemGroup>
 
 </Project>
